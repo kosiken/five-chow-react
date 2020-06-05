@@ -66,7 +66,7 @@ const classes = useStyles()
             <IconButton
               edge="start"
               color="inherit"
-              onClick={close}
+              onClick={() =>{close()}}
               aria-label="close"
             >
               <Close />
@@ -80,8 +80,8 @@ const classes = useStyles()
         <List>
 
           {foods.map((food)=> {
-          return ( <>
-             <ListItem>
+          return ( <React.Fragment key={food.title}>
+             <ListItem >
         <ListItemAvatar>
           <Avatar src={food.src} />
         </ListItemAvatar>
@@ -92,7 +92,7 @@ const classes = useStyles()
      
       </ListItem>
       <Divider />
-            </>)
+            </React.Fragment>)
           })}
       
         </List>

@@ -41,7 +41,7 @@ function Resturant({ resturant }) {
          </IconButton>
        </CardActions>
       </Card>
-      <Modal open={modal} close={()=> {
+      <Modal opened={modal} close={()=> {
            setModal(true)
          }} />
     </div>

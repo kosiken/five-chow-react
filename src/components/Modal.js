@@ -13,6 +13,35 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 
+import hamburger from "../assets/hamburger.jpg"
+import bread from "../assets/bread.jpg"
+import meat from "../assets/meat.jpg"
+
+
+const foods = [
+
+
+{
+
+name: "hamburger",
+price:100,
+src: hamburger
+
+},
+{
+
+  name: "bread",
+  price:100,
+  src: bread
+  
+  },
+  {
+
+    name: "meat",
+    price:100,
+    src: meat
+    
+    }]
 const useStyles = makeStyles((theme) => ({
   appBar: {
     position: "relative",
@@ -47,13 +76,23 @@ function Modal({ opened, close }) {
           </Toolbar>
         </AppBar>
         <List>
-          <ListItem button>
-            <ListItemText primary="Phone ringtone" secondary="Titania" />
-          </ListItem>
-          <Divider />
-          <ListItem button>
-            <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-          </ListItem>
+
+          {foods.map((food)=> {
+            <>
+             <ListItem>
+        <ListItemAvatar>
+          <Avatar src={food.src} />
+        </ListItemAvatar>
+        <ListItemText primary={food.name} secondary={`N${food.price}`} />
+     <ListItemIcon>
+       <Favorite/>
+     </ListItemIcon>
+     
+      </ListItem>
+      <Divider />
+            </>
+          })}
+      
         </List>
       </Dialog>
     </div>

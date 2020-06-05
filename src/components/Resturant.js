@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardMedia, Avatar, CardContent, Typography, CardActions, IconButton } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
-import {VisibilityIcon} from "@material-ui/icons"
+import {Visibility} from "@material-ui/icons"
+import Modal from "./Modal"
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -25,17 +26,24 @@ const useStyles = makeStyles((theme) => ({
 
 function Resturant({ resturant }) {
   const classes = useStyles();
+  const [modal, setModal ] = useState(false)
   return (
     <div>
       <Card>
           <CardHeader title={resturant.title} />
         <CardMedia className={classes.media} image={resturant.src} />
        <CardActions >
-         <IconButton ariaLabel="view more">
-           <VisibilityIcon />
+         <IconButton ariaLabel="view more"
+         onClick={()=> {
+           setModal(true)
+         }}>
+           <Visibility color="primary" />
          </IconButton>
        </CardActions>
       </Card>
+      <Modal open={modal} close={()=> {
+           setModal(true)
+         }} />
     </div>
   );
 }

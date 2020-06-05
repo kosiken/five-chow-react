@@ -9,7 +9,11 @@ const cards =  [
       { title: 'Resturant three', src: 'https://cdn.vuetifyjs.com/images/cards/plane.jpg', flex: 6 },
   ]
 const restutants = [];
-
+const useStyles = makeStyles((theme)=> ({
+    gridl: {
+        margin: "0 auto"
+    }
+}) )
 for(let i = 0; i< 15; i++){
     restutants.push({
         name:'Resturant ' + i,
@@ -17,10 +21,14 @@ for(let i = 0; i< 15; i++){
     })
 }
 function ResturantList() {
-
+    const classes = useStyles();
     return (
         <div>
-            <Grid container xs={12} spacing={3} >
+            <Grid style={{
+                margin:'0 auto'
+            }} container  direction="row"
+  justify="center"
+  alignItems="center"  xs={12} spacing={3} >
                 {cards.map((i)=> (
                    <Grid item xs={4}>
                        <Resturant resturant={i}/>

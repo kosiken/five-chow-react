@@ -13,10 +13,12 @@ import { ShoppingCart } from '@material-ui/icons';
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-
 import {Close}from "@material-ui/icons";
 import CartItems from './CartItems'
-
+import Login from './Login';
+import SignUp from './SignUp';
+import CheckOut from './CheckOut';
+// CheckOut
 
     const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -27,7 +29,7 @@ import CartItems from './CartItems'
     flex: 1,
   },
       fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },link: {
@@ -47,7 +49,9 @@ function Cart (){
 const classes = useStyles();
   const [state , setState] = useState({
   modal: false,
-  checked: false
+  checked: false,
+  variant: window.innerWidth > 500 ? 'extended':'round'
+  
   });
   
   function setModal(value) {
@@ -55,21 +59,28 @@ const classes = useStyles();
   
   
   }
+  
+  
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
   
+  window.addEventListener('resize', function() {
   
-  
+  let v = window.innerWidth > 500 ? 'extended':'round'
+
+ setState({ ...state, variant: v});
+}
+  )
 
 return (
 
 <div>
-     <Fab className={classes.fab} variant="extended" color="secondary" onClick={()=> {
+     <Fab className={classes.fab} variant={state.variant} color="secondary" onClick={()=> {
            setModal(true)
          }} >
                 <ShoppingCart/>
-                 Shopping Cart
+{state.variant === 'extended' ? 'Shopping Cart': ''}
             </Fab>
 <Dialog fullScreen open={state.modal} onClose={()=> {
                 setModal(false)
@@ -109,22 +120,23 @@ return (
              <Switch>
           <Route exact path="/">
               <CartItems />
+              <Link className={classes.link} to={state.checked? 'checkout': 'login'} > <Button onClick={()=> {
+          setState({...state, checked: true})
+        }}>Confirm</Button> </Link>  
           </Route>
           <Route path="/checkout">
-            <p>checkout</p>
+            <CheckOut />
           </Route>
           <Route path="/login">
-            <p>login</p>
+            <Login />
           </Route>
           
             <Route path="/signup">
-            <p>signup</p>
+            <SignUp />
           </Route>
         </Switch>
         
-        <Link className={classes.link} to={state.checked? 'checkout': 'login'} > <Button onClick={()=> {
-          setState({...state, checked: true})
-        }}>Confirm</Button> </Link>     
+         
         </Router>
      
        

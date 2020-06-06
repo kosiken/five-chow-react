@@ -6,6 +6,12 @@ import { Button, Typography, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
+  div: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height:'100%'
+  },
   root: {
     display: "block",
     width: "80%",
@@ -15,45 +21,70 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     textAlign: "center",
   },
+
+  input: {
+    width: "100%",
+    maxWidth: '300px'
+
+  },
+  inputDiv: {
+    marginBottom: '2em'
+  }
 }));
 function SignUp() {
   const classes = useStyles();
   return (
-    <div>
+    <div className={classes.div}>
       <form className={classes.root} noValidate>
-        <div>
+        <div className={classes.inputDiv} >
           <TextField
-            error
-            id="filled-error"
             label="email"
-            defaultValue="Hello World"
-            variant="filled"
+            style={{ width: "100%" }}
+            name={"email"}
+            variant="outlined"
+            classes={classes.input}
+            inputProps={{
+              style: {
+                width: "100%",
+                backgroundColor: "white",
+              },
+            }}
           />
         </div>
-        <div>
+        <div className={classes.inputDiv} >
           <TextField
-            error
-            id="filled-error"
             label="Password"
-            defaultValue="Hello World"
-            variant="filled"
+            style={{ width: "100%" }}
+            variant="outlined"
             type="password"
+            classes={classes.input}
+            inputProps={{
+              style: {
+                width: "100%",
+                backgroundColor: "white",
+              },
+            }}
           />
+        </div>
+        <div className={classes.inputDiv} >
           <TextField
-            error
-            id="filled-error"
-            label="Password"
-            defaultValue="Hello World"
-            variant="filled"
+            style={{ width: "100%" }}
+            label="Confirm Password"
+            variant="outlined"
             type="password"
+            classes={classes.input}
+            inputProps={{
+              style: {
+                width: "100%",
+                backgroundColor: "white",
+              },
+            }}
           />
         </div>
 
-        <div>
-          <Button>SignUp</Button>
-        </div>
+      
         <Link className={classes.link} to="/">
-          <Button>SignUp</Button>
+          <Button variant="raised" color="secondary">SignUp</Button>
         </Link>
       </form>
     </div>

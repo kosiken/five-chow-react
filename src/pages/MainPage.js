@@ -50,14 +50,14 @@ function MainPage() {
       };
   const classes = useStyles();
   return (
-    <div class={classes.root}>
+    <div className={classes.root}>
       <AppBar color="primary" position="static">
         <Toolbar
           style={{
             minHeight: "80px",
           }}
         >
-          <div class={classes.title}>
+          <div className={classes.title}>
             <Avatar className={classes.large} src={logo}></Avatar>
           </div>
           <IconButton

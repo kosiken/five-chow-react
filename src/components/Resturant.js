@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, CardHeader, CardMedia,  CardContent,  CardActions, IconButton } from "@material-ui/core";
+import { Card, CardHeader, CardMedia,  CardContent,  CardActions, IconButton , Typography} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 
@@ -9,7 +9,6 @@ import Divider from "@material-ui/core/Divider";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 
-import Typography from "@material-ui/core/Typography";
 import {Close, Favorite}from "@material-ui/icons";
 import Slide from "@material-ui/core/Slide";
 
@@ -75,7 +74,10 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     flex: 1,
   },
+content: {
 
+padding:'12px 15px'
+}
 }));
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -95,10 +97,21 @@ function Resturant({ resturant }) {
   return (
     <div>
       <Card>
-          <CardHeader title={resturant.title} />
+       
         <CardMedia className={classes.media} image={resturant.src} />
+        
+        <CardContent className={classes.content}>
+          <Typography gutterBottom variant="h6" component="h6">
+            {resturant.title}
+          </Typography>
+          <Divider/>
+                <Typography variant="body2" color="textSecondary" component="p">
+           {'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit officiis maiores necessitatibus obcaecati! Laborum esse !'}
+          </Typography>
+           </CardContent>
+       
        <CardActions >
-         <IconButton ariaLabel="view more"
+         <IconButton aria-label="view more"
          onClick={()=> {
            setModal(true)
          }}>
@@ -131,8 +144,8 @@ function Resturant({ resturant }) {
         </AppBar>
         <List>
 
-          {foodlists.map((food)=> {
-          return ( <Item key={food.title} food={food} />)
+          {foodlists.map((food, i)=> {
+          return ( <Item key={`food_${i+1}`} food={food} />)
           })}
       
         </List>

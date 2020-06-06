@@ -12,7 +12,7 @@ const RootReducer = combineReducers({
 
 const middleware = [thunk];
 export default createStore(
-    rootReducer,
+    RootReducer,
     InitialState,
     applyMiddleware(...middleware),
   );

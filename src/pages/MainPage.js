@@ -1,17 +1,17 @@
 import React, { Component } from "react";
+import {Provider} from 'react-redux';
+
 import {AppBar, Toolbar, Avatar, Menu, MenuItem, IconButton  } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 // import Button from "@material-ui/core/Button";
 
-import { Typography } from "@material-ui/core";
+
 // import AccountCircle from "@material-ui/icons/AccountCircle";
 import {ExitToApp,Favorite, AccountCircle } from "@material-ui/icons"
 // import App from '../App';
 import logo from "../assets/logo.png";
 import ResturantList from "../components/ResturantList"
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,7 +50,9 @@ function MainPage() {
       };
   const classes = useStyles();
   return (
+    <Provider store={store}>
     <div className={classes.root}>
+      
       <AppBar color="primary" position="static">
         <Toolbar
           style={{
@@ -88,6 +90,7 @@ function MainPage() {
       </div>
       
     </div>
+    </Provider>
   );
 }
 

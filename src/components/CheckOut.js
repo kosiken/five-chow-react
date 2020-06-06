@@ -73,6 +73,8 @@ let amount = 500;
         display:'flex',
         justifyContent: 'center'
         }}>
+        
+        <Link to="/">
           <Button className={classes.btn} variant="contained" color="info" >
          
   
@@ -81,6 +83,7 @@ let amount = 500;
          
             Pay with Paystack
           </Button>
+          </Link>
         </CardActions>
       </Card>
     </div>

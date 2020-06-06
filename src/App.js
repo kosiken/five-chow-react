@@ -8,7 +8,8 @@ const theme = createMuiTheme({
   palette: {
     primary:{ main: "#f0324b"},
     secondary: {main:"#e5298b"},
-    accent: {main:"#ff9800"},
+    info: {main:"#0ba4db"},
+    
   },
   status: {
     danger: "orange",

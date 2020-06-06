@@ -125,7 +125,7 @@ return (
         }}>Confirm</Button> </Link>  
           </Route>
           <Route path="/checkout">
-            <CheckOut />
+            <CheckOut amount={1000} />
           </Route>
           <Route path="/login">
             <Login />

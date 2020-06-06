@@ -4,16 +4,16 @@ import {BrowserRouter as Router,
   Route,
   Link} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
-import {ListItemAvatar,ListItemText , ListItemIcon, Badge, List, ListItem, Button, Typography,
-Dialog,IconButton,Avatar,Switch as MSwitch,
+import { Button, Typography,
+Dialog,IconButton,Switch as MSwitch,
 Fab, Slide}from "@material-ui/core";
 import { ShoppingCart } from '@material-ui/icons';
 
 
-import Divider from "@material-ui/core/Divider";
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import TextField from '@material-ui/core/TextField';
+
 import {Close}from "@material-ui/icons";
 import CartItems from './CartItems'
 
@@ -33,7 +33,8 @@ import CartItems from './CartItems'
   },link: {
   
   display:'block',
-  width: '100%'
+  width: '100%',
+  textAlign:'center'
   }
 }));
 
@@ -121,7 +122,9 @@ return (
           </Route>
         </Switch>
         
-        <Link className={classes.link} to={state.checked? 'checkout': 'login'} > <Button>Confirm</Button> </Link>     
+        <Link className={classes.link} to={state.checked? 'checkout': 'login'} > <Button onClick={()=> {
+          setState({...state, checked: true})
+        }}>Confirm</Button> </Link>     
         </Router>
      
        

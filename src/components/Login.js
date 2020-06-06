@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     width: "100%",
     textAlign: "center",
+    textDecoration:"none"
   },
   input: {
     width: "100%",
@@ -28,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
   inputDiv: {
     marginBottom: "2em",
   },
+
 }));
 function Login() {
   const classes = useStyles();

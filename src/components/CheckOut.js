@@ -45,7 +45,14 @@ textAlign:'center'
   backgroundColor: 'rgb(11, 164, 219)',
   color:'white'
   
-  },
+  },link:{
+     
+
+
+    textDecoration:"none"
+
+
+}
 
 }});
 
@@ -74,7 +81,7 @@ let amount = 500;
         justifyContent: 'center'
         }}>
         
-        <Link to="/">
+        <Link to="/"  className={classes.link} >
           <Button className={classes.btn} variant="contained" color="info" >
          
   

@@ -20,7 +20,13 @@ const useStyles = makeStyles((theme) => ({
     display: "block",
     width: "100%",
     textAlign: "center",
-  },
+    
+  },  link: {
+    display: "block",
+    width: "100%",
+    textAlign: "center",
+    textDecoration:"none"
+  }
 
   input: {
     width: "100%",

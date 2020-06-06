@@ -66,7 +66,7 @@ const classes = useStyles()
             <IconButton
               edge="start"
               color="inherit"
-              onClick={() =>{close()}}
+              onClick={() =>{opened=false}}
               aria-label="close"
             >
               <Close />

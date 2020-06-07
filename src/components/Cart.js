@@ -85,10 +85,13 @@ return (
 <Dialog fullScreen open={state.modal} onClose={()=> {
                 setModal(false)
               }} TransitionComponent={Transition}>
-        <AppBar className={classes.appBar}>
-
+       
 
 <Router>
+
+ <AppBar className={classes.appBar}>
+
+
           
 <Toolbar>
 

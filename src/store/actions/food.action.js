@@ -8,9 +8,10 @@ export const fetchResturants= (resturants) => dispatch => {
   };
 
 
-  export const fetchFoods= (foods, resturantId) => dispatch => {
+  export const fetchFoods=(resturantId) => dispatch => {
+
     dispatch({
-      type: FETCH_RESTURANTS,
-      foods, resturantId
+      type: FETCH_FOODS,
+      resturantId
     });
   };

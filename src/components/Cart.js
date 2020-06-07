@@ -18,6 +18,8 @@ import CartItems from './CartItems'
 import Login from './Login';
 import SignUp from './SignUp';
 import CheckOut from './CheckOut';
+import Opener from './Opener';
+import FoodList from './FoodList'
 // CheckOut
 
     const useStyles = makeStyles((theme) => ({
@@ -44,7 +46,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function Cart (){
+function Cart (props){
 
 const classes = useStyles();
   const [state , setState] = useState({
@@ -82,12 +84,13 @@ return (
                 <ShoppingCart/>
 {state.variant === 'extended' ? 'Shopping Cart': ''}
             </Fab>
+       
 <Dialog fullScreen open={state.modal} onClose={()=> {
                 setModal(false)
               }} TransitionComponent={Transition}>
        
 
-<Router>
+
 
  <AppBar className={classes.appBar}>
 
@@ -95,7 +98,8 @@ return (
           
 <Toolbar>
 
-       
+      <Link to="/" style={{
+      color:'white'}}> 
      <IconButton
               edge="start"
               color="inherit"
@@ -107,7 +111,7 @@ return (
               <Close />
             </IconButton>
             
-            
+            </Link>
             <Typography variant="h6" className={classes.title}>
               {'500 chow'}
             </Typography>
@@ -126,7 +130,7 @@ return (
         </AppBar>
         
         
-             <Switch>
+            
           <Route exact path="/">
               <CartItems />
               <Link className={classes.link} to={state.checked? 'checkout': 'login'} > <Button onClick={()=> {
@@ -143,14 +147,24 @@ return (
             <Route path="/signup">
             <SignUp />
           </Route>
-        </Switch>
+       
+  
         
          
-        </Router>
-     
+        
+         <Route path="/food/:id">
+               <FoodList />
+          </Route>
        
            
       </Dialog>
+          <Route path="/food">
+               <Opener openModal={()=> {
+           if(!state.modal) setModal(true)
+            console.log('ran')
+            }} />
+          </Route>
+       
 </div>
 )
 

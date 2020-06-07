@@ -3,7 +3,9 @@ import { Card, CardHeader, CardMedia,  CardContent,  CardActions, IconButton , T
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import { connect } from "react-redux";
+import {BrowserRouter as Router,
 
+  Link} from 'react-router-dom'
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import AppBar from "@material-ui/core/AppBar";
@@ -95,14 +97,7 @@ function Resturant({ resturant, shoppingCartItems }) {
   }
   
   
-  function cf(id ) {
-  let i=0;
-  for(let f of shoppingCartItems){
-  if(f.id=== id) i++;
-  
-  }
-  return i
-  }
+
   return (
     <div>
       <Card>
@@ -120,13 +115,16 @@ function Resturant({ resturant, shoppingCartItems }) {
            </CardContent>
        
        <CardActions >
+       <Link to={"food/" + resturant.id }>
          <IconButton aria-label="view more"
          onClick={()=> {
            setModal(true)
          }}>
            <Visibility color="primary" />
          </IconButton>
+       </Link>
        </CardActions>
+       
       </Card>
    
 

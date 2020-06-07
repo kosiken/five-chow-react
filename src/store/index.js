@@ -14,7 +14,8 @@ const InitialState = {auth: {
   },
   
   food: {
-    resturants: []
+    resturants: [],
+    foods:[]
 }
 
 };

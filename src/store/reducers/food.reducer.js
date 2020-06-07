@@ -11,17 +11,19 @@ export default (state = initialState, action) => {
 if(state.resturants.length> 0){
 return state
 }
+console.log(action)
     let returnValue = initialState;;
     switch(action.type) {
         case FETCH_RESTURANTS:
     
-            returnValue = {
+            returnValue = {...state,
                 resturants: makeDefaultResturants()
             }
-                console.log(returnValue)
+               
             break;
         case FETCH_FOODS:
-           let foods = state.find(res=> res.id==action.id).foods;
+           let foods = state.find(res=> res.id==action.resturantId).foods;
+           
            returnValue ={...state, foods};
            break;
 

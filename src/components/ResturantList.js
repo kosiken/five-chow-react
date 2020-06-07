@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-
+import {BrowserRouter as Router,Switch,Route
+ } from 'react-router-dom'
 import Grid from "@material-ui/core/Grid";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -8,7 +9,7 @@ import Resturant from "./Resturant";
 import hamburger from "../assets/hamburger.jpg";
 import bread from "../assets/bread.jpg";
 import meat from "../assets/meat.jpg";
-
+import FoodList from './FoodList'
 import Cart from "./Cart";
 import { fetchResturants } from "../store/actions";
 const cards = [
@@ -59,6 +60,8 @@ props.fetchResturants([]);
 
   
   return (
+  <Router>
+   <Switch>
     <div style={{
     width: window.innerWidth>500 ? '85%': '100%',
 margin:'0 auto'}} >
@@ -80,9 +83,12 @@ margin:'0 auto'}} >
           </Grid>
         ))}
       </Grid>
-
-      <Cart />
+<Cart/>
+     
     </div>
+    
+    </Switch>
+    </Router>
   );
 }
 

@@ -130,35 +130,6 @@ function Resturant({ resturant, shoppingCartItems }) {
       </Card>
    
 
-<Dialog fullScreen open={modal} onClose={()=> {
-                setModal(false)
-              }} TransitionComponent={Transition}>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton
-              edge="start"
-              color="inherit"
-              onClick={()=> {
-                setModal(false)
-              }}
-              aria-label="close"
-            >
-              <Close />
-            </IconButton>
-            <Typography variant="h6" className={classes.title}>
-              Foods
-            </Typography>
-           
-          </Toolbar>
-        </AppBar>
-        <List>
-
-          {resturant.foods.map((food, i)=> {
-          return ( <Item key={food.id} food={food} count={cf}/>)
-          })}
-      
-        </List>
-      </Dialog>
 
     </div>
   );

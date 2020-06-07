@@ -2,7 +2,8 @@ import {FETCH_RESTURANTS, FETCH_FOODS} from '../types'
 import { makeDefaultResturants } from "../../constants";
 
 const initialState = {
-    resturants: []
+    resturants: [], lastUpdated:null,
+foods:[]
 }
 
 
@@ -19,6 +20,10 @@ return state
             }
                 console.log(returnValue)
             break;
+        case FETCH_FOODS:
+           let foods = state.find(res=> res.id==action.id).foods;
+           returnValue ={...state, foods};
+           break;
 
         default:
             console.warn("Unknown action " + action.type);

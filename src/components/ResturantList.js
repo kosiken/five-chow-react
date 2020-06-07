@@ -37,17 +37,19 @@ function ResturantList(props) {
   let w = window.innerWidth > 600 ? 4 : window.innerWidth > 400? 6: 12;
 
   //
-props.fetchResturants([]);
-  const classes = useStyles();
-let [resturants]=useState(props.resturants);
-  useEffect(() => {
+  let r = props.resturants
   
-    console.log("resized");
-  });
+  const classes = useStyles();
+let [resturants, setResturantsState]=useState(r);
 
+   useEffect(() => {
+    console.log(resturants,'ll');
+       setResturantsState(props.resturants);
+   }, [props.resturants])
+props.fetchResturants([]);
   let [width, setWidth] = useState(w);
   useEffect(() => {
-  props.fetchResturants([]);
+
     console.log("resized");
   });
   window.addEventListener("resize", function () {
@@ -71,8 +73,9 @@ margin:'0 auto'}} >
         xs={12}
         spacing={3}
       >
-        {props.resturants.map((resturant, i) => (
-          <Grid item xs={width} key={`resturant_${i + 1}`}>
+      
+        {resturants.map((resturant, i) => (
+          <Grid item xs={width} key={`resturant_${resturant.id}`}>
             <Resturant resturant={resturant} />
           </Grid>
         ))}

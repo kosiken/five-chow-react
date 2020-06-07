@@ -13,10 +13,11 @@ return state
     let returnValue = initialState;;
     switch(action.type) {
         case FETCH_RESTURANTS:
-        console.log('here')
+    
             returnValue = {
                 resturants: makeDefaultResturants()
             }
+                console.log(returnValue)
             break;
 
         default:

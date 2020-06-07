@@ -86,8 +86,11 @@ return (
                 setModal(false)
               }} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton
+          
+<Toolbar>
+
+       <Router>
+     <IconButton
               edge="start"
               color="inherit"
               onClick={()=> {
@@ -116,7 +119,7 @@ return (
           </Toolbar>
         </AppBar>
         
-        <Router>
+        
              <Switch>
           <Route exact path="/">
               <CartItems />

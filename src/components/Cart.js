@@ -86,10 +86,13 @@ return (
                 setModal(false)
               }} TransitionComponent={Transition}>
         <AppBar className={classes.appBar}>
+
+
+<Router>
           
 <Toolbar>
 
-       <Router>
+       
      <IconButton
               edge="start"
               color="inherit"

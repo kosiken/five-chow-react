@@ -2,42 +2,55 @@ import React, {useState, useEffect} from 'react'
 
 import {Avatar, ListItem,ListItemAvatar, Divider,ListItemText , ListItemIcon, Badge, IconButton}from "@material-ui/core";
 
-
+import {  addItemToCart, removeItemfromCart} from "../store/actions";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { connect } from "react-redux";
 
 
 
+function Item({food, count,  addItemToCart, removeItemfromCart}) {
 
+let [mcount, setCount] = useState(count(food.id))
 
-function Item({food}) {
-
-    const [count, setFood] = useState(food.count)
-    useEffect(()=> {
-        console.log("incremented")
-    })
     return (
         <div>
                       <ListItem >
         <ListItemAvatar>
-          <Avatar src={food.src} />
+          <Avatar src={food.picture} />
         </ListItemAvatar>
         <ListItemText primary={food.name} secondary={`N${food.price}`} />
+        
+           <ListItemIcon>
+     <IconButton onClick={()=> {
+      
+       
+         removeItemfromCart(food)
+         setCount(count(food.id))
+     }} >
+    
+       <RemoveCircleIcon/>
+      
+       </IconButton>
+       
+     </ListItemIcon>
+        
      <ListItemIcon>
      <IconButton onClick={()=> {
       
        
-        setFood(count+1)
+         addItemToCart(food)
+         setCount(count(food.id))
      }} >
-     <Badge badgeContent={count.toString()} color="secondary">
+    
        <AddCircleIcon/>
-       </Badge>
+    
        </IconButton>
      </ListItemIcon>
-    
+     <Badge badgeContent={mcount.toString()} color="secondary"/>
       </ListItem>
        <Divider />
         </div>
     )
 }
-
-export default Item
+export default connect(()=> {return {}}, { addItemToCart , removeItemfromCart})(Item)

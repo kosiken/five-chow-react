@@ -10,6 +10,9 @@ import {
 Avatar,
   IconButton
 } from "@material-ui/core";
+import { connect } from "react-redux";
+import {getTotal} from '../constants' 
+
 import { makeStyles } from "@material-ui/styles";
 import {grey} from "@material-ui/core/colors/"
 import paystack_logo from "../assets/paystack.svg";
@@ -62,27 +65,15 @@ let defaultProps = { amount: 500 };
 function CheckOut(props = { amount: 500 }) {
 const classes = useStyles();
 
+
 let amount = 500;
  if(props) amount = props.amount;
  else amount  = 500
-  return (
-    <div className={classes.mainDiv}>
-      <Card className={classes.root}>
-        <CardHeader title="Confirm Transaction" />
-
-        <CardContent>
-          <Typography  variant="p" className={classes.checkout}>
-            You are about to confirm transaction of N{amount.toString()}
-          </Typography>
-        </CardContent>
-        <CardActions style={{
-        
-        display:'flex',
-        justifyContent: 'center'
-        }}>
-        
-        <Link to="/"  className={classes.link} >
-          <Button className={classes.btn} variant="contained" color="info" >
+ let total = getTotal(props.shoppingCartItems)
+ function renderButton(tots) {
+if (tots> 0) {
+return (     
+          <Button className={classes.btn} variant="contained" color="info"  >
          
   
             <Avatar src={paystack_logo}  
@@ -90,11 +81,55 @@ let amount = 500;
          
             Pay with Paystack
           </Button>
+         )
+          
+
+}
+return (  <Button className={classes.btn} variant="contained" color="info" disabled >
+         
+  
+            <Avatar src={paystack_logo}  
+             className={classes.small} /> 
+         
+            Pay with Paystack
+          </Button>)
+
+}
+
+  return (
+    <div className={classes.mainDiv}>
+      <Card className={classes.root}>
+        <CardHeader title="Confirm Transaction" />
+
+        <CardContent>
+          <Typography  variant="p" className={classes.checkout}>
+           {total > 0 ? ` You are about to confirm transaction of N${total}`: 'You havent ordered anything yet'} 
+          </Typography>
+        </CardContent>
+        <CardActions style={{
+        
+        display:'flex',
+        justifyContent: 'center'
+        }}>
+     
+  {renderButton(total)}
+   <div>
+          <Link to="/"  className={classes.link} >
+          <Button color="error"  >
+         
+  
+          Back
+          </Button>
           </Link>
+          </div>
         </CardActions>
       </Card>
     </div>
   );
 }
-
-export default CheckOut;
+const mapStatetoProps = (state) => {
+  return {
+    shoppingCartItems: state.cart.shoppingCartItems,
+  };
+};
+export default connect(mapStatetoProps, null )(CheckOut);

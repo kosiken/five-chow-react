@@ -43,11 +43,11 @@ export class Resturant {
     this.name = name;
     this.id = id;
     this.picture = picture;
-    this.foods = [new Food("Hamburger",700,  pics.foods.hamburger, this.id+ 1, this.id),
+    this.foods = [new Food("Hamburger",700,  pics.foods.hamburger, uuid()+ 1, this.id),
 
-    new Food("Bread",300, pics.foods.bread, this.id+ 2, this.id),
+    new Food("Bread",300, pics.foods.bread, uuid()+ 12, this.id),
 
-    new Food("Meat",700, pics.foods.meat, this.id+ 1, this.id)
+    new Food("Meat",700, pics.foods.meat, uuid()+ 14, this.id)
 ]
   }
 
@@ -73,7 +73,7 @@ export class User {
 
   static defaultUser() {
     return new User(
-      name,
+      'John Snow',
       uuid(),
       defaultAvatar,
       "john@snow.com",
@@ -81,6 +81,36 @@ export class User {
     );
   }
 }
+
+
+
+
+export function removeDuplicates(array) {
+if(!array.length) return [];
+
+let newArray  = []
+let isThere = {}
+for (let item of array) {
+if(!isThere[item.id]) {
+isThere[item.id] = true;
+
+newArray.push(item)
+}
+
+}
+return newArray
+}
+
+
+export function getTotal(array){
+return array.reduce((count, value)=> {
+
+return count+ value.price
+}, 0)
+
+}
+
+
 
 export function makeDefaultResturants() {
   const resturants = [

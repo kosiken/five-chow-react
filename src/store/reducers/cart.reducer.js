@@ -5,27 +5,37 @@ let initialState = {
   shoppingCartItems: [],
 };
 
-
+//var array = [2, 5, 9];
+//console.log(array)
+//var index = array.indexOf(5);
+//if (index > -1) {
+//  array.splice(index, 1);
+//}
+// array = [2, 9]
+//console.log(array);
 
 export default (state = initialState, action) => {
+
   let { item } = action;
   if (!item) {
     console.warn("action.item is empty");
-    return;
+    return initialState;
   }
   let mstate = state;
   switch (action.type) {
     case ADD_ITEM_TO_CART:
-      const nFood = new Food(item.name, item.id, item.resturant_id);
+      
 
-      mstate.shoppingCartItems.unshift(nFood);
+      mstate.shoppingCartItems.unshift(item);
       break;
 
     case REMOVE_ITEM_FROM_CART:
-      mstate.shoppingCartItems = mstate.shoppingCartItems.filter(
-        (food) => food.id !== item.id
+      let index = mstate.shoppingCartItems.findIndex(
+        (food) => food.id == item.id
       );
-      console.log("food " + food.toString() + " removed");
+      console.log("food " + item.toString() + " removed");
+      
+      mstate.shoppingCartItems.splice(index, 1)
       break;
     default:
       console.warn("Unknown action " + action.type);

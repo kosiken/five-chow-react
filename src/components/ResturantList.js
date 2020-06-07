@@ -17,6 +17,12 @@ const cards = [
   { title: "Resturant three", src: meat, flex: 6 },
 ];
 const useStyles = makeStyles((theme) => ({
+maindiv:{
+width: window.innerWidth>500 ? '85%': '100%',
+margin:'0 auto'
+
+},
+
   root: {
     flexGrow: 1,
   },
@@ -28,24 +34,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResturantList(props) {
-  let w = window.innerWidth > 500 ? 4 : 6;
+  let w = window.innerWidth > 600 ? 4 : window.innerWidth > 400? 6: 12;
 
-  props.fetchResturants([]);
-
+  //
+props.fetchResturants([]);
   const classes = useStyles();
+let [resturants]=useState(props.resturants);
+  useEffect(() => {
+  
+    console.log("resized");
+  });
 
   let [width, setWidth] = useState(w);
   useEffect(() => {
+  props.fetchResturants([]);
     console.log("resized");
   });
   window.addEventListener("resize", function () {
-    let nw = window.innerWidth > 500 ? 4 : 6;
+    let nw = window.innerWidth > 600 ? 4 : window.innerWidth > 400? 6: 12;
     setWidth(nw);
   });
 
   
   return (
-    <div>
+    <div style={{
+    width: window.innerWidth>500 ? '85%': '100%',
+margin:'0 auto'}} >
       <Grid
         style={{
           margin: "0 auto",

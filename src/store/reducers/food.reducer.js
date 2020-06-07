@@ -7,9 +7,13 @@ const initialState = {
 
 
 export default (state = initialState, action) => {
-    let returnValue;
+if(state.resturants.length> 0){
+return state
+}
+    let returnValue = initialState;;
     switch(action.type) {
         case FETCH_RESTURANTS:
+        console.log('here')
             returnValue = {
                 resturants: makeDefaultResturants()
             }

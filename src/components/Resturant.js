@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Card, CardHeader, CardMedia,  CardContent,  CardActions, IconButton , Typography} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-
+import { connect } from "react-redux";
 
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
@@ -84,7 +84,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 
-function Resturant({ resturant }) {
+function Resturant({ resturant, shoppingCartItems }) {
   const classes = useStyles();
   const [modal, setModal ] = useState(false);
   
@@ -94,15 +94,24 @@ function Resturant({ resturant }) {
     addFood(foods)
   }
   
+  
+  function cf(id ) {
+  let i=0;
+  for(let f of shoppingCartItems){
+  if(f.id=== id) i++;
+  
+  }
+  return i
+  }
   return (
     <div>
       <Card>
        
-        <CardMedia className={classes.media} image={resturant.src} />
+        <CardMedia className={classes.media} image={resturant.picture} />
         
         <CardContent className={classes.content}>
           <Typography gutterBottom variant="h6" component="h6">
-            {resturant.title}
+            {resturant.name}
           </Typography>
           <Divider/>
                 <Typography variant="body2" color="textSecondary" component="p">
@@ -144,8 +153,8 @@ function Resturant({ resturant }) {
         </AppBar>
         <List>
 
-          {foodlists.map((food, i)=> {
-          return ( <Item key={`food_${i+1}`} food={food} />)
+          {resturant.foods.map((food, i)=> {
+          return ( <Item key={food.id} food={food} count={cf}/>)
           })}
       
         </List>
@@ -154,5 +163,10 @@ function Resturant({ resturant }) {
     </div>
   );
 }
+const mapStatetoProps = (state) => {
+  return {
+    shoppingCartItems: state.cart.shoppingCartItems,
+  };
+};
+export default connect(mapStatetoProps, null)(Resturant);
 
-export default Resturant;

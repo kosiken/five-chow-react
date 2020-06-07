@@ -6,16 +6,17 @@ const initialState = {
   isAuthorized: false,
 };
 
-export default (state = initialState, action) => {
+export default function(state = initialState, action) {
   let returnValue;
   let { user } = action;
   if (!user) {
     console.warn("action.user is empty");
-    return;
+    return initialState;
   }
+   let nUser = User.defaultUser();
   switch (action.type) {
     case SIGNUP_USER:
-      let nUser = User.defaultUser();
+     
       nUser.email = user.email;
 
       returnValue = {
@@ -27,7 +28,7 @@ export default (state = initialState, action) => {
       break;
 
     case LOGIN_USER:
-      let nUser = User.defaultUser();
+  
       nUser.email = user.email;
 
       returnValue = {

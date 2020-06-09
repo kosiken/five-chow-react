@@ -18,9 +18,21 @@ import CartItems from './CartItems'
 import Login from './Login';
 import SignUp from './SignUp';
 import CheckOut from './CheckOut';
+import Opener from './Opener';
+import FoodList from './FoodList'
 // CheckOut
 
     const useStyles = makeStyles((theme) => ({
+
+      root:{
+
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        height: '100vh',
+        width: '100vw'
+      },
+
   appBar: {
     position: "relative",
   },
@@ -40,108 +52,56 @@ import CheckOut from './CheckOut';
   }
 }));
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
-function Cart (){
 
-const classes = useStyles();
-  const [state , setState] = useState({
-  modal: false,
-  checked: false,
-  variant: window.innerWidth > 500 ? 'extended':'round'
-  
-  });
-  
-  function setModal(value) {
-  setState({ ...state, modal: value});
-  
-  
-  }
-  
-  
-  const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
-  };
-  
-  window.addEventListener('resize', function() {
-  
-  let v = window.innerWidth > 500 ? 'extended':'round'
+function Cart (props){
 
- setState({ ...state, variant: v});
-}
-  )
+
+  
+  
+
 
 return (
 
 <div>
-     <Fab className={classes.fab} variant={state.variant} color="secondary" onClick={()=> {
-           setModal(true)
-         }} >
-                <ShoppingCart/>
-{state.variant === 'extended' ? 'Shopping Cart': ''}
-            </Fab>
-<Dialog fullScreen open={state.modal} onClose={()=> {
-                setModal(false)
-              }} TransitionComponent={Transition}>
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <IconButton
+
+       
+
+
+
+ <AppBar className={classes.appBar}>
+
+
+          
+<Toolbar>
+
+      <Link to="/" style={{
+      color:'white'}}> 
+     <IconButton
               edge="start"
               color="inherit"
-              onClick={()=> {
-                setModal(false)
-              }}
               aria-label="close"
             >
               <Close />
             </IconButton>
             
-            
+            </Link>
             <Typography variant="h6" className={classes.title}>
               {'500 chow'}
             </Typography>
-              <MSwitch
-        checked={state.checked}
-        onChange={handleChange}
-        name="checked"
-        color="accent"
-        inputProps={{ 'aria-label': 'secondary checkbox' }}
-      />
-      
-        <Typography variant="span" >
-              {'login'}
-            </Typography>
+ 
           </Toolbar>
         </AppBar>
         
-        <Router>
-             <Switch>
-          <Route exact path="/">
+        
+            
+          
               <CartItems />
-              <Link className={classes.link} to={state.checked? 'checkout': 'login'} > <Button onClick={()=> {
+              <Link className={classes.link} to={props.isAuthorized? 'checkout': 'login'} > <Button onClick={()=> {
           setState({...state, checked: true})
         }}>Confirm</Button> </Link>  
-          </Route>
-          <Route path="/checkout">
-            <CheckOut amount={1000} />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          
-            <Route path="/signup">
-            <SignUp />
-          </Route>
-        </Switch>
-        
          
-        </Router>
-     
        
-           
-      </Dialog>
 </div>
 )
 

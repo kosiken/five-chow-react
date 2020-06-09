@@ -1,40 +1,51 @@
 import React from "react";
+ import {connect} from 'react-redux'
 import { makeStyles } from "@material-ui/core/styles";
 // import  from '@material-ui/core/TextField';
 import Divider from "@material-ui/core/Divider";
 import { Button, Typography, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
-
+import {loginUser} from '../store/actions';
 const useStyles = makeStyles((theme) => ({
   div: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height:'100%'
+    height:'100vh',
+    backgroundColor:'white'
   },
+
   root: {
-    display: "block",
+
     width: "80%",
+       display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection:'column',
+    
+    maxWidth: '500px',
+    
+    padding: '2em 10px',
+    
+
   },
   link: {
     display: "block",
     width: "100%",
     textAlign: "center",
-    
- 
     textDecoration:"none"
   },
-
   input: {
     width: "100%",
-    maxWidth: '300px'
-
+    
   },
   inputDiv: {
-    marginBottom: '2em'
-  }
+    marginBottom: "2em",
+     width: "80%",
+
+  },
 }));
-function SignUp() {
+function SignUp(props) {
   const classes = useStyles();
   return (
     <div className={classes.div}>
@@ -86,12 +97,21 @@ function SignUp() {
         </div>
 
       
-        <Link className={classes.link} to="/">
-          <Button variant="raised" color="secondary">SignUp</Button>
+        <Link to="/">  <Button variant="contained" color="primary" onClick={()=> {
+          
+          props.loginUser({email:'lion@e.com'})
+          
+          }}>SignUp</Button>
         </Link>
       </form>
     </div>
   );
 }
 
-export default SignUp;
+const mapStateToProps = function (state) {
+
+return {
+isAuthorized:state.auth.isAuthorized
+}
+}
+export default connect(mapStateToProps, {loginUser})(SignUp)

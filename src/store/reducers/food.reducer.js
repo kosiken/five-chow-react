@@ -1,9 +1,15 @@
 import {FETCH_RESTURANTS, FETCH_FOODS} from '../types'
 import { makeDefaultResturants } from "../../constants";
 
+let r = makeDefaultResturants();
+let f = []
+    		
+r.forEach(i => { f= f.concat(i.foods)})	
+	
+	
 const initialState = {
-    resturants: [], lastUpdated:null,
-foods:[]
+    resturants: r, lastUpdated:null,
+foods:f.slice(12)
 }
 
 
@@ -17,14 +23,9 @@ export default (state = initialState, action) => {
             break;
     		
     		}
-    		let r = makeDefaultResturants()
-    		let f = []
+    	
     		
-    		r.forEach(i => { f= f.concat(i.foods)})
-            returnValue = {...state,
-                resturants: r,
-                foods: f
-            }
+       
                
             break;
         case FETCH_FOODS:

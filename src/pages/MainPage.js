@@ -1,7 +1,6 @@
-import React from "react";
+import React,{useState, useEffect}  from "react";
 import { Provider } from "react-redux";
-import { Link } from "react-router-dom";
-
+import { Link, BrowserRouter as Router,Switch,Route } from 'react-router-dom'
 import store from "../store";
 import { makeStyles } from "@material-ui/core/styles";
 import Fab from "@material-ui/core/Fab";
@@ -13,10 +12,13 @@ import ResturantList from "../components/ResturantList";
 
 import TopBar from "../components/TopBar.js";
 import FoodList from "../components/FoodList";
+
+import Item from "../components/Item";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
-import Cart from "../components/Cart";
-
+import CartItems from "../components/CartItems";
+import CheckOut from "../components/CheckOut";
+import ComboBox from "../components/ComboBox";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -43,28 +45,31 @@ function MainPage() {
 
   return (
     <Provider store={store}>
+       <Router>
       <div className={classes.root}>
         <TopBar />
+        <Link to="/cart">
         <Fab
           className={classes.fab}
           variant={state.variant}
-          color="secondary"
-          onClick={() => {
-            setModal(true);
-          }}
-        >
-          <ShoppingCart />
+          color="primary"
+>
+          <ShoppingCart/>
           {state.variant === "extended" ? "Shopping Cart" : ""}
         </Fab>
+        </Link>
         <div className={classes.root}>
-          <Router>
+       
             <Switch>
               <Route exact path="/">
+               <ComboBox  />
                 <FoodList />
               </Route>
               <Route path="/cart">
-                <Cart />
+                <CartItems />
               </Route>
+              
+          
               <Route path="/resturants">
                 <ResturantList />
               </Route>
@@ -80,9 +85,10 @@ function MainPage() {
                 <SignUp />
               </Route>
             </Switch>
-          </Router>
+         
         </div>
       </div>
+       </Router>
     </Provider>
   );
 }

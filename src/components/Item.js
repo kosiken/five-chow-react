@@ -34,7 +34,7 @@ let [mcount, setCount] = useState(count(food.id))
        </IconButton>
        
      </ListItemIcon>
-        
+         <Badge badgeContent={mcount.toString()} color="secondary"/> 
      <ListItemIcon>
      <IconButton onClick={()=> {
       
@@ -47,7 +47,7 @@ let [mcount, setCount] = useState(count(food.id))
     
        </IconButton>
      </ListItemIcon>
-     <Badge badgeContent={mcount.toString()} color="secondary"/>
+   
       </ListItem>
        <Divider />
         </div>

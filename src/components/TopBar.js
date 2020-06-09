@@ -2,7 +2,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import {AppBar, Toolbar, Avatar, Menu, MenuItem, IconButton , Button , Typography } from "@material-ui/core";
-import {ExitToApp,Favorite, AccountCircle } from "@material-ui/icons"
+import {ExitToApp,Favorite, AccountCircle } from "@material-ui/icons";
+import { Link } from 'react-router-dom'
 // import App from '../App';
 import logo from "../assets/logo.png";
 import { makeStyles } from "@material-ui/core/styles";
@@ -15,8 +16,14 @@ import {  loginUser} from "../store/actions";
 
 
 
-
 const useStyles = makeStyles((theme) => ({
+appbar:{
+backGroundColor:'none !important'
+
+},link: {
+textDecoration:'none'
+
+},
 
   menuButton: {
     marginRight: theme.spacing(2),
@@ -71,9 +78,17 @@ function TopBar({user,loginUser}){
 if(user.username) {
 
 return (
-<Button className={classes.loggedIn}  color="inherit"
-            onClick={handleClick}>
-  <Avatar src={user.avatar} className={classes.avatar} /> <span  >{user.username}</span>
+<div>
+   <IconButton
+            edge="end"
+            aria-label="account of current user"
+            aria-haspopup="true"
+            color="inherit"
+            onClick={handleClick}
+          >
+            <AccountCircle />
+          </IconButton>
+ 
               <Menu
         id="simple-menu"
         anchorEl={anchorEl}
@@ -81,11 +96,11 @@ return (
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={()=> {setAnchorEl(null)}}><Favorite className={classes.menuIcons} /> Profile</MenuItem>
+        <MenuItem onClick={()=> {setAnchorEl(null)}}><Favorite className={classes.menuIcons} /> <Avatar src={user.avatar} className={classes.avatar} /> <span  >{user.username}</span> Profile</MenuItem>
         <MenuItem onClick={()=> {setAnchorEl(null)}} ><ExitToApp className={classes.menuIcons}/> LogOut</MenuItem>
        
       </Menu>
-        </Button>
+        </div>
 )
 }
 
@@ -111,8 +126,8 @@ return (<div>
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}><Favorite className={classes.menuIcons} /> Sign Up</MenuItem>
-        <MenuItem onClick={handleClose}><ExitToApp className={classes.menuIcons}/> Log In</MenuItem>
+        <Link className={classes.link} to="/signup" ><MenuItem onClick={handleClose}><Favorite className={classes.menuIcons} /> Sign Up</MenuItem></Link>
+       <Link className={classes.link} to="/login" > <MenuItem onClick={handleClose}><ExitToApp className={classes.menuIcons}/> Log In</MenuItem></Link>
        
       </Menu>
       
@@ -126,7 +141,7 @@ return (<div>
   const classes = useStyles();
 	
 
-return(   <AppBar color="primary" position="static">
+return(   <AppBar position="static" color="transparent">
         <Toolbar
           style={{
             minHeight: "80px",
@@ -135,10 +150,18 @@ return(   <AppBar color="primary" position="static">
           <div className={classes.title}>
             <Avatar className={classes.large} src={logo}></Avatar>
           </div>
- 
+        <Link to="/resturants">   
+          <Button>
+         
+          Resturants
+         
+          
+          </Button>
+  </Link>
 {renderTopIcon(handleClose)}
 
         </Toolbar>
+               
       </AppBar>
 
 

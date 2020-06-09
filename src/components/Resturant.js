@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { Card, CardHeader, CardMedia,  CardContent,  CardActions, IconButton , Typography} from "@material-ui/core";
+import { Card, CardMedia,  CardContent,  CardActions, IconButton , Typography} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import { connect } from "react-redux";
 import {BrowserRouter as Router,
 
   Link} from 'react-router-dom'
-import List from "@material-ui/core/List";
+
 import Divider from "@material-ui/core/Divider";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+
 
 import {Close, Favorite}from "@material-ui/icons";
 import Slide from "@material-ui/core/Slide";
@@ -24,35 +23,14 @@ import meat from "../assets/meat.jpg"
 import Item from "./Item";
 
 
-let foodlists = [
-
-
-{
-
-name: "hamburger",
-price:100,
-src: hamburger,count: 0
-
-},
-{
-
-  name: "bread",
-  price:100,
-  src: bread,count: 0
-  
-  },
-  {
-
-    name: "meat",
-    price:100,
-    src: meat, count:0
-    
-    }]
-
 
 
 
 const useStyles = makeStyles((theme) => ({
+link: {
+textDecoration:'none'
+
+},
   root: {
     maxWidth: 345,
   },
@@ -60,18 +38,7 @@ const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },  appBar: {
-    position: "relative",
-  },
+
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
@@ -93,6 +60,8 @@ function Resturant({ resturant, shoppingCartItems }) {
 
   return (
     <div>
+    <Link className={classes.link} to="/" >
+    
       <Card>
        
         <CardMedia className={classes.media} image={resturant.picture} />
@@ -109,17 +78,12 @@ function Resturant({ resturant, shoppingCartItems }) {
        
        <CardActions >
       
-         <IconButton aria-label="view more"
-         onClick={()=> {
-          
-         }}>
-           <Visibility color="primary" />
-         </IconButton>
-
+  
        </CardActions>
        
       </Card>
-   
+    </Link>
+    
 
 
     </div>

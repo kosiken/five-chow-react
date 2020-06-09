@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
 
-
+import Food from "./Food"
 import { fetchFoods } from "../store/actions";
 const useStyles = makeStyles((theme) => ({
   maindiv: {
@@ -23,13 +23,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function FoodList(props) {
-  let [foods, setFoods] = useState(props.foods);
-  useEffect(() => {
-    if (mfoods.length == 0) {
-      props.fetchFoods(id);
-    }
-  }, [props.foods]);
+  let [mfoods, setFoods] = useState(props.foods);
 
+ let w = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
   let [width, setWidth] = useState(w);
   useEffect(() => {
     window.addEventListener("resize", function () {
@@ -63,9 +59,9 @@ function FoodList(props) {
         xs={12}
         spacing={3}
       >
-        {foods.map((resturant, i) => (
-          <Grid item xs={width} key={`resturant_${resturant.id}`}>
-            <Resturant resturant={resturant} />
+        {mfoods.map((food, i) => (
+          <Grid item xs={width} key={`food_${food.id}`}>
+            <Food food={food} />
           </Grid>
         ))}
       </Grid>

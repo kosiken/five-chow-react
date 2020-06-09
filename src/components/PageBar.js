@@ -16,12 +16,7 @@ import Switch from "@material-ui/core/Switch";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Close from "@material-ui/icons/Close";
-import PageBarItems from "./PageBarItems";
-import Login from "./Login";
-import SignUp from "./SignUp";
-import CheckOut from "./CheckOut";
-import Opener from "./Opener";
-import FoodList from "./FoodList";
+
 // CheckOut
 
 const useStyles = makeStyles((theme) => ({
@@ -59,14 +54,7 @@ function PageBar(props) {
           <Typography variant="h6" className={classes.title}>
             {"500 chow"}
           </Typography>
-          <Switch
-            checked={state.isAuthorized}
-            onChange={handleChange}
-            name="checked"
-            inputProps={{ "aria-label": "secondary checkbox" }}
-          />
-
-          <Typography variant="span">{"login"}</Typography>
+   
         </Toolbar>
       </AppBar>
    

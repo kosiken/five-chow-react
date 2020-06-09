@@ -8,27 +8,34 @@ foods:[]
 
 
 export default (state = initialState, action) => {
-if(state.resturants.length> 0){
-return state
-}
-console.log(action)
-    let returnValue = initialState;;
+
+    let returnValue;
     switch(action.type) {
         case FETCH_RESTURANTS:
-    
+    		if(state.resturants.length > 0){
+    		returnValue=state
+            break;
+    		
+    		}
+    		let r = makeDefaultResturants()
+    		let f = []
+    		
+    		r.forEach(i => { f= f.concat(i.foods)})
             returnValue = {...state,
-                resturants: makeDefaultResturants()
+                resturants: r,
+                foods: f
             }
                
             break;
         case FETCH_FOODS:
-           let foods = state.find(res=> res.id==action.resturantId).foods;
+        console.log(state.resturants.find(res=> res.id == action.resturantId))
+           let foods = [];
            
            returnValue ={...state, foods};
            break;
 
         default:
-            console.warn("Unknown action " + action.type);
+            returnValue=state
             break;
     }
     return returnValue;

@@ -12,11 +12,8 @@ import meat from "../assets/meat.jpg";
 import FoodList from './FoodList'
 import Cart from "./Cart";
 import { fetchResturants } from "../store/actions";
-const cards = [
-  { title: "Resturant One", src: hamburger, flex: 12 },
-  { title: "Resturant two", src: bread, flex: 6 },
-  { title: "Resturant three", src: meat, flex: 6 },
-];
+
+
 const useStyles = makeStyles((theme) => ({
 maindiv:{
 width: window.innerWidth>500 ? '85%': '100%',
@@ -38,30 +35,35 @@ function ResturantList(props) {
   let w = window.innerWidth > 600 ? 4 : window.innerWidth > 400? 6: 12;
 
   //
-  let r = props.resturants
+  let r = props.resturants;
   
-  const classes = useStyles();
+  
+ 
 let [resturants, setResturantsState]=useState(r);
 
    useEffect(() => {
+  
     console.log(resturants,'ll');
-       setResturantsState(props.resturants);
+       if(resturants.length ==0 ){
+       
+       props.fetchResturants([]);
+       setResturantsState(props.resturants)
+       };
    }, [props.resturants])
-props.fetchResturants([]);
+//s 
   let [width, setWidth] = useState(w);
   useEffect(() => {
 
-    console.log("resized");
-  });
-  window.addEventListener("resize", function () {
+     window.addEventListener("resize", function () {
     let nw = window.innerWidth > 600 ? 4 : window.innerWidth > 400? 6: 12;
-    setWidth(nw);
+   if(width!==nw) setWidth(nw);
   });
+  });
+ 
 
   
   return (
-  <Router>
-   <Switch>
+
     <div style={{
     width: window.innerWidth>500 ? '85%': '100%',
 margin:'0 auto'}} >
@@ -83,12 +85,11 @@ margin:'0 auto'}} >
           </Grid>
         ))}
       </Grid>
-<Cart/>
+
      
     </div>
     
-    </Switch>
-    </Router>
+   
   );
 }
 

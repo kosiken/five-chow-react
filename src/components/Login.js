@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
 }));
-function Login() {
+function Login(props) {
   const classes = useStyles();
   return (
     <div>
@@ -42,7 +42,7 @@ function Login() {
             style={{ width: "100%" }}
             name={"email"}
             variant="outlined"
-            classes={classes.input}
+            className={classes.input}
             inputProps={{
               style: {
                 width: "100%",
@@ -57,7 +57,7 @@ function Login() {
             style={{ width: "100%" }}
             variant="outlined"
             type="password"
-            classes={classes.input}
+            className={classes.input}
             inputProps={{
               style: {
                 width: "100%",
@@ -68,7 +68,11 @@ function Login() {
         </div>
 
         <div>
-          <Button>Login</Button>
+          <Button onClick={()=> {
+          
+          props.login({email:'lion@e.com'})
+          
+          }}>Login</Button>
         </div>
         <Link className={classes.link} to="/">
           <Button>Login</Button>

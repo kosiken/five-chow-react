@@ -12,14 +12,11 @@ import { removeItemfromCart} from "../store/actions";
 import {getTotal, removeDuplicates} from '../constants' 
 
 
-function CartItems({shoppingCartItems, removeItemfromCart}) {
-
+function CartItems(props) {
+let {shoppingCartItems, removeItemfromCart} = props
 let hasrendered={}
-let [count,setCount] = useState(0)
-useEffect(()=>{
+let [mitems,setItems] = useState(props.shoppingCartItems.length)
 
-console.log(`clicked ${count}`)
-})
   function cf(id ) {
   let i=0;
   for(let f of shoppingCartItems){
@@ -34,7 +31,7 @@ return (
 
  <List>
 
-          {removeDuplicates(shoppingCartItems).map((food, i)=> {
+          {removeDuplicates(props.shoppingCartItems).map((food, i)=> {
           return ( <div key={food.id+i} > 
           
           
@@ -48,7 +45,8 @@ return (
      <IconButton onClick={()=> {
       
         removeItemfromCart(food)
-        setCount(count+1)
+     setItems(props.shoppingCartItems.length);
+        
        
      }} >
       

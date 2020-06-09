@@ -81,21 +81,14 @@ content: {
 padding:'12px 15px'
 }
 }));
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+
 
 
 function Resturant({ resturant, shoppingCartItems }) {
   const classes = useStyles();
-  const [modal, setModal ] = useState(false);
+
   
-  let [foods, addFood] = useState(foodlists)
-  const addAfood = function(name) {
-    foods.find(food => food.name == name).count++;
-    addFood(foods)
-  }
-  
+
   
 
   return (
@@ -115,14 +108,14 @@ function Resturant({ resturant, shoppingCartItems }) {
            </CardContent>
        
        <CardActions >
-       <Link to={"food/" + resturant.id }>
+      
          <IconButton aria-label="view more"
          onClick={()=> {
-           setModal(true)
+          
          }}>
            <Visibility color="primary" />
          </IconButton>
-       </Link>
+
        </CardActions>
        
       </Card>

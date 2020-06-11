@@ -1,7 +1,14 @@
 
 import React from "react";
 import { connect } from "react-redux";
-import {AppBar, Toolbar, Avatar, Menu, MenuItem, IconButton , Button , Typography } from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import  Toolbar from "@material-ui/core/Toolbar";
+import  Avatar from "@material-ui/core/Avatar";
+import  Menu from "@material-ui/core/Menu";
+import  MenuItem from "@material-ui/core/MenuItem";
+import  Button from "@material-ui/core/Button";
+import  Typography  from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
 import {ExitToApp,Favorite, AccountCircle } from "@material-ui/icons";
 import { Link } from 'react-router-dom'
 // import App from '../App';
@@ -79,6 +86,7 @@ if(user.username) {
 
 return (
 <div>
+
    <IconButton
             edge="end"
             aria-label="account of current user"
@@ -148,16 +156,11 @@ return(   <AppBar position="static" color="transparent">
           }}
         >
           <div className={classes.title}>
+          <Link to="/">
             <Avatar className={classes.large} src={logo}></Avatar>
+            </Link>
           </div>
-        <Link to="/resturants">   
-          <Button>
-         
-          Resturants
-         
-          
-          </Button>
-  </Link>
+
 {renderTopIcon(handleClose)}
 
         </Toolbar>

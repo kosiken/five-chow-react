@@ -3,7 +3,7 @@ import ThemeProvider from "@material-ui/styles/ThemeProvider";
 
 import MainPage from "./pages/MainPage";
 import { createMuiTheme } from "@material-ui/core/styles";
-
+import './App.css'
 const theme = createMuiTheme({
   palette: {
     primary:{ main: "#f0324b"},

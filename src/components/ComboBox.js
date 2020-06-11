@@ -10,11 +10,12 @@ export default function ComboBox(props) {
 const [locations, setLocations]= React.useState(['Lekki']);
   return (
     <Autocomplete
+    defaultValue="Lekki"
       id="combo-box-demo"
       options={locations}
       getOptionLabel={(option) => option}
       style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Location" variant="outlined" />}
+      renderInput={(params) => <TextField {...params} label="Location"  variant="outlined" />}
     />
   );
 }

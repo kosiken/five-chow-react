@@ -9,7 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Divider from "@material-ui/core/Divider";
 import {loginUser} from '../store/actions';
 
-
+import logo from '../assets/logo-meduim.png'
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -17,7 +17,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     height:'100vh',
-    backgroundColor:'white'
+     background:'linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)',
+        position: 'fixed',
+height: '100vh',width: '100vw',
+top: 0
   },
 
   root: {
@@ -27,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     flexDirection:'column', maxWidth: '500px',
-    
+    backgroundColor:'white',
     padding: '2em 10px',
     
 
@@ -43,10 +46,12 @@ const useStyles = makeStyles((theme) => ({
     
   },
   inputDiv: {
+  dusplay:'block',
     marginBottom: "2em",
      width: "80%",
 
   },
+  btn:{margin:'0 auto',   width: "100%", }
 
 }));
 function Login(props) {
@@ -55,6 +60,14 @@ function Login(props) {
     <div className={classes.div}>
     
       <form className={classes.root} noValidate>
+       <div style={{
+      padding: '1em'}}>
+      	<img src={logo} style={{
+      	height:'80px',
+      	width:'80px'
+      	}} />
+      
+      </div>
         <div className={classes.inputDiv}>
           <TextField
             label="email"
@@ -87,7 +100,7 @@ function Login(props) {
         </div>
 
         <div>
-        <Link to="/">  <Button variant="contained" color="primary" onClick={()=> {
+        <Link className={classes.inputDiv} to="/">  <Button variant="contained" className={classes.btn} color="primary" onClick={()=> {
           
           props.loginUser({email:'lion@e.com'})
           

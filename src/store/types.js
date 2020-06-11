@@ -1,18 +1,23 @@
-export const LOGIN_USER = 'LOGIN_USER';
-export const SIGNUP_USER = 'SIGNUP_USER';
-export const LOGOUT_USER = 'LOGOUT_USER';
+// user
+export const LOGIN_USER = "LOGIN_USER";
+export const SIGNUP_USER = "SIGNUP_USER";
+export const LOGOUT_USER = "LOGOUT_USER";
 
-export const APP_ERROR = 'APP_ERROR';
+export const APP_ERROR = "APP_ERROR";
 
-export const FETCH_RESTURANTS = 'FETCH_RESTURANTS';
+// resturants and food
+export const FETCH_RESTURANTS = "FETCH_RESTURANTS";
 
-export const ADD_ITEM_TO_CART = 'ADD_ITEM_TO_CART';
+export const FETCH_FOODS = "FETCH_FOODS";
 
-export const REMOVE_ITEM_FROM_CART = 'REMOVE_ITEM_FROM_CART';
+export const SELECT_RESTURANT = "SELECT_RESTURANT";
 
-export const CLEAR_CART = "CLEAR_CART"
+// shopping cart
 
-export const FETCH_FOODS = 'FETCH_FOODS';
+export const ADD_ITEM_TO_CART = "ADD_ITEM_TO_CART";
 
-export const CHECKOUT = 'CHECKOUT';
+export const REMOVE_ITEM_FROM_CART = "REMOVE_ITEM_FROM_CART";
 
+export const CLEAR_CART = "CLEAR_CART";
+
+export const CHECKOUT = "CHECKOUT";

@@ -1,80 +1,79 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState } from "react";
 import { connect } from "react-redux";
-import { makeStyles } from '@material-ui/core/styles';
-import {ListItemAvatar,ListItemText , ListItemIcon, List, ListItem, Typography,Badge,
-IconButton,Avatar
-}from '@material-ui/core';
-import hamburger from "../assets/hamburger.jpg"
-import bread from "../assets/bread.jpg"
-import meat from "../assets/meat.jpg"
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-import { removeItemfromCart} from "../store/actions";
-import {getTotal, removeDuplicates} from '../constants' 
 
+// material ui
+// import { makeStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon  from "@material-ui/core/ListItemIcon";
+import ListItem from "@material-ui/core/ListItem";
+import  ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Typography from "@material-ui/core/Typography";
+import Badge from "@material-ui/core/Badge";
+import Avatar from "@material-ui/core/Avatar";
+import  IconButton from "@material-ui/core/IconButton";
+
+// icons
+import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
+
+import { removeItemfromCart } from "../store/actions";
+import { getTotal, removeDuplicates } from "../constants";
 
 function CartItems(props) {
-let {shoppingCartItems, removeItemfromCart} = props
-let hasrendered={}
-let [mitems,setItems] = useState(props.shoppingCartItems.length)
+  let { shoppingCartItems, removeItemfromCart } = props;
+  let hasrendered = {};
+  let [mitems, setItems] = useState(props.shoppingCartItems.length);
 
-  function cf(id ) {
-  let i=0;
-  for(let f of shoppingCartItems){
-  if(f.id=== id) i++;
-  
+  function cf(id) {
+    let i = 0;
+    for (let f of shoppingCartItems) {
+      if (f.id === id) i++;
+    }
+    return i;
   }
-  return i
-  }
-  
-return (
-<div>
 
- <List>
+  return (
+    <div>
+      <List>
+        {removeDuplicates(props.shoppingCartItems).map((food, i) => {
+          return (
+            <div key={food.id + i}>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar src={food.picture} />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={food.name}
+                  secondary={`N${food.price}`}
+                />
 
-          {removeDuplicates(props.shoppingCartItems).map((food, i)=> {
-          return ( <div key={food.id+i} > 
-          
-          
-                            <ListItem >
-        <ListItemAvatar>
-          <Avatar src={food.picture} />
-        </ListItemAvatar>
-        <ListItemText primary={food.name} secondary={`N${food.price}`} />
-  
-   <ListItemIcon>
-     <IconButton onClick={()=> {
-      
-        removeItemfromCart(food)
-     setItems(props.shoppingCartItems.length);
-        
-       
-     }} >
-      
-       <RemoveCircleIcon color="error"/>
-     <Badge badgeContent={cf(food.id).toString()} color="secondary"/>
-       </IconButton>
-       
-     </ListItemIcon>
-     
-      </ListItem>
-          
-          
-          </div>)
-          })}
-      
-        </List>
-        <Typography>Total N{getTotal(shoppingCartItems)}</Typography>
-        
-        </div>
-)
-
-
+                <ListItemIcon>
+                  <IconButton
+                    onClick={() => {
+                      removeItemfromCart(food);
+                      setItems(props.shoppingCartItems.length);
+                    }}
+                  >
+                    <RemoveCircleIcon color="error" />
+                    <Badge
+                      badgeContent={cf(food.id).toString()}
+                      color="secondary"
+                    />
+                  </IconButton>
+                </ListItemIcon>
+              </ListItem>
+            </div>
+          );
+        })}
+      </List>
+      <Typography>Total N{getTotal(shoppingCartItems)}</Typography>
+    </div>
+  );
 }
-
 
 const mapStatetoProps = (state) => {
   return {
     shoppingCartItems: state.cart.shoppingCartItems,
   };
 };
-export default connect(mapStatetoProps, {removeItemfromCart})(CartItems);
+export default connect(mapStatetoProps, { removeItemfromCart })(CartItems);

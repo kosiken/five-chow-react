@@ -4,16 +4,10 @@ import { Route, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Dialog from "@material-ui/core/Dialog";
 
 import IconButton from "@material-ui/core/IconButton";
-import { loginUser } from "../store/actions";
 
-import Switch from "@material-ui/core/Switch";
-
-import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Close from "@material-ui/icons/Close";
 
@@ -28,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
     flex: 1,
   },
   link: {
-   color: 'white', textDecoration:'none'
+    color: "white",
+    textDecoration: "none",
   },
 }));
 
@@ -40,24 +35,18 @@ function PageBar(props) {
   }
 
   return (
-
-      <AppBar className={classes.appBar}>
-        <Toolbar>
-          <Link
-            to="/"
-          className={classes.link}
-          >
-            <IconButton edge="start" color="inherit" aria-label="close">
-              <Close />
-            </IconButton>
-          </Link>
-          <Typography variant="h6" className={classes.title}>
-            {"500 chow"}
-          </Typography>
-   
-        </Toolbar>
-      </AppBar>
-   
+    <AppBar className={classes.appBar}>
+      <Toolbar>
+        <Link to="/" className={classes.link}>
+          <IconButton edge="start" color="inherit" aria-label="close">
+            <Close />
+          </IconButton>
+        </Link>
+        <Typography variant="h6" className={classes.title}>
+          {"500 chow"}
+        </Typography>
+      </Toolbar>
+    </AppBar>
   );
 }
 

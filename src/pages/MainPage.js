@@ -1,8 +1,10 @@
-import React,{useState, useEffect}  from "react";
+import React,{useState}  from "react";
 import { Provider } from "react-redux";
 import { Link, BrowserRouter as Router,Switch,Route } from 'react-router-dom'
 import store from "../store";
 import { makeStyles } from "@material-ui/core/styles";
+
+
 import Fab from "@material-ui/core/Fab";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 
@@ -12,8 +14,8 @@ import ResturantList from "../components/ResturantList";
 
 import TopBar from "../components/TopBar.js";
 import FoodList from "../components/FoodList";
+import  Button from "@material-ui/core/Button";
 
-import Item from "../components/Item";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
 import CartItems from "../components/CartItems";
@@ -28,7 +30,13 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     bottom: theme.spacing(2),
     right: theme.spacing(2),
-  },
+  },  linkdiv: {
+  display: 'flex',
+alignContent: 'space-between',
+justifyContent: 'space-around',
+flexDirection: window.innerWidth > 500 ? 'row': 'column',
+alignItems:'center'
+  }
 }));
 
 function MainPage() {
@@ -48,7 +56,12 @@ function MainPage() {
        <Router>
       <div className={classes.root}>
         <TopBar />
-        <Link to="/cart">
+  
+        <div className={classes.root}>
+       
+            <Switch>
+              <Route exact path="/">
+                    <Link to="/cart">
         <Fab
           className={classes.fab}
           variant={state.variant}
@@ -58,11 +71,21 @@ function MainPage() {
           {state.variant === "extended" ? "Shopping Cart" : ""}
         </Fab>
         </Link>
-        <div className={classes.root}>
-       
-            <Switch>
-              <Route exact path="/">
+              
+              <div className={classes.linkdiv}>  
                <ComboBox  />
+                       <Link to="/resturants">   
+          <Button>
+         
+          Resturants
+         
+          
+          </Button>
+       
+        
+  </Link>
+  </div>
+
                 <FoodList />
               </Route>
               <Route path="/cart">

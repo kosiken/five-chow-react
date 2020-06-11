@@ -6,13 +6,19 @@ import Divider from "@material-ui/core/Divider";
 import { Button, Typography, TextField } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import {loginUser} from '../store/actions';
+
+import logo from '../assets/logo-meduim.png'
 const useStyles = makeStyles((theme) => ({
   div: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     height:'100vh',
-    backgroundColor:'white'
+    background:'linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)',
+        position: 'fixed',
+height: '100vh',width: '100vw',
+top: 0
+
   },
 
   root: {
@@ -22,11 +28,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     flexDirection:'column',
-    
+     backgroundColor:'white',
     maxWidth: '500px',
     
     padding: '2em 10px',
-    
 
   },
   link: {
@@ -40,16 +45,28 @@ const useStyles = makeStyles((theme) => ({
     
   },
   inputDiv: {
+  dusplay:'block',
     marginBottom: "2em",
      width: "80%",
 
   },
+  btn:{margin:'0 auto',   width: "100%", }
 }));
+
+
 function SignUp(props) {
   const classes = useStyles();
   return (
     <div className={classes.div}>
       <form className={classes.root} noValidate>
+      <div style={{
+      padding: '1em'}}>
+      	<img src={logo} style={{
+      	height:'80px',
+      	width:'80px'
+      	}} />
+      
+      </div>
         <div className={classes.inputDiv} >
           <TextField
             label="email"
@@ -77,6 +94,7 @@ function SignUp(props) {
                 width: "100%",
                 backgroundColor: "white",
               },
+              
             }}
           />
         </div>
@@ -97,7 +115,7 @@ function SignUp(props) {
         </div>
 
       
-        <Link to="/">  <Button variant="contained" color="primary" onClick={()=> {
+        <Link className={classes.inputDiv} to="/">  <Button variant="contained" className={classes.btn} color="primary" onClick={()=> {
           
           props.loginUser({email:'lion@e.com'})
           

@@ -1,46 +1,59 @@
 import React, { useState, useEffect } from "react";
 
 import { connect } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
 
 import Grid from "@material-ui/core/Grid";
 
-import Food from "./Food"
+import Food from "./Food";
 import { fetchFoods } from "../store/actions";
-const useStyles = makeStyles((theme) => ({
-  maindiv: {
-    width: window.innerWidth > 500 ? "85%" : "100%",
-    margin: "0 auto",
-  },
+import Loader from './Loader';
 
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
-}));
+
+function tempAsyncFunction(duration, shouldFail = false) {
+  return new Promise((resolve,reject)=> {
+    setTimeout(function(){
+ 
+      if(shouldFail){ reject("There was ab error");}
+      else{ resolve('ok') ;    console.log('here')}
+    },duration)
+  })
+}
 function FoodList(props) {
-  let [mfoods, setFoods] = useState(props.foods);
+  let [state, setState] = useState({
+    mfoods: props.foods,
+    width: window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12,
+    isLoading: props.foods.length === 0
+  });
 
- let w = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
-  let [width, setWidth] = useState(w);
   useEffect(() => {
+ 
+  if(state.mfoods.length == 0){  tempAsyncFunction(3000).then(val=> {
+    console.log('here2')
+      props.fetchFoods()
+    }).catch(console.log)
+    }
     window.addEventListener("resize", function () {
       let nw = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
-      if (width !== nw) setWidth(nw);
+      if (state.width !== nw)
+        setState({
+          ...state,
+          width: nw,
+        });
     });
   });
 
-  function cf(id) {
-    let i = 0;
-    for (let f of props.shoppingCartItems) {
-      if (f.id === id) i++;
+  useEffect(()=> {
+    if(props.foods.length !== state.mfoods.length){
+      setState({
+        ...state, mfoods: props.foods, isLoading: false
+      })
     }
-    return i;
+  }, [props.foods])
+
+  if(state.isLoading) {
+    return <Loader />
   }
+
   return (
     <div
       style={{
@@ -59,8 +72,8 @@ function FoodList(props) {
         xs={12}
         spacing={3}
       >
-        {mfoods.map((food, i) => (
-          <Grid item xs={width} key={`food_${food.id}`}>
+        {state.mfoods.map((food) => (
+          <Grid item xs={state.width} key={`food_${food.id}`}>
             <Food food={food} />
           </Grid>
         ))}
@@ -72,7 +85,7 @@ function FoodList(props) {
 const mapStatetoProps = (state) => {
   return {
     foods: state.food.foods,
-    shoppingCartItems: state.cart.shoppingCartItems,
+
   };
 };
 

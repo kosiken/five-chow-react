@@ -1,4 +1,32 @@
-body {
-  background-color: #1111ff05;
-  font-style: italic;
+.overlay-circle {
+  background-color: brown;
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  opacity: 0.4;
+  transform: scale(1);
+  animation: throb 1s 0s infinite;
+}
+#no2 {
+  animation: throb 2s 2s infinite;
+}
+@-webkit-keyframes throb {
+  from {
+    transform: scale(0.2);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Standard syntax */
+@keyframes throb {
+  from {
+    transform: scale(0.2);
+  }
+  to {
+    transform: scale(1.2);
+  }
 }

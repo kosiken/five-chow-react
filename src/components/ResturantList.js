@@ -6,16 +6,13 @@ import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import Resturant from "./Resturant";
 
-
 import { fetchResturants } from "../store/actions";
 
-
 const useStyles = makeStyles((theme) => ({
-maindiv:{
-width: window.innerWidth>500 ? '85%': '100%',
-margin:'0 auto'
-
-},
+  maindiv: {
+    width: window.innerWidth > 500 ? "85%" : "100%",
+    margin: "0 auto",
+  },
 
   root: {
     flexGrow: 1,
@@ -28,41 +25,36 @@ margin:'0 auto'
 }));
 
 function ResturantList(props) {
-  let w = window.innerWidth > 600 ? 4 : window.innerWidth > 400? 6: 12;
+  let w = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
 
   //
   let r = props.resturants;
-  
-  
- 
-let [resturants, setResturantsState]=useState(r);
 
-   useEffect(() => {
-  
-    console.log(resturants,'ll');
-       if(resturants.length ==0 ){
-       
-       props.fetchResturants([]);
-       setResturantsState(props.resturants)
-       };
-   }, [props.resturants])
-//s 
+  let [resturants, setResturantsState] = useState(r);
+
+  useEffect(() => {
+    console.log(resturants, "ll");
+    if (resturants.length == 0) {
+      props.fetchResturants([]);
+      setResturantsState(props.resturants);
+    }
+  }, [props.resturants]);
+  //s
   let [width, setWidth] = useState(w);
   useEffect(() => {
-
-     window.addEventListener("resize", function () {
-    let nw = window.innerWidth > 600 ? 4 : window.innerWidth > 400? 6: 12;
-   if(width!==nw) setWidth(nw);
+    window.addEventListener("resize", function () {
+      let nw = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
+      if (width !== nw) setWidth(nw);
+    });
   });
-  });
- 
 
-  
   return (
-
-    <div style={{
-    width: window.innerWidth>500 ? '85%': '100%',
-margin:'0 auto'}} >
+    <div
+      style={{
+        width: window.innerWidth > 500 ? "85%" : "100%",
+        margin: "0 auto",
+      }}
+    >
       <Grid
         style={{
           margin: "0 auto",
@@ -74,18 +66,13 @@ margin:'0 auto'}} >
         xs={12}
         spacing={3}
       >
-      
         {resturants.map((resturant, i) => (
           <Grid item xs={width} key={`resturant_${resturant.id}`}>
             <Resturant resturant={resturant} />
           </Grid>
         ))}
       </Grid>
-
-     
     </div>
-    
-   
   );
 }
 

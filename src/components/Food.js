@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Link} from 'react-router-dom'
+
 //import Button from "@material-ui/core/Button";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
@@ -10,7 +10,7 @@ import  Typography from "@material-ui/core/Typography"
 import Backdrop from "@material-ui/core/Backdrop"
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import Close from "@material-ui/icons/Close";
+
 import Item from "./Item";
 import Paper from '@material-ui/core/Paper';
 

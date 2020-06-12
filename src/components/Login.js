@@ -164,9 +164,10 @@ setAuth(true)
   
         <Link className={classes.inputDiv}  to="/forgotpassword">  <Button  className={classes.btn} color="primary">Forgot Password</Button>
           </Link>
+           <div className={classes.inputDiv} >
           <Button variant="contained"  className={classes.btn} color="primary" type="submit">Login</Button>
           
-   
+   </div>
     
    
       </form>

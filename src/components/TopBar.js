@@ -117,7 +117,7 @@ return (
 }
 
 else {
-
+if(window.innerWidth > 500){
 
 return (
 <div>
@@ -132,7 +132,17 @@ return (
        </div>
       
 )
+}
 
+return (
+
+       
+     
+       <Link className={classes.link} to="/signup" > <Button color="primary" variant="contained" onClick={handleClose}>  Sign up
+       </Button></Link>
+    
+      
+)
 }
 
 
@@ -140,7 +150,7 @@ return (
 
   const classes = useStyles();
 	
-if(window.innerWidth > 500){
+
 return(  <AppBar position="static" color="transparent">
       <div className={classes.container}>   <Toolbar
           style={{
@@ -164,7 +174,7 @@ return(  <AppBar position="static" color="transparent">
 )
 
 
-}
+
 
 
 

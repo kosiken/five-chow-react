@@ -21,6 +21,7 @@ import SignUp from "../components/SignUp";
 import CartItems from "../components/CartItems";
 import CheckOut from "../components/CheckOut";
 import ComboBox from "../components/ComboBox";
+import NotFound from "../components/NotFound";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -111,6 +112,8 @@ function MainPage() {
               <Route path="/signup">
                 <SignUp />
               </Route>
+              
+              <Route path='*' exact={true} component={NotFound} />
             </Switch>
          
         </div>

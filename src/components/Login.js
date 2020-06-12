@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
 import Divider from "@material-ui/core/Divider";
 import {loginUser} from '../store/actions';
-
+import msvg from '../assets/undraw_walk_in_the_city_1ma6.svg'
 import logo from '../assets/logo-meduim.png'
 
 const useStyles = makeStyles((theme) => ({
@@ -35,8 +35,16 @@ top: 0
     backgroundColor:'white',
        
     padding: '2em 0',
-    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)'
+    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)',
+    opacity: '0.9',
+    '&:focus': {
+    opacity:'1'
     
+    },
+    '&:focus-within': {
+    opacity:'1'
+    
+    },
 
   },
   link: {
@@ -106,19 +114,26 @@ function Login(props) {
           />
         </div>
 
-        <div>
+  
         <Link className={classes.inputDiv}  to="/forgotpassword">  <Button  className={classes.btn} color="primary">Forgot Password</Button>
           </Link>
-        <Link  to="/">  <Button variant="contained" className={classes.btn} color="primary" onClick={()=> {
+        <Link className={classes.inputDiv}  to="/">  <Button variant="contained" className={classes.btn} color="primary" onClick={()=> {
           
           props.loginUser({email:'lion@e.com'})
           
           }}>Login</Button>
           
           </Link>
-        </div>
+    
    
       </form>
+      
+             	<img src={msvg} style={{
+   position: 'absolute',
+   zIndex: '-1'
+      	
+      	}} />
+  
     </div>
   );
 }

@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import {loginUser} from '../store/actions';
 
 import logo from '../assets/logo-meduim.png'
+import msvg from '../assets/undraw_walk_in_the_city_1ma6.svg'
 const useStyles = makeStyles((theme) => ({
   div: {
     display: "flex",
@@ -34,7 +35,17 @@ top: 0
     maxWidth: '500px',
     
     padding: '2em 0',
-    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)'
+    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)',
+opacity: '0.9',
+    '&:focus': {
+    opacity:'1'
+    
+    },
+    '&:focus-within': {
+    opacity:'1'
+    
+    },
+
 
   },
   link: {
@@ -122,6 +133,9 @@ function SignUp(props) {
           
           
         </div>
+        
+        
+        
 
       
         <Link className={classes.inputDiv} to="/">  <Button variant="contained" className={classes.btn} color="primary" onClick={()=> {
@@ -130,7 +144,14 @@ function SignUp(props) {
           
           }}>SignUp</Button>
         </Link>
+        
+        <Link to="/login" className={classes.inputDiv}> <Button   className={classes.btn}> Already signed up? </Button>       </Link>
       </form>
+       	<img src={msvg} style={{
+   position: 'absolute',
+   zIndex: '-1'
+      	
+      	}} />
     </div>
   );
 }

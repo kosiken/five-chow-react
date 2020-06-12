@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 
 // material ui
-// import { makeStyles } from "@material-ui/core/styles";
+
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon  from "@material-ui/core/ListItemIcon";
@@ -19,10 +19,13 @@ import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import { removeItemfromCart } from "../store/actions";
 import { getTotal, removeDuplicates } from "../constants";
 
+
+// Component holds all the items in the shopping cart
 function CartItems(props) {
   let { shoppingCartItems, removeItemfromCart } = props;
-  let hasrendered = {};
-  let [mitems, setItems] = useState(props.shoppingCartItems.length);
+ 
+  // eslint-disable-next-line no-unused-vars
+  let [_, setItems] = useState(props.shoppingCartItems.length);
 
   function cf(id) {
     let i = 0;

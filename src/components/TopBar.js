@@ -67,11 +67,19 @@ marginRight: '10px'
 }));
 
 
-function TopBar({user,loginUser}){
+function TopBar(props){
 
-
+let{loginUser} = props
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [muser, setUser] = React.useState(props.user)
+    React.useEffect(()=> {
+    
+    if(muser.username !==   props.user.username){
+    setUser(props.user)
+    }
+    
+    }, [props.user])
     const handleClick = (event) => {
         if(!anchorEl)setAnchorEl(event.currentTarget);
       };
@@ -80,13 +88,13 @@ function TopBar({user,loginUser}){
       const handleClose = () => {
     
         setAnchorEl(null);
-        console.log(user)
+        console.log(muser)
       };
 
 
 			function renderTopIcon(handleClosen){
 
-if(user.username) {
+if(muser.username) {
 
 return (
 <div>
@@ -108,7 +116,7 @@ return (
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={()=> {setAnchorEl(null)}}> <Avatar src={user.avatar} className={classes.avatar} /> <span  >{user.username}</span> Profile</MenuItem>
+        <MenuItem onClick={()=> {setAnchorEl(null)}}> <Avatar src={muser.avatar} className={classes.avatar} /> <span  >{muser.username}</span> Profile</MenuItem>
         <MenuItem onClick={()=> {setAnchorEl(null)}} ><ExitToApp className={classes.menuIcons}/> LogOut</MenuItem>
        
       </Menu>

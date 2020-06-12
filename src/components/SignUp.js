@@ -1,12 +1,13 @@
-import React from "react";
- import {connect} from 'react-redux'
+import React, {useState, useEffect} from "react";
+import {connect} from 'react-redux'
+import { Link , useHistory, Redirect} from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-// import  from '@material-ui/core/TextField';
+import { useForm } from "react-hook-form";
 import Divider from "@material-ui/core/Divider";
 import Button  from "@material-ui/core/Button";
 import  Typography from "@material-ui/core/Typography";
 import TextField  from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
+
 import {loginUser} from '../store/actions';
 
 import logo from '../assets/logo-meduim.png'
@@ -70,9 +71,32 @@ opacity: '0.9',
 
 function SignUp(props) {
   const classes = useStyles();
+  const { register, handleSubmit, errors, clearError, getValues } = useForm();
+   let history = useHistory();
+  const [authorized, setAuth] = useState(props.isAuthorized)
+  
+
+
+  
+  const myfunc = (s) => {
+  console.log(history)
+  props.loginUser(s);
+setAuth(true)
+
+}
+
+	if(authorized) {
+		return       <Redirect
+            to={{
+              pathname: "/",
+              state: { from: props.location }
+            }}
+          />
+	}
+
   return (
     <div className={classes.div}>
-      <form className={classes.root} noValidate>
+      <form className={classes.root} onSubmit={handleSubmit(myfunc)}>
       <div style={{
       padding: '1em'}}>
           <Link  to="/">
@@ -89,13 +113,27 @@ function SignUp(props) {
             color="secondary"
             name={"email"}
             variant="outlined"
-            classes={classes.input}
+            className={classes.input}
             inputProps={{
               style: {
                 width: "100%",
                 backgroundColor: "white",
               },
+              ref:register({
+                required:{
+                  value: true,
+                  message: "Email is required"
+                }, 
+                pattern: {
+                  value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
+                  message: "Invalid Email Address"
+                }
+              })
             }}
+
+          
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
         </div>
         <div className={classes.inputDiv} >
@@ -104,15 +142,29 @@ function SignUp(props) {
             style={{ width: "100%" }}
             variant="outlined"
             type="password"
-            classes={classes.input}
+            name="password"
+            className={classes.input}
             color="secondary"
-            inputProps={{
-              style: {
+             inputProps={{
+            style: {
                 width: "100%",
                 backgroundColor: "white",
               },
-              
+              ref:register({
+                required:{
+                  value: true,
+                  message: "Password is required"
+                }, 
+                min: {
+                  value: 8,
+                  message: "Password must be at least 8 characters"
+                }
+              })
             }}
+
+          
+            error={!!errors.password}
+            helperText={errors.password?.message}
           />
         </div>
         <div className={classes.inputDiv} >
@@ -122,28 +174,29 @@ function SignUp(props) {
             variant="outlined"
             color="secondary"
             type="password"
-            classes={classes.input}
+            name="password2"
+            className={classes.input}
             inputProps={{
               style: {
                 width: "100%",
                 backgroundColor: "white",
               },
+              ref:register
             }}
+            
+            
+            error={getValues("password") !==  getValues("password2")  }
+            helperText={(getValues("password") !==  getValues("password2"))? "Passwords don't match": ""}
           />
           
           
         </div>
         
-        
-        
+        <div className={classes.inputDiv} >
 
       
-        <Link className={classes.inputDiv} to="/">  <Button variant="contained" className={classes.btn} color="primary" onClick={()=> {
-          
-          props.loginUser({email:'lion@e.com'})
-          
-          }}>SignUp</Button>
-        </Link>
+         <Button variant="contained" className={classes.btn} color="primary" type="submit">SignUp</Button>
+     </div>
         
         <Link to="/login" className={classes.inputDiv}> <Button   className={classes.btn}> Already signed up? </Button>       </Link>
       </form>

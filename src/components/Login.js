@@ -1,12 +1,14 @@
-import React from "react";
-
+import React , {useState, useEffect} from "react";
+import { Link , useHistory, Redirect} from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
+
 // import  from '@material-ui/core/TextField';
  import {connect} from 'react-redux'
 import Button  from "@material-ui/core/Button";
 import  Typography from "@material-ui/core/Typography";
 import TextField  from "@material-ui/core/TextField";
-import { Link } from "react-router-dom";
+
 import Paper from '@material-ui/core/Paper';
 import Divider from "@material-ui/core/Divider";
 import {loginUser} from '../store/actions';
@@ -67,15 +69,45 @@ top: 0
 
 }));
 function Login(props) {
+
   const classes = useStyles();
+
+  const { register, handleSubmit, errors, clearError } = useForm();
+  
+     let history = useHistory();
+  const [authorized, setAuth] = useState(props.isAuthorized)
+  
+
+
+  
+  const myfunc = (s) => {
+  console.log(history)
+  props.loginUser(s);
+setAuth(true)
+
+}
+
+	if(authorized) {
+		return       <Redirect
+            to={{
+              pathname: "/",
+              state: { from: props.location }
+            }}
+          />
+	}
+
+
+
+
+	
   return (
     <div className={classes.div}>
     
-      <form className={classes.root} noValidate>
+      <form className={classes.root} noValidate onSubmit={handleSubmit(myfunc)}>
        <div style={{
       padding: '1em'}}>
       <Link  to="/">
-      	<img src={logo} style={{
+      	<img alt="logo" src={logo} style={{
    
       	width:'60px'
       	}} />
@@ -94,7 +126,21 @@ function Login(props) {
                 width: "100%",
                 backgroundColor: "white",
               },
+              ref:register({
+                required:{
+                  value: true,
+                  message: "Email is required"
+                }, 
+                pattern: {
+                  value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
+                  message: "Invalid Email Address"
+                }
+              })
             }}
+
+          
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
         </div>
         <div className={classes.inputDiv}>
@@ -111,24 +157,21 @@ function Login(props) {
                 backgroundColor: "white",
               },
             }}
+           
           />
         </div>
 
   
         <Link className={classes.inputDiv}  to="/forgotpassword">  <Button  className={classes.btn} color="primary">Forgot Password</Button>
           </Link>
-        <Link className={classes.inputDiv}  to="/">  <Button variant="contained" className={classes.btn} color="primary" onClick={()=> {
+          <Button variant="contained"  className={classes.btn} color="primary" type="submit">Login</Button>
           
-          props.loginUser({email:'lion@e.com'})
-          
-          }}>Login</Button>
-          
-          </Link>
+   
     
    
       </form>
       
-             	<img src={msvg} style={{
+             	<img alt="mysource" src={msvg} style={{
    position: 'absolute',
    zIndex: '-1'
       	

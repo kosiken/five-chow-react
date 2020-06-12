@@ -35,7 +35,10 @@ const useStyles = makeStyles((theme) => ({
 alignContent: 'space-between',
 justifyContent: 'space-around',
 flexDirection: window.innerWidth > 500 ? 'row': 'column',
-alignItems:'center'
+alignItems:'center',
+backgroundColor: '#ffdc4a',
+padding: '15px',
+marginBottom:'10px'
   }
 }));
 
@@ -75,7 +78,8 @@ function MainPage() {
               <div className={classes.linkdiv}>  
                <ComboBox  />
                        <Link to="/resturants">   
-          <Button>
+          <Button style={{
+          color: '#011627'}}>
          
           Resturants
          

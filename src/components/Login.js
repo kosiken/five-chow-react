@@ -3,7 +3,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // import  from '@material-ui/core/TextField';
  import {connect} from 'react-redux'
-import { Button, Typography, TextField } from "@material-ui/core";
+import Button  from "@material-ui/core/Button";
+import  Typography from "@material-ui/core/Typography";
+import TextField  from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import Paper from '@material-ui/core/Paper';
 import Divider from "@material-ui/core/Divider";
@@ -31,7 +33,9 @@ top: 0
     justifyContent: "center",
     flexDirection:'column', maxWidth: '500px',
     backgroundColor:'white',
-    padding: '2em 10px',
+       
+    padding: '2em 0',
+    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)'
     
 
   },
@@ -62,15 +66,17 @@ function Login(props) {
       <form className={classes.root} noValidate>
        <div style={{
       padding: '1em'}}>
+      <Link  to="/">
       	<img src={logo} style={{
-      	height:'80px',
-      	width:'80px'
+   
+      	width:'60px'
       	}} />
-      
+      </Link>
       </div>
         <div className={classes.inputDiv}>
           <TextField
-            label="email"
+          color="secondary"
+            label="Email"
             style={{ width: "100%" }}
             name={"email"}
             variant="outlined"
@@ -85,6 +91,7 @@ function Login(props) {
         </div>
         <div className={classes.inputDiv}>
           <TextField
+          color="secondary"
             label="Password"
             style={{ width: "100%" }}
             variant="outlined"
@@ -100,7 +107,9 @@ function Login(props) {
         </div>
 
         <div>
-        <Link className={classes.inputDiv} to="/">  <Button variant="contained" className={classes.btn} color="primary" onClick={()=> {
+        <Link className={classes.inputDiv}  to="/forgotpassword">  <Button  className={classes.btn} color="primary">Forgot Password</Button>
+          </Link>
+        <Link  to="/">  <Button variant="contained" className={classes.btn} color="primary" onClick={()=> {
           
           props.loginUser({email:'lion@e.com'})
           

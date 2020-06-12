@@ -1,32 +1,45 @@
 .overlay-circle {
-  background-color: brown;
-  border-radius: 50px;
+  background-color: transparent;
+  border-radius: 50%;
+  border: 5px solid #ffdc4a;
   width: 100px;
   height: 100px;
   position: absolute;
   top: 0;
-  opacity: 0.4;
-  transform: scale(1);
-  animation: throb 1s 0s infinite;
+ left: 0;
+
+  animation: throb 2s cubic-bezier(0, 0.2, 0.8, 1)  infinite;
 }
 #no2 {
-  animation: throb 2s 2s infinite;
+  animation: throb 2s 1s cubic-bezier(0, 0.2, 0.8, 1)  infinite;
 }
 @-webkit-keyframes throb {
   from {
-    transform: scale(0.2);
+       top: 50px;
+    left: 50px;
+    width: 0;
+        height: 0;
   }
   to {
-    transform: scale(1);
+      top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
   }
 }
 
 /* Standard syntax */
 @keyframes throb {
-  from {
-    transform: scale(0.2);
+   from {
+       top: 50px;
+    left: 50px;
+    width: 0;
+        height: 0;
   }
   to {
-    transform: scale(1.2);
+      top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
   }
 }

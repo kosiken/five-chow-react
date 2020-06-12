@@ -3,7 +3,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // import  from '@material-ui/core/TextField';
 import Divider from "@material-ui/core/Divider";
-import { Button, Typography, TextField } from "@material-ui/core";
+import Button  from "@material-ui/core/Button";
+import  Typography from "@material-ui/core/Typography";
+import TextField  from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import {loginUser} from '../store/actions';
 
@@ -31,7 +33,8 @@ top: 0
      backgroundColor:'white',
     maxWidth: '500px',
     
-    padding: '2em 10px',
+    padding: '2em 0',
+    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)'
 
   },
   link: {
@@ -61,16 +64,18 @@ function SignUp(props) {
       <form className={classes.root} noValidate>
       <div style={{
       padding: '1em'}}>
+          <Link  to="/">
       	<img src={logo} style={{
-      	height:'80px',
-      	width:'80px'
+   
+      	width:'60px'
       	}} />
-      
+      </Link>
       </div>
         <div className={classes.inputDiv} >
           <TextField
-            label="email"
+            label="Email"
             style={{ width: "100%" }}
+            color="secondary"
             name={"email"}
             variant="outlined"
             classes={classes.input}
@@ -89,6 +94,7 @@ function SignUp(props) {
             variant="outlined"
             type="password"
             classes={classes.input}
+            color="secondary"
             inputProps={{
               style: {
                 width: "100%",
@@ -103,6 +109,7 @@ function SignUp(props) {
             style={{ width: "100%" }}
             label="Confirm Password"
             variant="outlined"
+            color="secondary"
             type="password"
             classes={classes.input}
             inputProps={{
@@ -112,6 +119,8 @@ function SignUp(props) {
               },
             }}
           />
+          
+          
         </div>
 
       

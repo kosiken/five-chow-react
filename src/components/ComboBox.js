@@ -14,8 +14,9 @@ const [locations, setLocations]= React.useState(['Lekki']);
       id="combo-box-demo"
       options={locations}
       getOptionLabel={(option) => option}
-      style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Location"  variant="outlined" />}
+      style={{ width: 300,
+      color: 'white' }}
+      renderInput={(params) => <TextField {...params} color="secondary" label="Location"  variant="outlined" />}
     />
   );
 }

@@ -4,7 +4,8 @@ import  CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import  CardActions from "@material-ui/core/CardActions";
 import  Typography from "@material-ui/core/Typography";
-
+import RoomIcon from '@material-ui/icons/Room';
+import { v4 as uuid } from "uuid";
 
 
 
@@ -44,6 +45,31 @@ textDecoration:'none'
 content: {
 
 padding:'12px 15px'
+},
+highlghts: {
+
+color: '#011627',
+margin:'0.5em 0',
+fontWeight: 'bold'
+},
+
+locationList: {
+paddingInlineStart:'1em',
+listStyleType:'none',
+margin:'0',
+
+
+
+},
+location:{
+marginBottom: '5px',
+display: 'flex'
+
+},
+locationSpan: {
+
+marginLeft:'2px'
+
 }
 }));
 
@@ -69,8 +95,15 @@ function Resturant({ resturant, shoppingCartItems }) {
             {resturant.name}
           </Typography>
           <Divider/>
+          <small className={classes.highlights}>Locations</small>
                 <Typography variant="body2" color="textSecondary" component="p">
-           {'Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit officiis maiores necessitatibus obcaecati! Laborum esse !'}
+                <ul className={classes.locationList}>
+           {resturant.location.map(l=> (<li key={uuid()} className={classes.location}>
+           
+         <RoomIcon/> <span  className={classes.locationSpan}> {l.name_of_area + ', ' + l.state}
+           </span>
+           </li>))}
+           </ul>
           </Typography>
            </CardContent>
        

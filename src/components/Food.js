@@ -39,7 +39,18 @@ textDecoration:'none'
   
   width: '100%',
   textAlign: 'center'
-  }
+  },
+
+
+  vendorTitle: {
+  margin: '5px 0 2px 0'
+  },
+  highlghts: {
+
+color: '#011627',
+margin:'0.5em 0',
+fontWeight: 'bold'
+},
 }));
 
 function Food({ food, shoppingCartItems }) {
@@ -70,19 +81,19 @@ function Food({ food, shoppingCartItems }) {
   return (
     <div>
    
-        <Card className={classes.root} onClick={handleToggle}>
+        <Card className={classes.root} onClick={handleToggle} elevation={0} >
           <CardMedia className={classes.media} image={food.picture} />
 
           <CardContent className={classes.content}>
-            <Typography gutterBottom variant="h6" component="h6">
+            <Typography gutterBottom variant="h6" className={classes.foodTitle} component="h6">
               {food.name}
             </Typography>
             <Divider />
-            <Typography variant="body2" color="textSecondary" component="p">
-              {
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit officiis maiores necessitatibus obcaecati! Laborum esse !"
-              }
-            </Typography>
+            
+     <Typography className={classes.vendorTitle}> {food.resturantName} </Typography>
+     <div>
+          <small>{`N${food.price}`} </small>
+       </div>    
           </CardContent>
           
         </Card>

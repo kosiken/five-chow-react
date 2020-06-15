@@ -1,5 +1,17 @@
 import axios, { AxiosInstance } from "axios";
 
+import {Food, Resturant} from '../constants'
+
+
+
+function   goodResponse(resp) {
+  
+  let val = resp.status == 200 || resp.status == 201
+  return val
+  }
+
+
+
 class FiveChowError extends Error {
   constructor(resp) {
     super();
@@ -9,7 +21,7 @@ class FiveChowError extends Error {
 }
 
 const Axios = axios.create({
-  baseURL: "https://c19325736df1.ngrok.io/api",
+  baseURL: "http://127.0.0.1:8000/api/",
   headers: { "Content-Type": "application/json" },
 });
 
@@ -28,11 +40,13 @@ class FiveWebApi {
    */
 
   async logIn(user) {
+      console.log(user)
     let { username, password } = user;
     if (username && password) {
-      let resp = await this.api.post("/login", user);
 
-      if (resp.status == 200) {
+      let resp = await this.api.post("/login/", user);
+
+      if (goodResponse(resp)) {
         return resp.data;
       } else {
         throw new FiveChowError(resp);
@@ -43,13 +57,13 @@ class FiveWebApi {
   async signUp(user) {
     let { email, password, phone } = user;
     if (email && password) {
-      let resp = await this.api.post("/register", {
+      let resp = await this.api.post("/register/", {
         email,
-        phone_number: phone,
+        phone_number: '+234'+ phone,
         password,
       });
 
-      if (resp.status == 200) {
+      if (resp.status == 200 || resp.status == 201) {
         return resp.data;
       } else {
         throw new FiveChowError(resp);
@@ -62,7 +76,7 @@ class FiveWebApi {
       throw new Error("Token is required");
     }
     let resp = this.api.post(
-      "/logout",
+      "/logout/",
       { data: "none" },
       {
         headers: {
@@ -71,11 +85,9 @@ class FiveWebApi {
       }
     );
 
-    if (resp.status == 200) {
+
       return resp.data;
-    } else {
-      throw new FiveChowError(resp);
-    }
+  
   }
   async createOrder(
     token,
@@ -102,41 +114,47 @@ class FiveWebApi {
       }
     );
 
-    if (resp.status == 200) {
+    if (goodResponse(resp)) {
       return resp.data;
     } else {
       throw new FiveChowError(resp);
     }
   }
 
-  async foodItemsList(token) {
-    let resp = this.api.get("/fooditems", {
-      headers: {
-        Authorization: token,
-      },
-    });
-    if (resp.status == 200) {
-      return resp.data;
+  async foodItemsList() {
+    let resp = await this.api.get("/fooditems/");
+    if (goodResponse(resp)) {
+      let {data} = resp;
+      
+      data = data.map((f, index)=> {
+      
+      
+      return new Food(f.name,
+      f.unit_price, null, f.id, f.vendor.public_id, index, f.vendor.name)})
+      
+      return data
     } else {
+    console.log( resp, 'here2')
       throw new FiveChowError(resp);
     }
   }
-  async vendorsList(token){
+  async vendorsList( ){
 
 
-    let resp = this.api.get("/vendors", {
-        headers: {
-          Authorization: token,
-        },
-      });
+    let resp =await this.api.get("/vendors/");
 
 
-    if (resp.status == 200) {
-        return resp.data;
+    if (goodResponse(resp)) {
+        let {data} = resp;
+        
+        data = data.map((r, index) => new Resturant(r.name, r.public_id, null, r.location, index))
+        return data;
       } else {
         throw new FiveChowError(resp);
       }
   }
+  
+
 }
 
 export default new FiveWebApi(Axios);

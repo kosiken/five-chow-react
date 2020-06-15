@@ -9,7 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
-
+import api from '../api'
 import { getTotal } from "../constants";
 
 
@@ -21,10 +21,15 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      height: "100%",
+      height: "100vh",
+      width:'100vw',
+	  position:'fixed',
+	  top:'0',
+	  background:'linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)',
+	  left:'0'
     },
     root: {
-      boxShadow: "none",
+  
       border: "none",
       padding: theme.spacing(5),
       textAlign: "center",
@@ -56,20 +61,64 @@ function CheckOut(props = { amount: 500 }) {
 
   let total = getTotal(props.shoppingCartItems);
   function renderButton(tots) {
-    if (tots > 0) {
+    if (props.token) {
       return (
-        <Button className={classes.btn} variant="contained" color="info">
+        <Button onClick={makeOrder} className={classes.btn} variant="contained" color="info" disabled={tots==0}>
           <Avatar src={paystack_logo} className={classes.small} />
           Pay with Paystack
         </Button>
       );
     }
     return (
-      <Button className={classes.btn} variant="contained" color="info" disabled>
-        <Avatar src={paystack_logo} className={classes.small} />
-        Pay with Paystack
+    <Link to="/login?returnTo=checkout">  <Button   variant="contained" color="primary" >
+        
+        Login to order
       </Button>
+      </Link>
     );
+  }
+  
+  function makeOrder(){
+  
+  let cartMap = Object.create(null)
+  for(let item of props.shoppingCartItems){
+  if(!cartMap[item.id]){
+  cartMap[item.id]=item
+  cartMap[item.id].count = 1;
+  
+  }
+  else {
+  cartMap[item.id].count+=1;
+  
+  
+  }
+  
+  }
+  let orders = Object.values(cartMap)
+  let orderObject = {
+  user: props.user.id,
+  delivery_address: {
+  user: props.user.id,
+  address_type: 'HOME',
+  street:'place Street',
+  city:'Enugu',
+    zip_code:'042',
+    number:'8082107825'
+  },
+  delivery_phone_number:'8082107825',
+  payment_method:'card',
+  order_items: orders.map(o => {
+  return {
+  food_id: o.id,
+  quantity: o.count
+  }
+  
+  })
+  
+  }
+  console.log(orderObject )
+  
+  
   }
 
   return (
@@ -92,8 +141,8 @@ function CheckOut(props = { amount: 500 }) {
         >
           {renderButton(total)}
           <div>
-            <Link to="/" className={classes.link}>
-              <Button color="error">Back</Button>
+            <Link to="/cart" className={classes.link}>
+              <Button >Back</Button>
             </Link>
           </div>
         </CardActions>
@@ -103,7 +152,9 @@ function CheckOut(props = { amount: 500 }) {
 }
 const mapStatetoProps = (state) => {
   return {
-    shoppingCartItems: state.cart.shoppingCartItems,
+    shoppingCartItems: state.cart.shoppingCartItems,    token: state.auth.token,debug: state.auth.debug, 
+    location:state.auth.location,
+    user: state.auth.user
   };
 };
 export default connect(mapStatetoProps, null)(CheckOut);

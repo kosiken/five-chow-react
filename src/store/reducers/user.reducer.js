@@ -4,6 +4,9 @@ import { User } from "../../constants";
 const initialState = {
   user: {},
   isAuthorized: false,
+  debug: false,
+  token: null,
+  location:'Place Street'
 };
 
 export default function(state = initialState, action) {
@@ -11,7 +14,7 @@ export default function(state = initialState, action) {
   let { user } = action;
   if (!user) {
     console.warn("action.user is empty");
-    return initialState;
+    return state;
   }
    let nUser = User.defaultUser();
   switch (action.type) {
@@ -28,7 +31,19 @@ export default function(state = initialState, action) {
       break;
 
     case LOGIN_USER:
+  if(!state.debug){
+  console.log(user)
   
+  returnValue = {
+  ...state,
+  user,
+  isAuthorized: true,
+  token: user.token
+  
+  }
+  
+  break;
+  }
       nUser.email = user.email;
 
       returnValue = {
@@ -36,6 +51,8 @@ export default function(state = initialState, action) {
         user: nUser,
         isAuthorized: true,
       };
+      
+     
 
       break;
     case LOGOUT_USER:
@@ -45,5 +62,6 @@ export default function(state = initialState, action) {
       console.warn("Unknown action " + action.type);
       break;
   }
+ 
   return returnValue;
 };

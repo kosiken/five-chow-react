@@ -1,4 +1,4 @@
-import { addItemToCart, removeItemfromCart } from "./cart.action";
+import { addItemToCart, removeItemfromCart , clearCart} from "./cart.action";
 import { fetchResturants, fetchFoods } from "./food.action";
 import { loginUser, logoutUser, signupUser } from "./user.action";
 
@@ -9,5 +9,5 @@ export {
   fetchFoods,
   loginUser,
   logoutUser,
-  signupUser,
+  signupUser,clearCart
 };

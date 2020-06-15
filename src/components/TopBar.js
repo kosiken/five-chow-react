@@ -12,10 +12,11 @@ import IconButton from "@material-ui/core/IconButton";
 import {ExitToApp,Favorite, AccountCircle } from "@material-ui/icons";
 import { Link } from 'react-router-dom'
 // import App from '../App';
+import api from '../api'
 import logo from "../assets/logo-meduim.png";
 import { makeStyles } from "@material-ui/core/styles";
-
-import {  loginUser} from "../store/actions";
+import { deepOrange} from '@material-ui/core/colors';
+import {  loginUser, logoutUser } from "../store/actions";
   
 
 
@@ -60,7 +61,9 @@ textDecoration:'none'
     alignItems: 'center'
 },
 avatar: {
-marginRight: '10px'
+
+ color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500],
 }
   
   
@@ -75,7 +78,7 @@ let{loginUser} = props
     const [muser, setUser] = React.useState(props.user)
     React.useEffect(()=> {
     
-    if(muser.username !==   props.user.username){
+    if(muser.email !==   props.user.email){
     setUser(props.user)
     }
     
@@ -88,13 +91,26 @@ let{loginUser} = props
       const handleClose = () => {
     
         setAnchorEl(null);
-        console.log(muser)
+      
       };
+function logUserOut(){
+ setAnchorEl(null)
+if(!props.debug){
+api.logOut(props.token).then((v) => {
 
+//props.logoutUser()
+
+
+}).catch((e)=>
+{console.log(e)})
+return
+}
+props.logoutUser()
+}
 
 			function renderTopIcon(handleClosen){
 
-if(muser.username) {
+if(muser.email) {
 
 return (
 <div>
@@ -106,7 +122,7 @@ return (
             color="inherit"
             onClick={handleClick}
           >
-            <AccountCircle />
+             <Avatar  className={classes.avatar} > {muser.email.slice(0,2).toUpperCase()} </Avatar> 
           </IconButton>
  
               <Menu
@@ -116,8 +132,9 @@ return (
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={()=> {setAnchorEl(null)}}> <Avatar src={muser.avatar} className={classes.avatar} /> <span  >{muser.username}</span> Profile</MenuItem>
-        <MenuItem onClick={()=> {setAnchorEl(null)}} ><ExitToApp className={classes.menuIcons}/> LogOut</MenuItem>
+       
+        <MenuItem onClick={        
+    logUserOut } ><ExitToApp className={classes.menuIcons}/> LogOut</MenuItem>
        
       </Menu>
         </div>
@@ -192,6 +209,8 @@ return(  <AppBar position="static" color="transparent">
    
 const mapStatetoProps = (state) => {
   return {
-    user: state.auth.user  };
+    user: state.auth.user,
+    token: state.auth.token,
+    debug: state.auth.debug  };
 };
-export default connect(mapStatetoProps, {loginUser})(TopBar)
+export default connect(mapStatetoProps, {loginUser })(TopBar)

@@ -1,13 +1,16 @@
 import React, {useState, useEffect} from "react";
 import {connect} from 'react-redux'
-import { Link , useHistory, Redirect} from "react-router-dom";
+import { Link , useLocation, Redirect} from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import Divider from "@material-ui/core/Divider";
 import Button  from "@material-ui/core/Button";
 import  Typography from "@material-ui/core/Typography";
 import TextField  from "@material-ui/core/TextField";
-
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import api from '../api'
 import {loginUser} from '../store/actions';
 
 import logo from '../assets/logo-meduim.png'
@@ -27,7 +30,7 @@ top: 0
 
   root: {
 
-    width: "80%",
+    width: window.innerWidth > 500?  "80%": "90%",
        display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -65,38 +68,100 @@ opacity: '0.9',
      width: "80%",
 
   },
-  btn:{margin:'0 auto',   width: "100%", }
+  btn:{margin:'0 auto',   width: "100%", },
+  
+  phoneInputDiv: {
+  
+  display: "flex",
+  width: "80%",
+alignItems: "center",
+marginBottom: "2em",
+  },
+  numspan : {
+  
+  marginRight: theme.spacing(2)
+  
+  }
 }));
 
 
 function SignUp(props) {
   const classes = useStyles();
   const { register, handleSubmit, errors, clearError, getValues } = useForm();
-   let history = useHistory();
+
   const [authorized, setAuth] = useState(props.isAuthorized)
-  
+  const [errorMessage, setErrorM] = useState('There was an error')
+let [isLoading, setLoading] = useState(false)
+const location = useLocation().search;
+
+  const [open, setOpen] =useState(false);
+
 
 
   
   const myfunc = (s) => {
-  console.log(history)
+   setLoading(true)
+  if(!props.debug){
+  
+  api.signUp(s).then((d)=> {
+  
+  //setLoading(false)
+  
+  
+  props.loginUser(d);
+ setAuth(true)
+  
+  
+  }).catch((d)=> {
+  
+  console.log(d.response, 'kk')
+ let status = d.status || d.response.status;
+ let data = d.data || d.response.data
+ 
+ if(status == 400) {
+ let er = ""
+ for (let key in data) {
+ er += data[key][0] + ", "
+ }
+ er = er.slice(0, er.length - 2)
+ setErrorM(er)
+ 
+ }
+  setLoading(false)
+  setOpen(true)
+  
+
+  
+  return
+  
+  
+  })
+  return
+  }
   props.loginUser(s);
 setAuth(true)
 
 }
 
+  const handleClose = (event, reason) => {
+
+
+    setOpen(false);
+  };
+
 	if(authorized) {
 		return       <Redirect
             to={{
-              pathname: "/",
+              pathname: location? "/" + location.split('=')[1]: "/",
               state: { from: props.location }
             }}
           />
 	}
 
+
   return (
     <div className={classes.div}>
-      <form className={classes.root} onSubmit={handleSubmit(myfunc)}>
+      <form className={classes.root} onSubmit={handleSubmit(myfunc)} >
       <div style={{
       padding: '1em'}}>
           <Link  to="/">
@@ -112,6 +177,7 @@ setAuth(true)
             style={{ width: "100%" }}
             color="secondary"
             name={"email"}
+            type="email"
             variant="outlined"
             className={classes.input}
             inputProps={{
@@ -135,6 +201,39 @@ setAuth(true)
             error={!!errors.email}
             helperText={errors.email?.message}
           />
+           </div>
+            <div className={classes.phoneInputDiv}>
+            <span className={classes.numspan}> {"+234"} </span>
+                   <TextField
+            label="Phone Number"
+            style={{ width: "100%" }}
+            color="secondary"
+            name={"phone"}
+            variant="outlined"
+           type="tel"
+            inputProps={{
+              style: {
+                width: "100%",
+                backgroundColor: "white",
+              },
+              ref:register({
+             required: {
+                 value: true,
+                  message: "Email Phone Number"
+             },
+             
+                min: {
+                  value: 10,
+                  message: "Invalid Phone Number"
+                }
+              })
+            }}
+
+          
+            error={!!errors.phone}
+            helperText={errors.phone?.message}
+          />
+          
         </div>
         <div className={classes.inputDiv} >
           <TextField
@@ -195,16 +294,38 @@ setAuth(true)
         <div className={classes.inputDiv} >
 
       
-         <Button variant="contained" className={classes.btn} color="primary" type="submit">SignUp</Button>
+         <Button variant="contained" className={classes.btn} color="primary" type="submit" disabled={isLoading} >SignUp</Button>
      </div>
         
-        <Link to="/login" className={classes.inputDiv}> <Button   className={classes.btn}> Already signed up? </Button>       </Link>
+        <Link to="/login" className={classes.inputDiv}> <Button   className={classes.btn}>  Already signed up? </Button>       </Link>
       </form>
        	<img src={msvg} style={{
    position: 'absolute',
    zIndex: '-1'
       	
       	}} />
+      	
+      	
+      	
+      	      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={errorMessage}
+        action={
+    
+            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+      
+        }
+      />
+      
+      
     </div>
   );
 }
@@ -212,7 +333,8 @@ setAuth(true)
 const mapStateToProps = function (state) {
 
 return {
-isAuthorized:state.auth.isAuthorized
+isAuthorized:state.auth.isAuthorized,
+debug: state.auth.debug
 }
 }
 export default connect(mapStateToProps, {loginUser})(SignUp)

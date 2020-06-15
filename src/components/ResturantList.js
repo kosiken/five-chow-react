@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Resturant from "./Resturant";
 
 import { fetchResturants } from "../store/actions";
+import api from '../api'
 
 const useStyles = makeStyles((theme) => ({
   maindiv: {
@@ -31,22 +32,48 @@ function ResturantList(props) {
   let r = props.resturants;
 
   let [resturants, setResturantsState] = useState(r);
-
+  let [width, setWidth] = useState((window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12))
+  let [isLoading, setLoading] = useState(!props.resturants.length)
+    function resizede() {
+      let nw = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
+      if ( width !== nw)
+        setWidth(nw,
+        );
+    }
+ window.addEventListener("resize", resizede);
   useEffect(() => {
     console.log(resturants, "ll");
-    if (resturants.length == 0) {
-      props.fetchResturants([]);
-      setResturantsState(props.resturants);
+    if (props.resturants.length == 0) {
+      api.vendorsList().then((resturants)=> {
+      
+      props.fetchResturants(resturants);
+      
+      
+      }).catch(console.log) ;
+     
     }
-  }, [props.resturants]);
+       if(props.resturants.length !== resturants.length){
+      setResturantsState(
+        props.resturants
+      )
+      
+   setLoading(false)
+    }
+    
+    
+     return ()=> {
+    window.removeEventListener("resize", resizede)
+    
+    }
+    
+    
+    
+    
+  }  ,
+  [props.resturants, resturants.length]);
   //s
-  let [width, setWidth] = useState(w);
-  useEffect(() => {
-    window.addEventListener("resize", function () {
-      let nw = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
-      if (width !== nw) setWidth(nw);
-    });
-  });
+
+
 
   return (
     <div

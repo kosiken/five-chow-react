@@ -1,56 +1,92 @@
-import React, {useState, useEffect} from 'react'
-
-import {Avatar, ListItem,ListItemAvatar, Divider,ListItemText , ListItemIcon, Badge, IconButton}from "@material-ui/core";
-
-import {  addItemToCart, removeItemfromCart} from "../store/actions";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
+import Divider from "@material-ui/core/Divider";
+import Badge from "@material-ui/core/Badge";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from '@material-ui/core/Typography'
 
 
-function Item({food, count,  addItemToCart, removeItemfromCart}) {
+import { makeStyles } from "@material-ui/core/styles";
+import { addItemToCart, removeItemfromCart } from "../store/actions";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 
-let [mcount, setCount] = useState(count(food.id))
-
-    return (
-        <div>
-                      <ListItem >
-        <ListItemAvatar>
-          <Avatar src={food.picture} />
-        </ListItemAvatar>
-        <ListItemText primary={food.name} secondary={`N${food.price}`} />
-        
-           <ListItemIcon>
-     <IconButton onClick={()=> {
-      
-       
-         removeItemfromCart(food)
-         setCount(count(food.id))
-     }} >
+const useStyles = makeStyles({
+  foodInfo: {
+    display: "flex",
+    padding: '8px',
     
-       <RemoveCircleIcon/>
-      
-       </IconButton>
-       
-     </ListItemIcon>
-         <Badge badgeContent={mcount.toString()} color="secondary"/> 
-     <ListItemIcon>
-     <IconButton onClick={()=> {
-      
-       
-         addItemToCart(food)
-         setCount(count(food.id))
-     }} >
     
-       <AddCircleIcon/>
-    
-       </IconButton>
-     </ListItemIcon>
-   
-      </ListItem>
-       <Divider />
-        </div>
-    )
+  },
+  
+  sectionInfo: {
+  
+  padding: '0px 5px'
+  
+  },
+  
+  foodTitle: {
+  fontWeight: 'bold'
+  
+  },
+  foodImg: {
+    width: "100px",
+    minWidth: '80px'
+  },
+  cartActions: {
+    display:'flex',
+    justifyContent: 'center',
+    alignItems:'center'
+  }
+});
+
+function Item({ food, count, addItemToCart, removeItemfromCart }) {
+  const classes = useStyles();
+  let [mcount, setCount] = useState(count(food.id));
+
+  return (
+    <div>
+      <div className={classes.foodInfo}>
+        <img src={food.picture} alt={food.name} className={classes.foodImg} />
+        <section className={classes.sectionInfo}>
+          <Typography className={classes.foodTitle}> {food.name} </Typography>
+          <small>{`N${food.price}`} </small>
+        </section>
+      </div>
+
+      {/* add to cart buttons */}
+      <div className={classes.cartActions}>
+        <section>
+        <IconButton
+          onClick={() => {
+            removeItemfromCart(food);
+            setCount(count(food.id));
+          }}
+        >
+          <RemoveCircleIcon />
+        </IconButton>
+
+        <Badge badgeContent={mcount.toString()} color="secondary" />
+
+        <IconButton
+          onClick={() => {
+            addItemToCart(food);
+            setCount(count(food.id));
+          }}
+        >
+          <AddCircleIcon />
+        </IconButton>
+        </section>
+      </div>
+
+      <Divider />
+    </div>
+  );
 }
-export default connect(()=> {return {}}, { addItemToCart , removeItemfromCart})(Item)
+export default connect(
+  () => {
+    return {};
+  },
+  { addItemToCart, removeItemfromCart }
+)(Item);

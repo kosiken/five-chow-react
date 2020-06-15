@@ -1,7 +1,7 @@
-import React,{useState}  from "react";
-import { Provider } from "react-redux";
+import React,{useState, useEffect}  from "react";
+import { connect } from "react-redux";
 import { Link, BrowserRouter as Router,Switch,Route } from 'react-router-dom'
-import store from "../store";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 
@@ -22,6 +22,7 @@ import CartItems from "../components/CartItems";
 import CheckOut from "../components/CheckOut";
 import ComboBox from "../components/ComboBox";
 import NotFound from "../components/NotFound";
+import { fetchFoods } from "../store/actions";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -43,12 +44,15 @@ marginBottom:'10px'
   }
 }));
 
-function MainPage() {
+
+function MainPage(props) {
   const classes = useStyles();
 
   const [state, setState] = useState({
     variant: window.innerWidth > 500 ? "extended" : "round",
   });
+  
+
   window.addEventListener("resize", function () {
     let v = window.innerWidth > 500 ? "extended" : "round";
 
@@ -56,7 +60,7 @@ function MainPage() {
   });
 
   return (
-    <Provider store={store}>
+
        <Router>
       <div className={classes.root}>
         <TopBar />
@@ -119,7 +123,6 @@ function MainPage() {
         </div>
       </div>
        </Router>
-    </Provider>
   );
 }
 

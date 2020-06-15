@@ -1,6 +1,6 @@
 import React from "react";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
-
+import { Provider } from "react-redux";import store from "./store";
 import MainPage from "./pages/MainPage";
 import { createMuiTheme } from "@material-ui/core/styles";
 import './App.css'
@@ -17,11 +17,14 @@ const theme = createMuiTheme({
   },
 });
 
+  
 function App() {
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
+        <Provider store={store}>
         <MainPage />
+            </Provider>
       </ThemeProvider>
     </div>
   );

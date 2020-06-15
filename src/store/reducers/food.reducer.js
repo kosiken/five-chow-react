@@ -1,16 +1,10 @@
 import { FETCH_RESTURANTS, FETCH_FOODS, SELECT_RESTURANT } from "../types";
-import { makeDefaultResturants } from "../../constants";
 
-let r = makeDefaultResturants();
-let f = [];
-
-r.forEach((i) => {
-  f = f.concat(i.foods);
-});
 
 const initialState = {
   resturants: [],
   lastUpdated: null,
+  lastUpdatedResturants: null,
   foods: [],
   selectedResturant: null,
 };
@@ -19,29 +13,34 @@ export default (state = initialState, action) => {
   let returnValue;
   switch (action.type) {
     case FETCH_RESTURANTS:
-      if (state.resturants.length > 0) {
+      if (!action.resturants) {
         returnValue = state;
         break;
       }
       returnValue = {
-        resturants: r,
-        foods: f.slice(0, 12),
-        lastUpdated: Date.now(),
-        selectedResturant: r[0],
-      };
+      ...state,
+      resturants: action.resturants,
+      lastUpdatedResturants: Date.now()
+      
+      }
       
       
 
       break;
     case FETCH_FOODS:
-  
+  	if(action.foods){
+  	
+  	returnValue = {
+  	...state,
+  	lastUpdated: Date.now(),
+  	foods: action.foods
+  	
+  	}
+  	
+  	break;
+  	}
 
-      returnValue = {
-        resturants: r,
-        foods: f.slice(0, 12),
-        lastUpdated: Date.now(),
-        selectedResturant: r[0],
-      };
+      returnValue = action.payload;
       break;
     case SELECT_RESTURANT:
       returnValue = {

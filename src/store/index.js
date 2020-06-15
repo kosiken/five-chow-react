@@ -20,9 +20,10 @@ const InitialState = {auth: {
 
 };
 const RootReducer = combineReducers({
-    auth: Auth,
+auth: Auth,
     food: Food,
-    cart: ShoppingCart
+    cart: ShoppingCart,
+        
 })
 const createMStore = applyMiddleware(thunk)(
   createStore

@@ -1,16 +1,18 @@
 import React , {useState, useEffect} from "react";
-import { Link , useHistory, Redirect} from "react-router-dom";
+import { Link , useLocation, Redirect} from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
-
+import Snackbar from '@material-ui/core/Snackbar';
 // import  from '@material-ui/core/TextField';
  import {connect} from 'react-redux'
 import Button  from "@material-ui/core/Button";
 import  Typography from "@material-ui/core/Typography";
 import TextField  from "@material-ui/core/TextField";
-
+import api from '../api'
 import Paper from '@material-ui/core/Paper';
 import Divider from "@material-ui/core/Divider";
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import {loginUser} from '../store/actions';
 import msvg from '../assets/undraw_walk_in_the_city_1ma6.svg'
 import logo from '../assets/logo-meduim.png'
@@ -29,7 +31,7 @@ top: 0
 
   root: {
 
-    width: "80%",
+       width: window.innerWidth > 500?  "80%": "90%",
        display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -65,7 +67,14 @@ top: 0
      width: "80%",
 
   },
-  btn:{margin:'0 auto',   width: "100%", }
+  btn:{margin:'0 auto',   width: "100%", },
+  
+  actiondiv:{
+  display: 'flex',
+   width: "80%",
+  justifyContent:'space-around',
+  marginBottom: "2em",
+  }
 
 }));
 function Login(props) {
@@ -74,23 +83,68 @@ function Login(props) {
 
   const { register, handleSubmit, errors, clearError } = useForm();
   
-     let history = useHistory();
+     const location = useLocation().search;
+     
   const [authorized, setAuth] = useState(props.isAuthorized)
-  
+  let [isLoading, setLoading] = useState(false)
+
+const [errorMessage, setErrorM] = useState('There was an error')
+  const [open, setOpen] =useState(false);
 
 
   
   const myfunc = (s) => {
-  console.log(history)
-  props.loginUser(s);
+
+  
+  if(!props.debug){
+  setLoading(true)
+  api.logIn(s).then((d)=> {
+  
+  //setLoading(false)
+  
+  
+  props.loginUser(d);
+ setAuth(true)
+  
+  
+  }).catch((d)=> {
+  
+  console.log(d.response, 'kk')
+ let status = d.status || d.response.status;
+ let data = d.data || d.response.data
+ 
+ if(status == 400) {
+
+ setErrorM("Email or Password incorrect")
+ 
+ }
+  setLoading(false)
+  setOpen(true)
+  
+
+  
+  return
+  
+  
+  
+  })
+  
+  return
+  
+  }
+  props.loginUser({email: s.username});
 setAuth(true)
 
 }
+  const handleClose = (event, reason) => {
 
+
+    setOpen(false);
+  };
 	if(authorized) {
 		return       <Redirect
             to={{
-              pathname: "/",
+              pathname: location? "/" + location.split('=')[1]: "/",
               state: { from: props.location }
             }}
           />
@@ -116,9 +170,9 @@ setAuth(true)
         <div className={classes.inputDiv}>
           <TextField
           color="secondary"
-            label="Email"
+            label="Email or Phone"
             style={{ width: "100%" }}
-            name={"email"}
+            name={"username"}
             variant="outlined"
             className={classes.input}
             inputProps={{
@@ -129,43 +183,52 @@ setAuth(true)
               ref:register({
                 required:{
                   value: true,
-                  message: "Email is required"
-                }, 
-                pattern: {
-                  value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
-                  message: "Invalid Email Address"
+                  message: "You have to enter an email or phone number"
                 }
               })
             }}
 
           
-            error={!!errors.email}
-            helperText={errors.email?.message}
+            error={!!errors.username}
+            helperText={errors.username?.message}
           />
         </div>
         <div className={classes.inputDiv}>
-          <TextField
-          color="secondary"
+         <TextField
             label="Password"
             style={{ width: "100%" }}
             variant="outlined"
             type="password"
+            name="password"
             className={classes.input}
-            inputProps={{
-              style: {
+            color="secondary"
+             inputProps={{
+            style: {
                 width: "100%",
                 backgroundColor: "white",
               },
+              ref:register({
+                required:{
+                  value: true,
+                  message: "Password is required"
+                }
+              })
             }}
-           
+
+          
+            error={!!errors.password}
+            helperText={errors.password?.message}
           />
         </div>
 
-  
-        <Link className={classes.inputDiv}  to="/forgotpassword">  <Button  className={classes.btn} color="primary">Forgot Password</Button>
+  <div className={classes.actiondiv}>
+        <Link  to="/forgotpassword">  <Button  color="primary">Forgot Password</Button>
           </Link>
+           <Link  to={"/signup"+location} >  <Button  c variant="contained"   color="secondary">Sign Up</Button>
+          </Link>
+           </div>
            <div className={classes.inputDiv} >
-          <Button variant="contained"  className={classes.btn} color="primary" type="submit">Login</Button>
+          <Button variant="contained"  className={classes.btn} disabled={isLoading} color="primary" type="submit">Login</Button>
           
    </div>
     
@@ -177,7 +240,23 @@ setAuth(true)
    zIndex: '-1'
       	
       	}} />
-  
+        	      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={errorMessage}
+        action={
+    
+            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+      
+        }
+      />
     </div>
   );
 }
@@ -186,7 +265,8 @@ setAuth(true)
 const mapStateToProps = function (state) {
 
 return {
-isAuthorized:state.auth.isAuthorized
+isAuthorized:state.auth.isAuthorized,
+debug: state.auth.debug
 }
 }
 export default connect(mapStateToProps, {loginUser})(Login)

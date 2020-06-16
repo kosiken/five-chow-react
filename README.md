@@ -2,7 +2,6 @@
 
 ## Todo
 
-- Edit checkout design
 - Integrate with api
 - Documentation
 

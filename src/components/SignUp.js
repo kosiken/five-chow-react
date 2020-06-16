@@ -113,7 +113,7 @@ const location = useLocation().search;
   
   
   }).catch((d)=> {
-  
+  try{
   console.log(d.response, 'kk')
  let status = d.status || d.response.status;
  let data = d.data || d.response.data
@@ -127,6 +127,13 @@ const location = useLocation().search;
  setErrorM(er)
  
  }
+ }
+ catch(err){
+ console.log(d, JSON.stringify(d))
+ setErrorM('There was a cors error')
+ 
+ }
+
   setLoading(false)
   setOpen(true)
   

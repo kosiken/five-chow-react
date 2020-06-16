@@ -2,45 +2,49 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
-
+import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Resturant from "./Resturant";
-
+import Loader from './Loader';
 import { fetchResturants } from "../store/actions";
 import api from '../api'
+import useWidth from '../hooks/useWidth'
 
 const useStyles = makeStyles((theme) => ({
-  maindiv: {
-    width: window.innerWidth > 500 ? "85%" : "100%",
-    margin: "0 auto",
-  },
+errorDiv: {
+display: 'flex',
+flexDirection: 'column',
 
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: "center",
-    color: theme.palette.text.secondary,
-  },
+justifyContent: 'center',
+
+height: '70vh',
+
+padding: '20px'
+} 
+
 }));
 
 function ResturantList(props) {
-  let w = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
-
+ 
   //
   let r = props.resturants;
 
   let [resturants, setResturantsState] = useState(r);
-  let [width, setWidth] = useState((window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12))
+const classes = useStyles();
+
   let [isLoading, setLoading] = useState(!props.resturants.length)
-    function resizede() {
-      let nw = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
-      if ( width !== nw)
-        setWidth(nw,
-        );
-    }
- window.addEventListener("resize", resizede);
+  const [error, setError] = useState(false)
+ const width = useWidth();
+ 
+ const handleError = function (err) {
+	
+	console.log(err.message);
+	
+	setError(true)
+	setLoading(false)
+	}
+	
+	
   useEffect(() => {
     console.log(resturants, "ll");
     if (props.resturants.length == 0) {
@@ -49,7 +53,7 @@ function ResturantList(props) {
       props.fetchResturants(resturants);
       
       
-      }).catch(console.log) ;
+      }).catch(handleError) ;
      
     }
        if(props.resturants.length !== resturants.length){
@@ -61,10 +65,7 @@ function ResturantList(props) {
     }
     
     
-     return ()=> {
-    window.removeEventListener("resize", resizede)
-    
-    }
+  
     
     
     
@@ -73,7 +74,21 @@ function ResturantList(props) {
   [props.resturants, resturants.length]);
   //s
 
-
+	if(error) {
+	return (
+	<div className={classes.errorDiv}> 
+	
+	<Typography color="primary" variant="h3" >
+	There was an error completing this request
+	
+	 </Typography>
+	 	<Typography color="primary"  >
+	 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at http://695135ee6c6f.ngrok.io/api/fooditems/. (Reason: CORS header ‘Access-Control-Allow-Origin’ missing)
+	  </Typography>
+	</div>)}
+  if(isLoading) {
+    return <Loader />
+  }
 
   return (
     <div

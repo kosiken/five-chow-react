@@ -1,13 +1,29 @@
 import React, { useState, useEffect } from "react";
 
 import { connect } from "react-redux";
-
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-
+import Typography from "@material-ui/core/Typography";
 import Food from "./Food";
 import { fetchFoods } from "../store/actions";
 import Loader from './Loader';
 import api from '../api'
+import useWidth from '../hooks/useWidth'
+
+
+const useStyles = makeStyles((theme)=> ({
+errorDiv: {
+display: 'flex',
+flexDirection: 'column',
+
+justifyContent: 'center',
+
+height: '70vh',
+
+padding: '20px'
+} 
+
+}));
 
 function tempAsyncFunction(duration, shouldFail = false) {
   return new Promise((resolve,reject)=> {
@@ -20,17 +36,23 @@ function tempAsyncFunction(duration, shouldFail = false) {
 }
 function FoodList(props) {
   let [mfoods, setFoods] = useState(props.foods);
-  let [width, setWidth] = useState((window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12))
+  
   let [isLoading, setLoading] = useState(!props.foods.length)
-  function resized() {
-      let nw = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
-      if ( width !== nw)
-        setWidth(nw,
-        );
-    }
- window.addEventListener("resize", resized);
+  const [error, setError] = useState(false)
+  const width = useWidth();
+  
+ 
+    
+      const classes = useStyles();
+ 
 
-
+	const handleError = function (err) {
+	
+	console.log(err.message);
+	
+	setError(true)
+	setLoading(false)
+	}
 
   useEffect(()=> {
   
@@ -41,12 +63,13 @@ function FoodList(props) {
    tempAsyncFunction(3000).then(val=> {
     console.log('here2')
       props.fetchFoods()
-    }).catch(console.log)
+    }).catch(handleError)
     }
     
     else {
+    console.log('here2')
       api.foodItemsList().then((s)=> {console.log(s);
-      props.fetchFoods(props.debug, s)}).catch(console.log)
+      props.fetchFoods(props.debug, s)}).catch(handleError)
 
 }
 
@@ -58,12 +81,27 @@ function FoodList(props) {
       
    setLoading(false)
     }
-    return ()=> {
-    window.removeEventListener("resize", resized)
-    
-    }
+   
   }, [props.foods, mfoods.length])
+	
+	if(error) {
+	return (
+	<div className={classes.errorDiv}> 
+	
+	<Typography color="primary" variant="h3" >
+	There was an error completing this request
+	
+	 </Typography>
+	 	<Typography color="primary"  >
+	 Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at http://695135ee6c6f.ngrok.io/api/fooditems/. (Reason: CORS header ‘Access-Control-Allow-Origin’ missing)
+	  </Typography>
+	</div>)
+	
 
+	
+	
+	}
+	
   if(isLoading) {
     return <Loader />
   }

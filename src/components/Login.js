@@ -108,7 +108,7 @@ const [errorMessage, setErrorM] = useState('There was an error')
   
   
   }).catch((d)=> {
-  
+  try{
   console.log(d.response, 'kk')
  let status = d.status || d.response.status;
  let data = d.data || d.response.data
@@ -116,6 +116,12 @@ const [errorMessage, setErrorM] = useState('There was an error')
  if(status == 400) {
 
  setErrorM("Email or Password incorrect")
+ 
+ }
+ }
+ catch(err){
+ console.log(d, JSON.stringify(d))
+ setErrorM('There was a cors error')
  
  }
   setLoading(false)

@@ -1,184 +1,165 @@
-import React, {useState, useEffect} from "react";
-import {connect} from 'react-redux'
-import { Link , useLocation, Redirect} from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { Link, useLocation, Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
 import Divider from "@material-ui/core/Divider";
-import Button  from "@material-ui/core/Button";
-import  Typography from "@material-ui/core/Typography";
-import TextField  from "@material-ui/core/TextField";
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import api from '../api'
-import {loginUser} from '../store/actions';
+import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import api from "../api";
+import { loginUser } from "../store/actions";
 
-import logo from '../assets/logo-meduim.png'
-import msvg from '../assets/undraw_walk_in_the_city_1ma6.svg'
+import logo from "../assets/logo-meduim.png";
+import msvg from "../assets/undraw_walk_in_the_city_1ma6.svg";
 const useStyles = makeStyles((theme) => ({
   div: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    height:'100vh',
-    background:'linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)',
-        position: 'fixed',
-height: '100vh',width: '100vw',
-top: 0
-
+    height: "100vh",
+    background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
+    position: "fixed",
+    height: "100vh",
+    width: "100vw",
+    top: 0,
   },
 
   root: {
-
-    width: window.innerWidth > 500?  "80%": "90%",
-       display: "flex",
+    width: window.innerWidth > 500 ? "80%" : "90%",
+    display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    flexDirection:'column',
-     backgroundColor:'white',
-    maxWidth: '500px',
-    
-    padding: '2em 0',
-    boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)',
-opacity: '0.9',
-    '&:focus': {
-    opacity:'1'
-    
-    },
-    '&:focus-within': {
-    opacity:'1'
-    
-    },
+    flexDirection: "column",
+    backgroundColor: "white",
+    maxWidth: "500px",
 
-
+    padding: "2em 0",
+    boxShadow:
+      "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+    opacity: "0.9",
+    "&:focus": {
+      opacity: "1",
+    },
+    "&:focus-within": {
+      opacity: "1",
+    },
   },
   link: {
     display: "block",
     width: "100%",
     textAlign: "center",
-    textDecoration:"none"
+    textDecoration: "none",
   },
   input: {
     width: "100%",
-    
   },
   inputDiv: {
-  dusplay:'block',
+    dusplay: "block",
     marginBottom: "2em",
-     width: "80%",
-
+    width: "80%",
   },
-  btn:{margin:'0 auto',   width: "100%", },
-  
+  btn: { margin: "0 auto", width: "100%" },
+
   phoneInputDiv: {
-  
-  display: "flex",
-  width: "80%",
-alignItems: "center",
-marginBottom: "2em",
+    display: "flex",
+    width: "80%",
+    alignItems: "center",
+    marginBottom: "2em",
   },
-  numspan : {
-  
-  marginRight: theme.spacing(2)
-  
-  }
+  numspan: {
+    marginRight: theme.spacing(2),
+  },
 }));
-
 
 function SignUp(props) {
   const classes = useStyles();
   const { register, handleSubmit, errors, clearError, getValues } = useForm();
 
-  const [authorized, setAuth] = useState(props.isAuthorized)
-  const [errorMessage, setErrorM] = useState('There was an error')
-let [isLoading, setLoading] = useState(false)
-const location = useLocation().search;
+  const [authorized, setAuth] = useState(props.isAuthorized);
+  const [errorMessage, setErrorM] = useState("There was an error");
+  let [isLoading, setLoading] = useState(false);
+  const location = useLocation().search;
 
-  const [open, setOpen] =useState(false);
+  const [open, setOpen] = useState(false);
 
-
-
-  
   const myfunc = (s) => {
-   setLoading(true)
-  if(!props.debug){
-  
-  api.signUp(s).then((d)=> {
-  
-  //setLoading(false)
-  
-  
-  props.loginUser(d);
- setAuth(true)
-  
-  
-  }).catch((d)=> {
-  try{
-  console.log(d.response, 'kk')
- let status = d.status || d.response.status;
- let data = d.data || d.response.data
- 
- if(status == 400) {
- let er = ""
- for (let key in data) {
- er += data[key][0] + ", "
- }
- er = er.slice(0, er.length - 2)
- setErrorM(er)
- 
- }
- }
- catch(err){
- console.log(d, JSON.stringify(d))
- setErrorM('There was a cors error')
- 
- }
+    setLoading(true);
+    if (!props.debug) {
+      api
+        .signUp(s)
+        .then((d) => {
+          //setLoading(false)
 
-  setLoading(false)
-  setOpen(true)
-  
+          props.loginUser(d);
+          setAuth(true);
+        })
+        .catch((d) => {
+          try {
+            console.log(d.response, "kk");
+            let status = d.status || d.response.status;
+            let data = d.data || d.response.data;
 
-  
-  return
-  
-  
-  })
-  return
-  }
-  props.loginUser(s);
-setAuth(true)
+            if (status == 400) {
+              let er = "";
+              for (let key in data) {
+                er += data[key][0] + ", ";
+              }
+              er = er.slice(0, er.length - 2);
+              setErrorM(er);
+            }
+          } catch (err) {
+            console.log(d, JSON.stringify(d));
+            setErrorM("There was a cors error");
+          }
 
-}
+          setLoading(false);
+          setOpen(true);
+
+          return;
+        });
+      return;
+    }
+    props.loginUser(s);
+    setAuth(true);
+  };
 
   const handleClose = (event, reason) => {
-
-
     setOpen(false);
   };
 
-	if(authorized) {
-		return       <Redirect
-            to={{
-              pathname: location? "/" + location.split('=')[1]: "/",
-              state: { from: props.location }
-            }}
-          />
-	}
-
+  if (authorized) {
+    return (
+      <Redirect
+        to={{
+          pathname: location ? "/" + location.split("=")[1] : "/",
+          state: { from: props.location },
+        }}
+      />
+    );
+  }
 
   return (
     <div className={classes.div}>
-      <form className={classes.root} onSubmit={handleSubmit(myfunc)} >
-      <div style={{
-      padding: '1em'}}>
-          <Link  to="/">
-      	<img src={logo} style={{
-   
-      	width:'60px'
-      	}} />
-      </Link>
-      </div>
-        <div className={classes.inputDiv} >
+      <form className={classes.root} onSubmit={handleSubmit(myfunc)}>
+        <div
+          style={{
+            padding: "1em",
+          }}
+        >
+          <Link to="/">
+            <img
+              src={logo}
+              style={{
+                width: "60px",
+              }}
+            />
+          </Link>
+        </div>
+        <div className={classes.inputDiv}>
           <TextField
             label="Email"
             style={{ width: "100%" }}
@@ -192,57 +173,52 @@ setAuth(true)
                 width: "100%",
                 backgroundColor: "white",
               },
-              ref:register({
-                required:{
+              ref: register({
+                required: {
                   value: true,
-                  message: "Email is required"
-                }, 
+                  message: "Email is required",
+                },
                 pattern: {
                   value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
-                  message: "Invalid Email Address"
-                }
-              })
+                  message: "Invalid Email Address",
+                },
+              }),
             }}
-
-          
             error={!!errors.email}
             helperText={errors.email?.message}
           />
-           </div>
-            <div className={classes.phoneInputDiv}>
-            <span className={classes.numspan}> {"+234"} </span>
-                   <TextField
+        </div>
+        <div className={classes.phoneInputDiv}>
+          <span className={classes.numspan}> {"+234"} </span>
+          <TextField
             label="Phone Number"
             style={{ width: "100%" }}
             color="secondary"
             name={"phone"}
             variant="outlined"
-           type="tel"
+            type="tel"
             inputProps={{
               style: {
                 width: "100%",
                 backgroundColor: "white",
               },
-              ref:register({
-             required: {
-                 value: true,
-                  message: "Email Phone Number"
-             },
-             
+              ref: register({
+                required: {
+                  value: true,
+                  message: "Email Phone Number",
+                },
+
                 min: {
                   value: 10,
-                  message: "Invalid Phone Number"
-                }
-              })
+                  message: "Invalid Phone Number",
+                },
+              }),
             }}
-
-          
             error={!!errors.phone}
             helperText={errors.phone?.message}
           />
-          
         </div>
-        <div className={classes.inputDiv} >
+        <div className={classes.inputDiv}>
           <TextField
             label="Password"
             style={{ width: "100%" }}
@@ -251,29 +227,27 @@ setAuth(true)
             name="password"
             className={classes.input}
             color="secondary"
-             inputProps={{
-            style: {
+            inputProps={{
+              style: {
                 width: "100%",
                 backgroundColor: "white",
               },
-              ref:register({
-                required:{
+              ref: register({
+                required: {
                   value: true,
-                  message: "Password is required"
-                }, 
+                  message: "Password is required",
+                },
                 min: {
                   value: 8,
-                  message: "Password must be at least 8 characters"
-                }
-              })
+                  message: "Password must be at least 8 characters",
+                },
+              }),
             }}
-
-          
             error={!!errors.password}
             helperText={errors.password?.message}
           />
         </div>
-        <div className={classes.inputDiv} >
+        <div className={classes.inputDiv}>
           <TextField
             style={{ width: "100%" }}
             label="Confirm Password"
@@ -287,61 +261,70 @@ setAuth(true)
                 width: "100%",
                 backgroundColor: "white",
               },
-              ref:register
+              ref: register,
             }}
-            
-            
-            error={getValues("password") !==  getValues("password2")  }
-            helperText={(getValues("password") !==  getValues("password2"))? "Passwords don't match": ""}
+            error={getValues("password") !== getValues("password2")}
+            helperText={
+              getValues("password") !== getValues("password2")
+                ? "Passwords don't match"
+                : ""
+            }
           />
-          
-          
         </div>
-        
-        <div className={classes.inputDiv} >
 
-      
-         <Button variant="contained" className={classes.btn} color="primary" type="submit" disabled={isLoading} >SignUp</Button>
-     </div>
-        
-        <Link to="/login" className={classes.inputDiv}> <Button   className={classes.btn}>  Already signed up? </Button>       </Link>
+        <div className={classes.inputDiv}>
+          <Button
+            variant="contained"
+            className={classes.btn}
+            color="primary"
+            type="submit"
+            disabled={isLoading}
+          >
+            SignUp
+          </Button>
+        </div>
+
+        <Link to="/login" className={classes.inputDiv}>
+          {" "}
+          <Button className={classes.btn}> Already signed up? </Button>{" "}
+        </Link>
       </form>
-       	<img src={msvg} style={{
-   position: 'absolute',
-   zIndex: '-1'
-      	
-      	}} />
-      	
-      	
-      	
-      	      <Snackbar
+      <img
+        src={msvg}
+        style={{
+          position: "absolute",
+          zIndex: "-1",
+        }}
+      />
+
+      <Snackbar
         anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
+          vertical: "bottom",
+          horizontal: "left",
         }}
         open={open}
         autoHideDuration={6000}
         onClose={handleClose}
         message={errorMessage}
         action={
-    
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-      
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
         }
       />
-      
-      
     </div>
   );
 }
 
 const mapStateToProps = function (state) {
-
-return {
-isAuthorized:state.auth.isAuthorized,
-debug: state.auth.debug
-}
-}
-export default connect(mapStateToProps, {loginUser})(SignUp)
+  return {
+    isAuthorized: state.auth.isAuthorized,
+    debug: state.auth.debug,
+  };
+};
+export default connect(mapStateToProps, { loginUser })(SignUp);

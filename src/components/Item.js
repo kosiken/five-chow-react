@@ -4,8 +4,7 @@ import { connect } from "react-redux";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from '@material-ui/core/Typography'
-
+import Typography from "@material-ui/core/Typography";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { addItemToCart, removeItemfromCart } from "../store/actions";
@@ -15,30 +14,25 @@ import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 const useStyles = makeStyles({
   foodInfo: {
     display: "flex",
-    padding: '8px',
-    
-    
+    padding: "8px",
   },
-  
+
   sectionInfo: {
-  
-  padding: '0px 5px'
-  
+    padding: "0px 5px",
   },
-  
+
   foodTitle: {
-  fontWeight: 'bold'
-  
+    fontWeight: "bold",
   },
   foodImg: {
     width: "100px",
-    minWidth: '80px'
+    minWidth: "80px",
   },
   cartActions: {
-    display:'flex',
-    justifyContent: 'center',
-    alignItems:'center'
-  }
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 function Item({ food, count, addItemToCart, removeItemfromCart }) {
@@ -58,25 +52,25 @@ function Item({ food, count, addItemToCart, removeItemfromCart }) {
       {/* add to cart buttons */}
       <div className={classes.cartActions}>
         <section>
-        <IconButton
-          onClick={() => {
-            removeItemfromCart(food);
-            setCount(count(food.id));
-          }}
-        >
-          <RemoveCircleIcon />
-        </IconButton>
+          <IconButton
+            onClick={() => {
+              removeItemfromCart(food);
+              setCount(count(food.id));
+            }}
+          >
+            <RemoveCircleIcon />
+          </IconButton>
 
-        <Badge badgeContent={mcount.toString()} color="secondary" />
+          <Badge badgeContent={mcount.toString()} color="secondary" />
 
-        <IconButton
-          onClick={() => {
-            addItemToCart(food);
-            setCount(count(food.id));
-          }}
-        >
-          <AddCircleIcon />
-        </IconButton>
+          <IconButton
+            onClick={() => {
+              addItemToCart(food);
+              setCount(count(food.id));
+            }}
+          >
+            <AddCircleIcon />
+          </IconButton>
         </section>
       </div>
 

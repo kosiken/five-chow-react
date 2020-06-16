@@ -13,16 +13,15 @@ const useStyles = makeStyles({
     width: "100px",
     height: "100px",
     position: "relative",
-  }
+  },
 });
 
 function Loader() {
-    let classes = useStyles()
+  let classes = useStyles();
   return (
     <div>
       <div className={classes.root}>
         <div className={classes.loader}>
-       
           <div className="overlay-circle"></div>
           <div className="overlay-circle" id="no2"></div>
         </div>

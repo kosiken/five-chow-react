@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
@@ -25,21 +26,17 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  * Displays an array of vendors to be selected by a user
- * @param {{
- * resturants: any[],
- * fetchResturants: (newRestuants: any[])=> void}} props 
+ * @component
  */
 function ResturantList(props) {
-
-  const {resturants, fetchResturants}=props
-  
+  const { resturants, fetchResturants } = props;
 
   let [mresturants, setResturantsState] = useState(resturants);
   const classes = useStyles();
 
   let [isLoading, setLoading] = useState(!props.resturants.length);
   const [error, setError] = useState(false);
-  const width = useWidth();
+  const width = useWidth(12, 4);
 
   const handleError = function (err) {
     console.log(err.message);
@@ -112,6 +109,12 @@ function ResturantList(props) {
   );
 }
 
+ResturantList.propTypes = {
+  /**
+   * An array of vendors to display
+   */
+  resturants: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 const mapStatetoProps = (state) => {
   return {
     resturants: state.food.resturants,

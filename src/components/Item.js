@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import Divider from "@material-ui/core/Divider";
@@ -38,10 +39,7 @@ const useStyles = makeStyles({
 /**
  * This is what is displayed in the modal that opens when a user wants to
  * select a food
- * @param {{ food: any,
- *  count: (id: string) => number,
- *  addItemToCart: (item: any)=> void,
- *  removeItemfromCart: (item: any)=> void }} props 
+ * @component
  */
 function Item(props) {
   const { food, count, addItemToCart, removeItemfromCart } = props;
@@ -87,6 +85,30 @@ function Item(props) {
     </div>
   );
 }
+
+Item.propTypes = {
+  /**
+   * Utitlity function that is used to count how many of an item there is
+   * in the shopping cart
+   */
+  count: PropTypes.func.isRequired,
+
+  /**
+   * A food item
+   */
+  food: PropTypes.object.isRequired,
+
+  /**
+   * Action to add an item from the cart
+   */
+  addItemToCart: PropTypes.func.isRequired,
+
+  /**
+   * Action to remove an item from the cart
+   */
+  removeItemfromCart: PropTypes.func.isRequired,
+};
+
 export default connect(
   () => {
     return {};

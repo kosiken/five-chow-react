@@ -1,5 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
+
 import { Link } from "react-router-dom";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -67,10 +69,10 @@ const useStyles = makeStyles((theme) => ({
  * @param {{
  * logoutUser: ()=> (dispatch: any)=> void,
  * user: any,
- * debug: boolean}} props 
+ * debug: boolean}} props
  */
 function TopBar(props) {
-  const {  logoutUser, user } = props;
+  const { logoutUser, user } = props;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [muser, setUser] = React.useState(user);
@@ -92,16 +94,16 @@ function TopBar(props) {
       api
         .logOut(props.token)
         .then((v) => {
-          logoutUser()
+          logoutUser();
         })
         .catch((e) => {
-         logoutUser();
+          logoutUser();
           console.log(e);
         });
       return;
-       logoutUser();
+     
     }
-   
+    logoutUser();
   }
 
   function renderTopIcon(handleClosen) {
@@ -193,6 +195,29 @@ function TopBar(props) {
   );
 }
 
+TopBar.propTypes = {
+  /**
+   * The current user
+   */
+  user: PropTypes.object,
+
+  /**
+   * The api auth token
+   */
+  token: PropTypes.string.isRequired,
+
+  /**
+   * Check to see if we are in production
+   */
+  debug: PropTypes.bool.isRequired,
+
+  /**
+   * Action to log out the current user after a
+   * successful api request
+   */
+  logoutUser: PropTypes.func.isRequired,
+};
+
 const mapStatetoProps = (state) => {
   return {
     user: state.auth.user,
@@ -200,4 +225,4 @@ const mapStatetoProps = (state) => {
     debug: state.auth.debug,
   };
 };
-export default connect(mapStatetoProps, {  logoutUser })(TopBar);
+export default connect(mapStatetoProps, { logoutUser })(TopBar);

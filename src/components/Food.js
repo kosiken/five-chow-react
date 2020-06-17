@@ -1,5 +1,5 @@
 import React from "react";
-
+import PropTypes from 'prop-types'
 //import Button from "@material-ui/core/Button";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 /**
  * Used to display a food item
- *
+ * @component
  */
 function Food({ food, shoppingCartItems }) {
   const classes = useStyles();
@@ -123,5 +123,15 @@ const mapStatetoProps = (state) => {
     shoppingCartItems: state.cart.shoppingCartItems,
   };
 };
+Food.propTypes = {
+   /**
+   * Array of all items in the shopping cart
+   */
+  shoppingCartItems: PropTypes.arrayOf(PropTypes.object).isRequired,
 
+  /**
+   * A food item
+   */
+  food: PropTypes.object.isRequired
+}
 export default connect(mapStatetoProps, null)(Food);

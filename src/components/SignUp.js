@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
+
 import { Link, useLocation, Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
@@ -79,10 +81,7 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  * This component is rendered at the signup page
- * @param {{debug: boolean,
- * isAuthorized: boolean,
- * loginUser: (user: any)=> void
- * }} props
+ * @component
  */
 function SignUp(props) {
   const classes = useStyles();
@@ -336,6 +335,25 @@ function SignUp(props) {
     </div>
   );
 }
+
+SignUp.propTypes = {
+  /**
+   * This value shows whether the user is already logged in, in that case
+   * we need to redirect the user away from this page
+   */
+  isAuthorized: PropTypes.bool.isRequired,
+
+  /**
+   * Check to see if we are in production
+   */
+  debug: PropTypes.bool.isRequired,
+
+  /**
+   * Action to log in the a user after a
+   * successful api request 
+   */
+  loginUser: PropTypes.func.isRequired
+};
 
 const mapStateToProps = function (state) {
   return {

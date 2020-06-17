@@ -5,9 +5,9 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 
 /**
  * This component will be used to interact with the Google places api
- * @param {{locations: Array<string>}} props 
+ * @component
  */
-export default function ComboBox(props) {
+function ComboBox() {
   const [locations, setLocations] = React.useState(["Lekki"]);
   return (
     <Autocomplete
@@ -27,3 +27,5 @@ export default function ComboBox(props) {
     />
   );
 }
+
+export default ComboBox;

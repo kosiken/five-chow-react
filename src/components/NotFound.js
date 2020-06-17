@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  * Component rendered at routes that are not found
+ * @component
  */
 function NotFound() {
   const classes = useStyles();

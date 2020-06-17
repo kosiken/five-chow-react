@@ -20,7 +20,10 @@ const useStyles = makeStyles((theme) => ({
     paddingInlineStart: 0,
   },
 }));
-
+/**
+ * @component
+ * Footer of the app
+ */
 function Footer() {
   const classes = useStyles();
   return (

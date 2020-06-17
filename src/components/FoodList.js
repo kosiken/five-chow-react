@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -37,24 +37,21 @@ function tempAsyncFunction(duration, shouldFail = false) {
 
 /**
  * Displays an array of food items to be selected by a user
- * @param {{
- * foods: any[],
- * debug: boolean,
- * fetchFoods: (isDebug?: boolean, foodlist?: any[])=> function}} props
+ * @component
  */
 function FoodList(props) {
-  const {foods, debug, fetchFoods} = props
+  const { foods, debug, fetchFoods } = props;
   let [mfoods, setFoods] = useState(foods);
 
   let [isLoading, setLoading] = useState(!foods.length);
   const [error, setError] = useState(false);
-  const width = useWidth();
+  const width = useWidth(12, 4);
 
   const classes = useStyles();
 
   /**
    * Utility function to handle HTTP errors
-   * @param {Error} err 
+   * @param {Error} err
    */
   const handleError = function (err) {
     console.log(err.message);
@@ -138,6 +135,23 @@ function FoodList(props) {
     </div>
   );
 }
+
+FoodList.propTypes = {
+  /**
+   * An array of food items
+   */
+  foods: PropTypes.arrayOf(PropTypes.object).isRequired,
+
+  /**
+   * Check to see if we are in production
+   */
+  debug: PropTypes.bool.isRequired,
+
+  /**
+   * Action to get foods from api
+   */
+  fetchFoods: PropTypes.func.isRequired,
+};
 
 const mapStatetoProps = (state) => {
   return {

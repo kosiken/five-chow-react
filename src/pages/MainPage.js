@@ -1,9 +1,8 @@
-import React,{useState, useEffect}  from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Link, BrowserRouter as Router,Switch,Route } from 'react-router-dom'
+import { Link, BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
-
 
 import Fab from "@material-ui/core/Fab";
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
@@ -14,7 +13,7 @@ import ResturantList from "../components/ResturantList";
 
 import TopBar from "../components/TopBar.js";
 import FoodList from "../components/FoodList";
-import  Button from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
@@ -32,18 +31,18 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     bottom: theme.spacing(2),
     right: theme.spacing(2),
-  },  linkdiv: {
-  display: 'flex',
-alignContent: 'space-between',
-justifyContent: 'space-around',
-flexDirection: window.innerWidth > 500 ? 'row': 'column',
-alignItems:'center',
-backgroundColor: '#ffdc4a',
-padding: '15px',
-marginBottom:'10px'
-  }
+  },
+  linkdiv: {
+    display: "flex",
+    alignContent: "space-between",
+    justifyContent: "space-around",
+    flexDirection: window.innerWidth > 500 ? "row" : "column",
+    alignItems: "center",
+    backgroundColor: "#ffdc4a",
+    padding: "15px",
+    marginBottom: "10px",
+  },
 }));
-
 
 function MainPage(props) {
   const classes = useStyles();
@@ -51,7 +50,6 @@ function MainPage(props) {
   const [state, setState] = useState({
     variant: window.innerWidth > 500 ? "extended" : "round",
   });
-  
 
   window.addEventListener("resize", function () {
     let v = window.innerWidth > 500 ? "extended" : "round";
@@ -60,69 +58,63 @@ function MainPage(props) {
   });
 
   return (
-
-       <Router>
+    <Router>
       <div className={classes.root}>
         <TopBar />
-  
+
         <div className={classes.root}>
-       
-            <Switch>
-              <Route exact path="/">
-                    <Link to="/cart">
-        <Fab
-          className={classes.fab}
-          variant={state.variant}
-          color="primary"
->
-          <ShoppingCart/>
-          {state.variant === "extended" ? "Shopping Cart" : ""}
-        </Fab>
-        </Link>
-              
-              <div className={classes.linkdiv}>  
-               <ComboBox  />
-                       <Link to="/resturants">   
-          <Button style={{
-          color: '#011627'}}>
-         
-          Resturants
-         
-          
-          </Button>
-       
-        
-  </Link>
-  </div>
+          <Switch>
+            <Route exact path="/">
+              <Link to="/cart">
+                <Fab
+                  className={classes.fab}
+                  variant={state.variant}
+                  color="primary"
+                >
+                  <ShoppingCart />
+                  {state.variant === "extended" ? "Shopping Cart" : ""}
+                </Fab>
+              </Link>
 
-                <FoodList />
-              </Route>
-              <Route path="/cart">
-                <CartItems />
-              </Route>
-              
-          
-              <Route path="/resturants">
-                <ResturantList />
-              </Route>
-              <Route path="/checkout">
-                <CheckOut amount={1000} />
-              </Route>
+              <div className={classes.linkdiv}>
+                <ComboBox />
+                <Link to="/resturants">
+                  <Button
+                    style={{
+                      color: "#011627",
+                    }}
+                  >
+                    Resturants
+                  </Button>
+                </Link>
+              </div>
 
-              <Route path="/login">
-                <Login />
-              </Route>
+              <FoodList />
+            </Route>
+            <Route path="/cart">
+              <CartItems />
+            </Route>
 
-              <Route path="/signup">
-                <SignUp />
-              </Route>
-              
-              <Route path='*' exact={true} component={NotFound} />
-            </Switch>
-         
+            <Route path="/resturants">
+              <ResturantList />
+            </Route>
+            <Route path="/checkout">
+              <CheckOut amount={1000} />
+            </Route>
+
+            <Route path="/login">
+              <Login />
+            </Route>
+
+            <Route path="/signup">
+              <SignUp />
+            </Route>
+
+            <Route path="*" exact={true} component={NotFound} />
+          </Switch>
         </div>
       </div>
-       </Router>
+    </Router>
   );
 }
 

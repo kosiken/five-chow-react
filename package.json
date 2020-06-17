@@ -45,5 +45,8 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "better-docs": "^2.0.1",
+    "jsdoc": "^3.6.4"
+  }
 }

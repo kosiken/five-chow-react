@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link, useLocation, Redirect } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
     position: "fixed",
-   
+
     width: "100vw",
     top: 0,
   },
@@ -76,10 +77,7 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  * This component is rendered at the login page
- * @param {{debug: boolean,
- * isAuthorized: boolean,
- * loginUser: (user: any)=> void
- * }} props
+ * @component
  */
 function Login(props) {
   const classes = useStyles();
@@ -112,7 +110,7 @@ function Login(props) {
           try {
             console.log(d.response, "kk");
             let status = d.status || d.response.status;
-          // let data = d.data || d.response.data;
+            // let data = d.data || d.response.data;
 
             if (status === 400) {
               setErrorM("Email or Password incorrect");
@@ -272,6 +270,25 @@ function Login(props) {
     </div>
   );
 }
+
+Login.propTypes = {
+  /**
+   * This value shows whether the user is already logged in, in that case
+   * we need to redirect the user away from this page
+   */
+  isAuthorized: PropTypes.bool.isRequired,
+
+  /**
+   * Check to see if we are in production
+   */
+  debug: PropTypes.bool.isRequired,
+
+  /**
+   * Action to log in the a user after a
+   * successful api request 
+   */
+  loginUser: PropTypes.func.isRequired
+};
 
 const mapStateToProps = function (state) {
   return {

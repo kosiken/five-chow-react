@@ -1,7 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
 
+import { connect } from "react-redux";
+// import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/styles";
 
 import Button from "@material-ui/core/Button";
@@ -12,13 +14,11 @@ import CardHeader from "@material-ui/core/CardHeader";
 
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
-import api from "../api";
+// import api from "../api";
 // eslint-disable-next-line no-unused-vars
 import { getTotal, Food, User } from "../constants";
 
 import paystack_logo from "../assets/paystack.svg";
-
-
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -60,22 +60,17 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-
 /**
  * This component is what is displayed at the checkout route
  * it is used to trigger api post requests for orders
- * @param {{shoppingCartItems: Array<Food>,
- * token?: string,
- * debug: boolean,
- * user: User,
- * location: string
- * }} props
-  */
-
+ * @component
+ */
 function CheckOut(props) {
+  
   const classes = useStyles();
 
   let [total] = React.useState(getTotal(props.shoppingCartItems));
+
   function renderButton(tots) {
 
     // we need to check if the user is signed in, if he is then he can make an order
@@ -147,7 +142,7 @@ function CheckOut(props) {
 
         <CardContent>
           <Typography variant="p" className={classes.checkout}>
-            {total  >0
+            {total > 0
               ? ` You are about to confirm transaction of N${total}`
               : "You havent ordered anything yet"}
           </Typography>
@@ -169,6 +164,34 @@ function CheckOut(props) {
     </div>
   );
 }
+
+CheckOut.propTypes = {
+  /**
+   * Array of all items in the shopping cart
+   */
+  shoppingCartItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+
+  /**
+   * The api auth token
+   */
+  token: PropTypes.string.isRequired,
+
+  /**
+   * Check to see if we are in production
+   */
+  debug: PropTypes.bool.isRequired,
+
+  /**
+   * Users current location
+   */
+  location: PropTypes.string,
+
+  /**
+   * The current user
+   */
+  user: PropTypes.object,
+};
+
 const mapStatetoProps = (state) => {
   return {
     shoppingCartItems: state.cart.shoppingCartItems,

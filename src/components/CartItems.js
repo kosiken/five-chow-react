@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Divider from "@material-ui/core/Divider";
@@ -28,10 +29,10 @@ import { getTotal, removeDuplicates } from "../constants";
 import { Food } from "../constants";
 
 /**
+ *
  * This component holds all the items in a users shopping cart
- * @param {{removeItemfromCart: function,
- * shoppingCartItems: Array<Food>
- * }} props
+ * @component
+ *
  */
 function CartItems(props) {
   let { shoppingCartItems, removeItemfromCart } = props;
@@ -161,6 +162,18 @@ function CartItems(props) {
     </div>
   );
 }
+
+CartItems.propTypes = {
+  /**
+   * Action to remove an item from the cart
+   */
+  removeItemfromCart: PropTypes.func.isRequired,
+
+  /**
+   * Array of all items in the shopping cart
+   */
+  shoppingCartItems: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
 
 const mapStatetoProps = (state) => {
   return {

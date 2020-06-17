@@ -1,13 +1,13 @@
 import { useEffect, useState, useCallback } from "react";
 
-const useWidth = () => {
-  let [width, setWidth] = useState(
-    window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12
+const useWidth = (small, large) => {
+  let [widthValue, setWidth] = useState(
+    window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? large : small
   );
   const resized = useCallback(() => {
-    let nw = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? 6 : 12;
-    if (width !== nw) setWidth(nw);
-  },[width]);
+    let newWidthValue = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? large : small;
+    if (widthValue !== newWidthValue ) setWidth(newWidthValue );
+  },[widthValue, large, small]);
  
 
   useEffect(() => {
@@ -16,9 +16,9 @@ const useWidth = () => {
       
       window.removeEventListener("resize", resized);
     };
-  }, [resized, width]);
+  }, []);
 
-  return width;
+  return widthValue;
 };
 
 export default useWidth;

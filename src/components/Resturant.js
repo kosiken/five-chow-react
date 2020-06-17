@@ -1,4 +1,6 @@
-import React  from "react";
+import React from "react";
+import PropTypes from "prop-types";
+
 import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
 
@@ -9,7 +11,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import RoomIcon from "@material-ui/icons/Room";
-
 
 import Divider from "@material-ui/core/Divider";
 
@@ -56,8 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  * Displays a vendor to be selected by a user
- * @param {{
- * resturant: any}} props
+ * @component
  */
 function Resturant(props) {
   const { resturant } = props;
@@ -96,5 +96,12 @@ function Resturant(props) {
     </div>
   );
 }
+
+Resturant.propTypes = {
+  /**
+   * A vendor item
+   */
+  resturant: PropTypes.object.isRequired,
+};
 
 export default Resturant;

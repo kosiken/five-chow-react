@@ -23,11 +23,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Displays an array of vendors to be selected by a user
+ * @param {{
+ * resturants: any[],
+ * fetchResturants: (newRestuants: any[])=> void}} props 
+ */
 function ResturantList(props) {
-  //
-  let r = props.resturants;
 
-  let [resturants, setResturantsState] = useState(r);
+  const {resturants, fetchResturants}=props
+  
+
+  let [mresturants, setResturantsState] = useState(resturants);
   const classes = useStyles();
 
   let [isLoading, setLoading] = useState(!props.resturants.length);
@@ -43,20 +50,20 @@ function ResturantList(props) {
 
   useEffect(() => {
     console.log(resturants, "ll");
-    if (props.resturants.length == 0) {
+    if (resturants.length === 0) {
       api
         .vendorsList()
-        .then((resturants) => {
-          props.fetchResturants(resturants);
+        .then((nresturants) => {
+          fetchResturants(nresturants);
         })
         .catch(handleError);
     }
-    if (props.resturants.length !== resturants.length) {
-      setResturantsState(props.resturants);
+    if (resturants.length !== mresturants.length) {
+      setResturantsState(resturants);
 
       setLoading(false);
     }
-  }, [props.resturants, resturants.length]);
+  }, [resturants, mresturants.length, fetchResturants]);
   //s
 
   if (error) {
@@ -95,7 +102,7 @@ function ResturantList(props) {
         xs={12}
         spacing={3}
       >
-        {resturants.map((resturant, i) => (
+        {mresturants.map((resturant, i) => (
           <Grid item xs={width} key={`resturant_${resturant.id}`}>
             <Resturant resturant={resturant} />
           </Grid>

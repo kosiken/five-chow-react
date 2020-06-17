@@ -10,7 +10,6 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Typography from "@material-ui/core/Typography";
-import Badge from "@material-ui/core/Badge";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Snackbar from "@material-ui/core/Snackbar";
@@ -25,7 +24,15 @@ import { removeItemfromCart, clearCart } from "../store/actions";
 // utils
 import { getTotal, removeDuplicates } from "../constants";
 
-// Component holds all the items in the shopping cart
+// eslint-disable-next-line no-unused-vars
+import { Food } from "../constants";
+
+/**
+ * This component holds all the items in a users shopping cart
+ * @param {{removeItemfromCart: function,
+ * shoppingCartItems: Array<Food>
+ * }} props
+ */
 function CartItems(props) {
   let { shoppingCartItems, removeItemfromCart } = props;
 
@@ -34,6 +41,11 @@ function CartItems(props) {
   const [message, setMessage] = useState("Cart was cleared");
   const [open, setOpen] = useState(false);
 
+  /**
+   * Utitlity function that is used to count how many of an item there is
+   * in the shopping cart
+   * @param {string} id
+   */
   function cf(id) {
     let i = 0;
     for (let f of shoppingCartItems) {

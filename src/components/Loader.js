@@ -16,6 +16,10 @@ const useStyles = makeStyles({
   },
 });
 
+/**
+ * Just returns the spinner seen when you open the
+ * web page
+ */
 function Loader() {
   let classes = useStyles();
   return (

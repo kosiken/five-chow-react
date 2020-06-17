@@ -1,3 +1,7 @@
+/**
+ * This file holds temporary placeholder contents and model classes
+ */
+
 import defaultAvatar from "../assets/avatar.png";
 import { v4 as uuid } from "uuid";
 import res0 from "../assets/res0.jpg";
@@ -13,34 +17,34 @@ import hamburger from "../assets/hamburger.jpg";
 import bread from "../assets/bread.jpg";
 import meat from "../assets/meat.jpg";
 const pics = {
-  foods: {hamburger, bread, meat},
+  foods: { hamburger, bread, meat },
   fitems: [hamburger, bread, meat],
   resturants: [res0, res1, res2, res3, res4, res5, res6, res7, res8],
 };
-  const resturants = [
-    "Ntachi Osa",
-    "Dolphin Restaurant",
-    "Sochis Kitchen And Bridals",
-    "Auntie May's kitchen",
-    "Octopus",
-    "Discovery kitchen",
-    "Sahara Restaurant Labanese",
-    "Roots Restaurant & Cafe",
-    "Crunchies Fried Chicken",
-    "Emily Restaurant",
-    "The Native Pot",
-    "Feel at home restaurant",
-    "De-Trendy Restaurant",
-    "Livingbrook Restaurant",
-  ];
+const resturants = [
+  "Ntachi Osa",
+  "Dolphin Restaurant",
+  "Sochis Kitchen And Bridals",
+  "Auntie May's kitchen",
+  "Octopus",
+  "Discovery kitchen",
+  "Sahara Restaurant Labanese",
+  "Roots Restaurant & Cafe",
+  "Crunchies Fried Chicken",
+  "Emily Restaurant",
+  "The Native Pot",
+  "Feel at home restaurant",
+  "De-Trendy Restaurant",
+  "Livingbrook Restaurant",
+];
 export class Food {
-  constructor(name,price, picture, id, resturant_id, index, rname) {
+  constructor(name, price, picture, id, resturant_id, index, rname) {
     this.name = name;
-    this.price = price
-    this.picture = picture || pics.fitems[index%3]
+    this.price = price;
+    this.picture = picture || pics.fitems[index % 3];
     this.id = id;
     this.resturant_id = resturant_id;
-    this.resturantName = rname || resturants[index % resturants.length]
+    this.resturantName = rname || resturants[index % resturants.length];
   }
 
   toString() {
@@ -59,21 +63,34 @@ export class Resturant {
   constructor(name, id, picture, location, index) {
     this.name = name;
     this.id = id;
-    this.picture = picture || pics.fitems[index%3]
-    this.foods = [new Food("Hamburger served with ketchup and fries",700,  pics.foods.hamburger, uuid()+ 1, this.id),
+    this.picture = picture || pics.fitems[index % 3];
+    this.foods = [
+      new Food(
+        "Hamburger served with ketchup and fries",
+        700,
+        pics.foods.hamburger,
+        uuid() + 1,
+        this.id
+      ),
 
-    new Food("Wheat Bread with a side of fish",300, pics.foods.bread, uuid()+ 12, this.id),
+      new Food(
+        "Wheat Bread with a side of fish",
+        300,
+        pics.foods.bread,
+        uuid() + 12,
+        this.id
+      ),
 
-    new Food("Roasted Goat meat",700, pics.foods.meat, uuid()+ 14, this.id)
- 
-];
+      new Food("Roasted Goat meat", 700, pics.foods.meat, uuid() + 14, this.id),
+    ];
 
-   this.location = location ||[ {
-    name_of_area: "Obalende",
-                country: "Nigeria",
-                state: "Ogun"
-    }
-]
+    this.location = location || [
+      {
+        name_of_area: "Obalende",
+        country: "Nigeria",
+        state: "Ogun",
+      },
+    ];
   }
 
   toString() {
@@ -98,7 +115,7 @@ export class User {
 
   static defaultUser() {
     return new User(
-      'John Snow',
+      "John Snow",
       uuid(),
       defaultAvatar,
       "john@snow.com",
@@ -107,39 +124,28 @@ export class User {
   }
 }
 
-
-
-
 export function removeDuplicates(array) {
-if(!array.length) return [];
+  if (!array.length) return [];
 
-let newArray  = []
-let isThere = {}
-for (let item of array) {
-if(!isThere[item.id]) {
-isThere[item.id] = true;
+  let newArray = [];
+  let isThere = {};
+  for (let item of array) {
+    if (!isThere[item.id]) {
+      isThere[item.id] = true;
 
-newArray.push(item)
+      newArray.push(item);
+    }
+  }
+  return newArray;
 }
 
+export function getTotal(array) {
+  return parseInt(array.reduce((count, value) => {
+    return count + value.price;
+  }, 0));
 }
-return newArray
-}
-
-
-export function getTotal(array){
-return array.reduce((count, value)=> {
-
-return count+ value.price
-}, 0)
-
-}
-
-
 
 export function makeDefaultResturants() {
-
-
   return resturants.map((resturant, i) => {
     return new Resturant(
       resturant,

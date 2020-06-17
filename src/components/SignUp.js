@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Link, useLocation, Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { useForm } from "react-hook-form";
-import Divider from "@material-ui/core/Divider";
+
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Snackbar from "@material-ui/core/Snackbar";
+
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+
 import api from "../api";
 import { loginUser } from "../store/actions";
 
 import logo from "../assets/logo-meduim.png";
 import msvg from "../assets/undraw_walk_in_the_city_1ma6.svg";
+
 const useStyles = makeStyles((theme) => ({
   div: {
     display: "flex",
@@ -23,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
     position: "fixed",
-    height: "100vh",
+  
     width: "100vw",
     top: 0,
   },
@@ -75,9 +77,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * This component is rendered at the signup page
+ * @param {{debug: boolean,
+ * isAuthorized: boolean,
+ * loginUser: (user: any)=> void
+ * }} props
+ */
 function SignUp(props) {
   const classes = useStyles();
-  const { register, handleSubmit, errors, clearError, getValues } = useForm();
+  const { register, handleSubmit, errors, getValues } = useForm();
 
   const [authorized, setAuth] = useState(props.isAuthorized);
   const [errorMessage, setErrorM] = useState("There was an error");
@@ -86,7 +95,12 @@ function SignUp(props) {
 
   const [open, setOpen] = useState(false);
 
-  const myfunc = (s) => {
+ /**
+   * This is the callback called when the form is submitted by the
+   * useForm hook https://react-hook-form.com
+   * @param {FormData} s
+   */
+  const handleSubmitCallback = (s) => {
     setLoading(true);
     if (!props.debug) {
       api
@@ -103,7 +117,7 @@ function SignUp(props) {
             let status = d.status || d.response.status;
             let data = d.data || d.response.data;
 
-            if (status == 400) {
+            if (status === 400) {
               let er = "";
               for (let key in data) {
                 er += data[key][0] + ", ";
@@ -127,7 +141,7 @@ function SignUp(props) {
     setAuth(true);
   };
 
-  const handleClose = (event, reason) => {
+  const handleClose = () => {
     setOpen(false);
   };
 
@@ -144,7 +158,7 @@ function SignUp(props) {
 
   return (
     <div className={classes.div}>
-      <form className={classes.root} onSubmit={handleSubmit(myfunc)}>
+      <form className={classes.root} onSubmit={handleSubmit(handleSubmitCallback)}>
         <div
           style={{
             padding: "1em",
@@ -152,6 +166,7 @@ function SignUp(props) {
         >
           <Link to="/">
             <img
+            alt="logo"
               src={logo}
               style={{
                 width: "60px",
@@ -291,6 +306,7 @@ function SignUp(props) {
       </form>
       <img
         src={msvg}
+        alt="bgImg"
         style={{
           position: "absolute",
           zIndex: "-1",

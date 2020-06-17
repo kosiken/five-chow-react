@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React  from "react";
+import { v4 as uuid } from "uuid";
+import { Link } from "react-router-dom";
+
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
+
 import CardActions from "@material-ui/core/CardActions";
 import Typography from "@material-ui/core/Typography";
 import RoomIcon from "@material-ui/icons/Room";
-import { v4 as uuid } from "uuid";
 
-import { connect } from "react-redux";
-import { BrowserRouter as Router, Link } from "react-router-dom";
 
 import Divider from "@material-ui/core/Divider";
 
@@ -53,7 +54,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Resturant({ resturant, shoppingCartItems }) {
+/**
+ * Displays a vendor to be selected by a user
+ * @param {{
+ * resturant: any}} props
+ */
+function Resturant(props) {
+  const { resturant } = props;
   const classes = useStyles();
 
   return (
@@ -89,9 +96,5 @@ function Resturant({ resturant, shoppingCartItems }) {
     </div>
   );
 }
-const mapStatetoProps = (state) => {
-  return {
-    shoppingCartItems: state.cart.shoppingCartItems,
-  };
-};
-export default connect(mapStatetoProps, null)(Resturant);
+
+export default Resturant;

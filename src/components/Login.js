@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import { Link, useLocation, Redirect } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/core/styles";
+
 import Snackbar from "@material-ui/core/Snackbar";
-// import  from '@material-ui/core/TextField';
-import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import api from "../api";
-import Paper from "@material-ui/core/Paper";
-import Divider from "@material-ui/core/Divider";
+
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
+
+import api from "../api";
+
 import { loginUser } from "../store/actions";
 import msvg from "../assets/undraw_walk_in_the_city_1ma6.svg";
 import logo from "../assets/logo-meduim.png";
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
     position: "fixed",
-    height: "100vh",
+   
     width: "100vw",
     top: 0,
   },
@@ -73,10 +73,18 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "2em",
   },
 }));
+
+/**
+ * This component is rendered at the login page
+ * @param {{debug: boolean,
+ * isAuthorized: boolean,
+ * loginUser: (user: any)=> void
+ * }} props
+ */
 function Login(props) {
   const classes = useStyles();
 
-  const { register, handleSubmit, errors, clearError } = useForm();
+  const { register, handleSubmit, errors } = useForm();
 
   const location = useLocation().search;
 
@@ -86,14 +94,17 @@ function Login(props) {
   const [errorMessage, setErrorM] = useState("There was an error");
   const [open, setOpen] = useState(false);
 
-  const myfunc = (s) => {
+  /**
+   * This is the callback called when the form is submitted by the
+   * useForm hook https://react-hook-form.com
+   * @param {FormData} s
+   */
+  const handleSubmitCallback = (s) => {
     if (!props.debug) {
       setLoading(true);
       api
         .logIn(s)
         .then((d) => {
-          //setLoading(false)
-
           props.loginUser(d);
           setAuth(true);
         })
@@ -101,9 +112,9 @@ function Login(props) {
           try {
             console.log(d.response, "kk");
             let status = d.status || d.response.status;
-            let data = d.data || d.response.data;
+          // let data = d.data || d.response.data;
 
-            if (status == 400) {
+            if (status === 400) {
               setErrorM("Email or Password incorrect");
             }
           } catch (err) {
@@ -121,7 +132,7 @@ function Login(props) {
     props.loginUser({ email: s.username });
     setAuth(true);
   };
-  const handleClose = (event, reason) => {
+  const handleClose = () => {
     setOpen(false);
   };
   if (authorized) {
@@ -137,7 +148,11 @@ function Login(props) {
 
   return (
     <div className={classes.div}>
-      <form className={classes.root} noValidate onSubmit={handleSubmit(myfunc)}>
+      <form
+        className={classes.root}
+        noValidate
+        onSubmit={handleSubmit(handleSubmitCallback)}
+      >
         <div
           style={{
             padding: "1em",
@@ -205,11 +220,9 @@ function Login(props) {
 
         <div className={classes.actiondiv}>
           <Link to="/forgotpassword">
-            {" "}
             <Button color="primary">Forgot Password</Button>
           </Link>
           <Link to={"/signup" + location}>
-            {" "}
             <Button c variant="contained" color="secondary">
               Sign Up
             </Button>

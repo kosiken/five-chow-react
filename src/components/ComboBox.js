@@ -3,6 +3,10 @@ import TextField from "@material-ui/core/TextField";
 
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
+/**
+ * This component will be used to interact with the Google places api
+ * @param {{locations: Array<string>}} props 
+ */
 export default function ComboBox(props) {
   const [locations, setLocations] = React.useState(["Lekki"]);
   return (

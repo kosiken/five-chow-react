@@ -34,15 +34,28 @@ function tempAsyncFunction(duration, shouldFail = false) {
     }, duration);
   });
 }
-function FoodList(props) {
-  let [mfoods, setFoods] = useState(props.foods);
 
-  let [isLoading, setLoading] = useState(!props.foods.length);
+/**
+ * Displays an array of food items to be selected by a user
+ * @param {{
+ * foods: any[],
+ * debug: boolean,
+ * fetchFoods: (isDebug?: boolean, foodlist?: any[])=> function}} props
+ */
+function FoodList(props) {
+  const {foods, debug, fetchFoods} = props
+  let [mfoods, setFoods] = useState(foods);
+
+  let [isLoading, setLoading] = useState(!foods.length);
   const [error, setError] = useState(false);
   const width = useWidth();
 
   const classes = useStyles();
 
+  /**
+   * Utility function to handle HTTP errors
+   * @param {Error} err 
+   */
   const handleError = function (err) {
     console.log(err.message);
 
@@ -51,31 +64,33 @@ function FoodList(props) {
   };
 
   useEffect(() => {
-    if (mfoods.length == 0) {
-      if (props.debug) {
+    if (mfoods.length === 0) {
+      if (debug) {
         tempAsyncFunction(3000)
-          .then((val) => {
+          .then(() => {
+            // for debugging
             console.log("here2");
-            props.fetchFoods();
+            fetchFoods();
           })
           .catch(handleError);
       } else {
+        // for debugging
         console.log("here2");
         api
           .foodItemsList()
           .then((s) => {
             console.log(s);
-            props.fetchFoods(props.debug, s);
+            fetchFoods(debug, s);
           })
           .catch(handleError);
       }
     }
-    if (props.foods.length !== mfoods.length) {
-      setFoods(props.foods);
+    if (foods.length !== mfoods.length) {
+      setFoods(foods);
 
       setLoading(false);
     }
-  }, [props.foods, mfoods.length]);
+  }, [debug, fetchFoods, foods, mfoods.length]);
 
   if (error) {
     return (

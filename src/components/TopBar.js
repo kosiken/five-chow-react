@@ -1,21 +1,26 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Avatar from "@material-ui/core/Avatar";
+
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+
 import IconButton from "@material-ui/core/IconButton";
-import { ExitToApp, Favorite, AccountCircle } from "@material-ui/icons";
-import { Link } from "react-router-dom";
-// import App from '../App';
-import api from "../api";
-import logo from "../assets/logo-meduim.png";
+
+import { ExitToApp } from "@material-ui/icons";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { deepOrange } from "@material-ui/core/colors";
-import { loginUser, logoutUser } from "../store/actions";
+
+import api from "../api";
+import logo from "../assets/logo-meduim.png";
+
+import { logoutUser } from "../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -57,16 +62,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Renders the top bar of the webpage
+ * @param {{
+ * logoutUser: ()=> (dispatch: any)=> void,
+ * user: any,
+ * debug: boolean}} props 
+ */
 function TopBar(props) {
-  let { loginUser } = props;
+  const {  logoutUser, user } = props;
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [muser, setUser] = React.useState(props.user);
+  const [muser, setUser] = React.useState(user);
   React.useEffect(() => {
-    if (muser.email !== props.user.email) {
-      setUser(props.user);
+    if (muser.email !== user.email) {
+      setUser(user);
     }
-  }, [props.user]);
+  }, [muser.email, user]);
   const handleClick = (event) => {
     if (!anchorEl) setAnchorEl(event.currentTarget);
   };
@@ -80,14 +92,16 @@ function TopBar(props) {
       api
         .logOut(props.token)
         .then((v) => {
-          //props.logoutUser()
+          logoutUser()
         })
         .catch((e) => {
+         logoutUser();
           console.log(e);
         });
       return;
+       logoutUser();
     }
-    props.logoutUser();
+   
   }
 
   function renderTopIcon(handleClosen) {
@@ -168,7 +182,7 @@ function TopBar(props) {
         >
           <div className={classes.title}>
             <Link to="/">
-              <img className={classes.large} src={logo} />
+              <img alt="logo" className={classes.large} src={logo} />
             </Link>
           </div>
 
@@ -186,4 +200,4 @@ const mapStatetoProps = (state) => {
     debug: state.auth.debug,
   };
 };
-export default connect(mapStatetoProps, { loginUser })(TopBar);
+export default connect(mapStatetoProps, {  logoutUser })(TopBar);

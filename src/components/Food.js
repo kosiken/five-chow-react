@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 //import Button from "@material-ui/core/Button";
 import Button from "@material-ui/core/Button";
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 0,
-    paddingTop: "56.25%", // 16:9
+    paddingTop: "56.25%",
   },
 
   content: {
@@ -48,7 +48,10 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
 }));
-
+/**
+ * Used to display a food item
+ *
+ */
 function Food({ food, shoppingCartItems }) {
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -61,7 +64,12 @@ function Food({ food, shoppingCartItems }) {
   const handleToggle = () => {
     setState({ open: !state.open });
   };
-
+  
+  /**
+   * Utitlity function that is used to count how many of an item there is
+   * in the shopping cart
+   * @param {string} id
+   */
   function cf(id) {
     let i = 0;
     for (let f of shoppingCartItems) {
@@ -87,8 +95,7 @@ function Food({ food, shoppingCartItems }) {
           <Divider />
 
           <Typography className={classes.vendorTitle}>
-            {" "}
-            {food.resturantName}{" "}
+            {food.resturantName}
           </Typography>
           <div>
             <small>{`N${food.price}`} </small>
@@ -104,8 +111,7 @@ function Food({ food, shoppingCartItems }) {
             color="primary"
             onClick={handleClose}
           >
-            {" "}
-            close{" "}
+            close
           </Button>
         </Paper>
       </Backdrop>

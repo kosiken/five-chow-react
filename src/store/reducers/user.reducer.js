@@ -10,11 +10,11 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  let returnValue;
+  let returnValue = state;
   let { user } = action;
   if (!user) {
     console.warn("action.user is empty");
-    return state;
+    
   }
    let nUser = User.defaultUser();
   switch (action.type) {

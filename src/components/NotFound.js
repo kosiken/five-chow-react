@@ -2,7 +2,8 @@ import React from "react";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
+
+
 import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import msvg from "../assets/undraw_walk_in_the_city_1ma6.svg";
@@ -16,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
     position: "fixed",
-    height: "100vh",
     width: "100vw",
     top: 0,
   },
@@ -25,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+/**
+ * Component rendered at routes that are not found
+ */
 function NotFound() {
   const classes = useStyles();
   return (
@@ -38,6 +41,7 @@ function NotFound() {
         >
           <Link to="/">
             <img
+              alt="logo"
               src={logo}
               style={{
                 width: "60px",
@@ -60,6 +64,7 @@ function NotFound() {
       </Paper>
 
       <img
+        alt="bgImage"
         src={msvg}
         style={{
           position: "absolute",

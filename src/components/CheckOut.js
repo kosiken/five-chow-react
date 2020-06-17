@@ -1,18 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+
 import { makeStyles } from "@material-ui/styles";
+
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardHeader from "@material-ui/core/CardHeader";
+
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import api from "../api";
-import { getTotal } from "../constants";
+// eslint-disable-next-line no-unused-vars
+import { getTotal, Food, User } from "../constants";
 
 import paystack_logo from "../assets/paystack.svg";
+
+
+
 const useStyles = makeStyles((theme) => {
   return {
     mainDiv: {
@@ -53,11 +60,26 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-function CheckOut(props = { amount: 500 }) {
+
+/**
+ * This component is what is displayed at the checkout route
+ * it is used to trigger api post requests for orders
+ * @param {{shoppingCartItems: Array<Food>,
+ * token?: string,
+ * debug: boolean,
+ * user: User,
+ * location: string
+ * }} props
+  */
+
+function CheckOut(props) {
   const classes = useStyles();
 
-  let total = getTotal(props.shoppingCartItems);
+  let [total] = React.useState(getTotal(props.shoppingCartItems));
   function renderButton(tots) {
+
+    // we need to check if the user is signed in, if he is then he can make an order
+    // otherwise we need to redirect him to the login page to sign in
     if (props.token) {
       return (
         <Button
@@ -65,7 +87,7 @@ function CheckOut(props = { amount: 500 }) {
           className={classes.btn}
           variant="contained"
           color="info"
-          disabled={tots == 0}
+          disabled={tots === 0}
         >
           <Avatar src={paystack_logo} className={classes.small} />
           Pay with Paystack
@@ -82,6 +104,9 @@ function CheckOut(props = { amount: 500 }) {
     );
   }
 
+  /**
+   * Temporary function to create an order object
+   */
   function makeOrder() {
     let cartMap = Object.create(null);
     for (let item of props.shoppingCartItems) {
@@ -122,7 +147,7 @@ function CheckOut(props = { amount: 500 }) {
 
         <CardContent>
           <Typography variant="p" className={classes.checkout}>
-            {total > 0
+            {total  >0
               ? ` You are about to confirm transaction of N${total}`
               : "You havent ordered anything yet"}
           </Typography>

@@ -35,7 +35,16 @@ const useStyles = makeStyles({
   },
 });
 
-function Item({ food, count, addItemToCart, removeItemfromCart }) {
+/**
+ * This is what is displayed in the modal that opens when a user wants to
+ * select a food
+ * @param {{ food: any,
+ *  count: (id: string) => number,
+ *  addItemToCart: (item: any)=> void,
+ *  removeItemfromCart: (item: any)=> void }} props 
+ */
+function Item(props) {
+  const { food, count, addItemToCart, removeItemfromCart } = props;
   const classes = useStyles();
   let [mcount, setCount] = useState(count(food.id));
 

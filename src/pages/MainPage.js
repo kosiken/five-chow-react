@@ -21,7 +21,7 @@ import CartItems from "../components/CartItems";
 import CheckOut from "../components/CheckOut";
 import ComboBox from "../components/ComboBox";
 import NotFound from "../components/NotFound";
-import { fetchFoods } from "../store/actions";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -52,9 +52,9 @@ function MainPage(props) {
   });
 
   window.addEventListener("resize", function () {
-    let v = window.innerWidth > 500 ? "extended" : "round";
+    let viewType = window.innerWidth > 500 ? "extended" : "round";
 
-    if (v != state.variant) setState({ ...state, variant: v });
+    if (viewType !== state.variant) setState({ ...state, variant: viewType });
   });
 
   return (

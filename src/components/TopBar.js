@@ -66,10 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 /**
  * Renders the top bar of the webpage
- * @param {{
- * logoutUser: ()=> (dispatch: any)=> void,
- * user: any,
- * debug: boolean}} props
+ * @component
  */
 function TopBar(props) {
   const { logoutUser, user } = props;

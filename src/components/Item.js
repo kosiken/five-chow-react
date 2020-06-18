@@ -28,6 +28,7 @@ const useStyles = makeStyles({
   foodImg: {
     width: "100px",
     minWidth: "80px",
+    maxHeight: "80px",
   },
   cartActions: {
     display: "flex",

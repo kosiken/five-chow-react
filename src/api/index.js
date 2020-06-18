@@ -6,7 +6,7 @@ import {Food, Resturant} from '../constants'
 
 function   goodResponse(resp) {
   console.log(resp)
-  let val = resp.status === 200 || resp.status == 201
+  let val = resp.status === 200 || resp.status === 201
   return val
   }
 

@@ -148,7 +148,7 @@ function Login(props) {
     <div className={classes.div}>
       <form
         className={classes.root}
-        noValidate
+   
         onSubmit={handleSubmit(handleSubmitCallback)}
       >
         <div

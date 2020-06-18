@@ -1,20 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
-// import { useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/styles";
 
 import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import CardHeader from "@material-ui/core/CardHeader";
-
-import CardActions from "@material-ui/core/CardActions";
+import TextField from "@material-ui/core/TextField";
+import Select from "@material-ui/core/Select"
 import Avatar from "@material-ui/core/Avatar";
-// import api from "../api";
+import api from "../api";
 // eslint-disable-next-line no-unused-vars
 import { getTotal, Food, User } from "../constants";
 
@@ -22,26 +18,30 @@ import paystack_logo from "../assets/paystack.svg";
 
 const useStyles = makeStyles((theme) => {
   return {
-    mainDiv: {
+    div: {
       display: "flex",
-      justifyContent: "center",
       alignItems: "center",
-      height: "100vh",
+      justifyContent: "center",
+   
+padding: '0 0 1.5em 0',
       width: "100vw",
-      position: "fixed",
-      top: "0",
-      background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
-      left: "0",
+      top: 0,
     },
+
     root: {
-      border: "none",
-      padding: theme.spacing(5),
-      textAlign: "center",
+      width: window.innerWidth > 500 ? "80%" : "90%",
+      display: "block",
+
+      
+      backgroundColor: "white",
     },
-    checkout: {
-      fontStyle: "italic",
-      color: "grey",
-    },
+containerDiv: {
+padding: '1em',
+border: '.5px solid currentColor',
+borderRadius: '5px',
+position: 'relative',
+marginTop: '1.5em',
+},
     small: {
       backgroundColor: "white",
       borderRaduis: "50%",
@@ -54,8 +54,26 @@ const useStyles = makeStyles((theme) => {
       backgroundColor: "rgb(11, 164, 219)",
       color: "white",
     },
+    btnSubmit: { margin: "1.5em auto 0", width:window.innerWidth > 500 ? "80%" :"100%"},
     link: {
       textDecoration: "none",
+    },
+    input: {
+    width: '100%',
+       marginBottom: window.innerWidth > 500 ?"0" : "1em",
+    },
+    inputDiv: {
+      display: window.innerWidth > 500 ?"grid": "block",
+      marginBottom: "1em",
+      
+      gridTemplateColumns: "46% 46%",
+      gridColumnGap: '5%',
+    },
+    
+    labeling: {
+    background: 'white',
+position: 'absolute',
+top: '-10px',
     },
   };
 });
@@ -66,43 +84,32 @@ const useStyles = makeStyles((theme) => {
  * @component
  */
 function CheckOut(props) {
-  
   const classes = useStyles();
-
+  const { register, handleSubmit, errors } = useForm();
   let [total] = React.useState(getTotal(props.shoppingCartItems));
 
   function renderButton(tots) {
-
     // we need to check if the user is signed in, if he is then he can make an order
     // otherwise we need to redirect him to the login page to sign in
-    if (props.token) {
-      return (
-        <Button
-          onClick={makeOrder}
-          className={classes.btn}
-          variant="contained"
-          color="info"
-          disabled={tots === 0}
-        >
-          <Avatar src={paystack_logo} className={classes.small} />
-          Pay with Paystack
-        </Button>
-      );
-    }
+
     return (
-      <Link to="/login?returnTo=checkout">
-        {" "}
-        <Button variant="contained" color="primary">
-          Login to order
-        </Button>
-      </Link>
+      <Button
+        onClick={makeOrder}
+        className={classes.btn}
+        variant="contained"
+        color="info"
+        disabled={tots === 0}
+      >
+        <Avatar src={paystack_logo} className={classes.small} />
+        Pay with Paystack
+      </Button>
     );
   }
 
   /**
    * Temporary function to create an order object
    */
-  function makeOrder() {
+  function makeOrder(s) {
     let cartMap = Object.create(null);
     for (let item of props.shoppingCartItems) {
       if (!cartMap[item.id]) {
@@ -116,15 +123,14 @@ function CheckOut(props) {
     let orderObject = {
       user: props.user.id,
       delivery_address: {
-        user: props.user.id,
-        address_type: "HOME",
-        street: "place Street",
-        city: "Enugu",
-        zip_code: "042",
-        number: "8082107825",
+      
+        street: s.street,
+        city: s.city,
+        zip_code: s.zip_code,
+      
       },
-      delivery_phone_number: "8082107825",
-      payment_method: "card",
+      delivery_phone_number: s.delivery_phone_number,
+      payment_method: s.payment_method,
       order_items: orders.map((o) => {
         return {
           food_id: o.id,
@@ -132,40 +138,165 @@ function CheckOut(props) {
         };
       }),
     };
-    console.log(orderObject);
+    api.createOrder(props.token, orderObject).then(console.log).catch(console.log);
   }
 
-  return (
-    <div className={classes.mainDiv}>
-      <Card className={classes.root}>
-        <CardHeader title="Confirm Transaction" />
+if(!props.isAuthorized) {
+   return (
+      <Redirect
+        to={"/login?redirectTo=checkout"}
+        
+      />
+    );
+}
 
-        <CardContent>
-          <Typography variant="p" className={classes.checkout}>
-            {total > 0
-              ? ` You are about to confirm transaction of N${total}`
-              : "You havent ordered anything yet"}
-          </Typography>
-        </CardContent>
-        <CardActions
-          style={{
-            display: "flex",
-            justifyContent: "center",
+  return (
+    <div className={classes.div}>
+      <form
+        className={classes.root}
+        noValidate
+        onSubmit={handleSubmit(makeOrder)}
+      >
+      <div className={classes.containerDiv}>
+        <label className={classes.labeling}>Location information</label>
+        <div className={classes.inputDiv}>
+          <TextField
+            color="secondary"
+            label="Street *"
+          
+            name={"street"}
+            variant="outlined"
+            multiline
+           className={classes.input}
+            inputProps={{
+              ref: register({
+                required: {
+                  value: true,
+                  message: "You have to enter a street for delivering",
+                },
+              }),
+            }}
+            error={!!errors.street}
+            helperText={errors.street?.message}
+          />
+          <TextField
+            color="secondary"
+            label="ZipCode*"
+     className={classes.input}
+            name={"zip_code"}
+            variant="outlined"
+            multiline
+           
+            inputProps={{
+          
+              ref: register({
+                required: {
+                  value: true,
+                  message: "You have to enter a zip code for delivering",
+                },
+              }),
+            }}
+            error={!!errors.zip_code}
+            helperText={errors.zip_code?.message}
+          />
+        </div>
+        <div className={classes.inputDiv}>
+          <TextField
+            color="secondary"
+            label="City"
+            className={classes.input}
+            name={"city"}
+            variant="outlined"
+           
+            inputProps={{
+          
+              ref: register({
+                required: {
+                  value: true,
+                  message: "You have to enter your city",
+                },
+              }),
+            }}
+            error={!!errors.city}
+            helperText={errors.city?.message}
+          />
+            <Select
+          native
+          defaultValue={0}
+        
+          inputProps={{
+            name: 'address_type',
+            id: 'address_type',
+            ref: register()
           }}
         >
-          {renderButton(total)}
-          <div>
-            <Link to="/cart" className={classes.link}>
-              <Button>Back</Button>
-            </Link>
+         
+          <option value={0}>Home Address</option>
+          <option value={1}>Office Address</option>
+         
+        </Select>
+        </div>
+        </div>
+        
+           <div className={classes.containerDiv}>
+        <label className={classes.labeling}>Payment Information</label>
+                <TextField
+            color="secondary"
+            label="Delivery Phone number *"
+          
+            name={"delivery_phone_number"}
+            variant="outlined"
+            multiline
+           className={classes.input}
+            inputProps={{
+              ref: register({
+                required: {
+                  value: true,
+                  message: "You have to enter a delivery phone number",
+                },
+              }),
+            }}
+            error={!!errors.delivery_phone_number}
+            helperText={errors.delivery_phone_number?.message}
+          />
+               <Select
+          native
+          defaultValue={0}
+        
+          inputProps={{
+            name: 'payment_method',
+            id: 'payment_method',
+            ref: register()
+          }}
+        >
+         
+          <option value={0}>Debit Card</option>
+          <option value={1}>On Delivery</option>
+         
+        </Select>
+        </div>
+        <div>
+            <Button
+            variant="contained"
+            className={classes.btnSubmit}
+            
+            color="primary"
+            type="submit"
+          >
+            Continue
+          </Button>
           </div>
-        </CardActions>
-      </Card>
+      </form>
     </div>
   );
 }
 
 CheckOut.propTypes = {
+  /**
+   * This value shows whether the user is already logged in, in that case
+   * we need to redirect the user away from this page
+   */
+  isAuthorized: PropTypes.bool.isRequired,
   /**
    * Array of all items in the shopping cart
    */
@@ -199,6 +330,7 @@ const mapStatetoProps = (state) => {
     debug: state.auth.debug,
     location: state.auth.location,
     user: state.auth.user,
+    isAuthorized: state.auth.isAuthorized,
   };
 };
 export default connect(mapStatetoProps, null)(CheckOut);

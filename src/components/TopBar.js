@@ -171,7 +171,7 @@ function TopBar(props) {
   const classes = useStyles();
 
   return (
-    <AppBar position="static" color="transparent">
+    <AppBar position="static" color="transparent" elevation={0}>
       <div className={classes.container}>
         {" "}
         <Toolbar

@@ -5,7 +5,7 @@ import {Food, Resturant} from '../constants'
 
 
 function   goodResponse(resp) {
-  
+  console.log(resp)
   let val = resp.status == 200 || resp.status == 201
   return val
   }
@@ -80,7 +80,7 @@ class FiveWebApi {
       { data: "none" },
       {
         headers: {
-          Authorization: token,
+          Authorization: `Token ${token}`,
         },
       }
     );
@@ -91,25 +91,17 @@ class FiveWebApi {
   }
   async createOrder(
     token,
-    delivery_address,
-    zip_code,
-    delivery_phone_number,
-    items
+   order
   ) {
     if (!token) {
       throw new Error("Token is required");
     }
-    let resp = this.api.post(
+    let resp = await this.api.post(
       "/orders/create/",
-      {
-        delivery_address,
-        zip_code,
-        delivery_phone_number,
-        order_items: items,
-      },
+     order,
       {
         headers: {
-          Authorization: token,
+          Authorization: `Token ${token}`,
         },
       }
     );

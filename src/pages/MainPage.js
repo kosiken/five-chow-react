@@ -25,7 +25,7 @@ import NotFound from "../components/NotFound";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "#f6f6ff",
+   
   },
   fab: {
     position: "fixed",

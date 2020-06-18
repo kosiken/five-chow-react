@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios from "axios";
 
 import {Food, Resturant} from '../constants'
 
@@ -6,7 +6,7 @@ import {Food, Resturant} from '../constants'
 
 function   goodResponse(resp) {
   console.log(resp)
-  let val = resp.status == 200 || resp.status == 201
+  let val = resp.status === 200 || resp.status == 201
   return val
   }
 
@@ -63,7 +63,7 @@ class FiveWebApi {
         password,
       });
 
-      if (resp.status == 200 || resp.status == 201) {
+      if (resp.status === 200 || resp.status === 201) {
         return resp.data;
       } else {
         throw new FiveChowError(resp);

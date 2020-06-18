@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link, Redirect } from "react-router-dom";
+import {  Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -9,12 +9,12 @@ import { makeStyles } from "@material-ui/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select"
-import Avatar from "@material-ui/core/Avatar";
+// import Avatar from "@material-ui/core/Avatar";
 import api from "../api";
-// eslint-disable-next-line no-unused-vars
-import { getTotal, Food, User } from "../constants";
+//  eslint-disable-next-line no-unused-vars
+// import { getTotal, Food, User } from "../constants";
 
-import paystack_logo from "../assets/paystack.svg";
+// import paystack_logo from "../assets/paystack.svg";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -86,25 +86,25 @@ top: '-10px',
 function CheckOut(props) {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-  let [total] = React.useState(getTotal(props.shoppingCartItems));
+  // let [total] = React.useState(getTotal(props.shoppingCartItems));
 
-  function renderButton(tots) {
+  // function renderButton(tots) {
     // we need to check if the user is signed in, if he is then he can make an order
     // otherwise we need to redirect him to the login page to sign in
 
-    return (
-      <Button
-        onClick={makeOrder}
-        className={classes.btn}
-        variant="contained"
-        color="info"
-        disabled={tots === 0}
-      >
-        <Avatar src={paystack_logo} className={classes.small} />
-        Pay with Paystack
-      </Button>
-    );
-  }
+  //   return (
+  //     <Button
+  //       onClick={makeOrder}
+  //       className={classes.btn}
+  //       variant="contained"
+  //       color="info"
+  //       disabled={tots === 0}
+  //     >
+  //       <Avatar src={paystack_logo} className={classes.small} />
+  //       Pay with Paystack
+  //     </Button>
+  //   );
+  // }
 
   /**
    * Temporary function to create an order object

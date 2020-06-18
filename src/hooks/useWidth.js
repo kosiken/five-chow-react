@@ -16,7 +16,7 @@ const useWidth = (small, large) => {
       
       window.removeEventListener("resize", resized);
     };
-  }, []);
+  });
 
   return widthValue;
 };

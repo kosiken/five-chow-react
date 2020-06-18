@@ -1,24 +1,10 @@
-import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import Auth from './reducers/user.reducer';
 import Food from './reducers/food.reducer';
 import ShoppingCart from './reducers/cart.reducer';
-import { persistStore, autoRehydrate } from "redux-persist";
-const InitialState = {auth: {
- auth: {},
-  isAuthorized: false,
-  },
-  
-  cart: {
-   shoppingCartItems: []
-  },
-  
-  food: {
-    resturants: [],
-    foods:[]
-}
+// import { persistStore, autoRehydrate } from "redux-persist";
 
-};
 const RootReducer = combineReducers({
 auth: Auth,
     food: Food,

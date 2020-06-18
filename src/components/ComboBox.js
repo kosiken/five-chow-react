@@ -8,7 +8,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
  * @component
  */
 function ComboBox() {
-  const [locations, setLocations] = React.useState(["Lekki"]);
+  const [locations] = React.useState(["Lekki"]);
   return (
     <Autocomplete
       defaultValue="Lekki"

@@ -21,7 +21,7 @@ class FiveChowError extends Error {
 }
 
 const Axios = axios.create({
-  baseURL: "https://695135ee6c6f.ngrok.io/api/",
+  baseURL: "https://fivechow.herokuapp.com/api/",
   headers: { "Content-Type": "application/json" },
 });
 

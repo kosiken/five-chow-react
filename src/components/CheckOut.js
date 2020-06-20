@@ -2,19 +2,23 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Redirect } from "react-router-dom";
 
+
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
 import { makeStyles } from "@material-ui/styles";
-
+import Snackbar from "@material-ui/core/Snackbar";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
-// import Avatar from "@material-ui/core/Avatar";
+import Avatar from "@material-ui/core/Avatar";
+import Paper from "@material-ui/core/Paper";
 import api from "../api";
 //  eslint-disable-next-line no-unused-vars
 // import { getTotal, Food, User } from "../constants";
 
-// import paystack_logo from "../assets/paystack.svg";
+import paystack_logo from "../assets/paystack.svg";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -22,19 +26,22 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-
+ background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
       padding: "0 0 1.5em 0",
       width: "100vw",
       top: 0,
+      height: '100%'
     },
 
     root: {
-      width: window.innerWidth > 500 ? "80%" : "90%",
+      width: window.innerWidth > 500 ? "85%" : "90%",
       display: "block",
+      padding: '1em',
 
-      backgroundColor: "white",
+     
     },
-    containerDiv: {
+    form: { width:'100%'},
+      containerDiv: {
       padding: "1em",
       border: ".5px solid currentColor",
       borderRadius: "5px",
@@ -51,7 +58,8 @@ const useStyles = makeStyles((theme) => {
     },
     btn: {
       backgroundColor: "rgb(11, 164, 219)",
-      color: "white",
+      color: "white",margin:'1em auto',
+      
     },
     btnSubmit: {
       margin: "1.5em auto 0",
@@ -88,32 +96,64 @@ const useStyles = makeStyles((theme) => {
 function CheckOut(props) {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
+   const [message, setMessage] = React.useState("Processing Payment");
+    const [open, setOpen] = React.useState(false);
+    const [redirectTo, setRedirectTo] = React.useState('');
   // let [total] = React.useState(getTotal(props.shoppingCartItems));
+ const handleClose = () => {
+    setOpen(false);
+  };
+   const handleOpen = (m) => {
+      setMessage(m);
+    setOpen(true);
+  };
 
-  // function renderButton(tots) {
-  // we need to check if the user is signed in, if he is then he can make an order
-  // otherwise we need to redirect him to the login page to sign in
+function paystackPay(total) {
+  return new Promise((res) => {
+  console.log(total)
+    const config = {
 
-  //   return (
-  //     <Button
-  //       onClick={makeOrder}
-  //       className={classes.btn}
-  //       variant="contained"
-  //       color="info"
-  //       disabled={tots === 0}
-  //     >
-  //       <Avatar src={paystack_logo} className={classes.small} />
-  //       Pay with Paystack
-  //     </Button>
-  //   );
-  // }
+      key: 'pk_test_8375cb0559631010056db94e05b725e445435002', // Replace with your public key
+  
+      email: props.user.email,
+  
+      amount: total* 100,
+ 
+  
+      currency: "NGN", //GHS for Ghana Cedis
+  
+    //use your reference or leave empty to have a reference generated for you
+  
+      // label: "Optional string that replaces customer email"
+  
+      onClose: function(){
+  
+        console.log('Window closed.');
+  
+      },
+  
+      callback: function(response){
+  
+       handleOpen('Payment complete! Thanks for your patronage');
+        res(response.reference)
+        
+  
+      }
+  
+    };
+   const paystackPopup = window.PaystackPop.setup(config);
+   paystackPopup.openIframe();
+  })
+}
 
   /**
    * Temporary function to create an order object
    */
-  function makeOrder(s) {
+   async function makeOrder(s) {
     let cartMap = Object.create(null);
+    let total = 0
     for (let item of props.shoppingCartItems) {
+      total += parseInt(item.price);
       if (!cartMap[item.id]) {
         cartMap[item.id] = item;
         cartMap[item.id].count = 1;
@@ -138,20 +178,27 @@ function CheckOut(props) {
         };
       }),
     };
-    api
-      .createOrder(props.token, orderObject)
-      .then(console.log)
-      .catch(console.log);
+   let paystackResponsse = await paystackPay(total)
+     let apiResponse = await api.createOrder(props.token, orderObject)
+     console.log(apiResponse)
+     setRedirectTo(`/order?orderId=${apiResponse.id}`);
+     
   }
 
   if (!props.isAuthorized) {
     return <Redirect to={"/login?redirectTo=checkout"} />;
   }
+  
+  if(redirectTo.length) {
+return  <Redirect to={redirectTo} />
+  
+  }
 
   return (
     <div className={classes.div}>
+    <Paper className={classes.root}>
       <form
-        className={classes.root}
+        className={classes.form}
         noValidate
         onSubmit={handleSubmit(makeOrder)}
       >
@@ -228,7 +275,7 @@ function CheckOut(props) {
           </div>
         </div>
 
-        <div className={classes.containerDiv}>
+        <div className={classes.containerDiv}> <div className={classes.inputDiv}>
           <label className={classes.labeling}>Payment Information</label>
           <TextField
             color="secondary"
@@ -260,18 +307,42 @@ function CheckOut(props) {
             <option value={0}>Debit Card</option>
             <option value={1}>On Delivery</option>
           </Select>
+          </div>
         </div>
         <div>
-          <Button
-            variant="contained"
-            className={classes.btnSubmit}
-            color="primary"
-            type="submit"
-          >
-            Continue
-          </Button>
+        <Button
+        type="submit"
+        className={classes.btn}
+        variant="contained"
+        color="info"
+      
+      >
+        <Avatar src={paystack_logo} className={classes.small} />
+        Pay with Paystack
+      </Button>
         </div>
       </form>
+      </Paper>
+            <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={message}
+        action={
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        }
+      />
     </div>
   );
 }

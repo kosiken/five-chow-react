@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
+
 import Badge from "@material-ui/core/Badge";
 import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+
 
 import { makeStyles } from "@material-ui/core/styles";
 import { addItemToCart, removeItemfromCart } from "../store/actions";

@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => {
 
 function Order(props) {
     const classes = useStyles();
-    const [order, setOrder]= useState({})
+    const [order, setOrder]= useState(null)
     const {id} = useParams();
     useEffect(() => {
         api.getOrder(props.token,id).then(setOrder)
@@ -55,7 +55,7 @@ function Order(props) {
             {morder.order_items.map(ord=> {
               return (
                 <ListItem key={ord.id}>
-                  <ListItemText>{ord.name +" x"+ ord.quantity}</ListItemText>
+                  <ListItemText>{ord.food_item.name +" x"+ ord.quantity}</ListItemText>
               <ListItemText>{"NGN"+ord.total_price}</ListItemText>
                 </ListItem>
               )

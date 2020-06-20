@@ -95,7 +95,7 @@ console.log('loaded paystack')
             <Route path="/resturants">
               <ResturantList />
             </Route>
-            <Route exact path="/orders/:id`">
+            <Route exact path="/orders/:id">
               <Order />
             </Route>
             <Route path="/checkout">

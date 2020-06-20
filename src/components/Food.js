@@ -8,12 +8,12 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions"
 import Typography from "@material-ui/core/Typography";
-import Backdrop from "@material-ui/core/Backdrop";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 
 import Item from "./Item";
-import Paper from "@material-ui/core/Paper";
+
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -60,9 +60,6 @@ function Food({ food, shoppingCartItems }) {
     open: false,
   });
 
-  const handleClose = () => {
-    setState({ open: false });
-  };
   const handleToggle = () => {
     setState({ open: !state.open });
   };

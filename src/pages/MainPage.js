@@ -4,7 +4,7 @@ import { Link, BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-import Fab from "@material-ui/core/Fab";
+import Footer from "../components/Footer";
 
 
 // import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -25,6 +25,10 @@ import NotFound from "../components/NotFound";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    backgroundColor:'#f0fbff',
+    height:'100vh',
+    width:'100vw',
+    position:'relative'
    
   },
   fab: {
@@ -62,7 +66,6 @@ function MainPage(props) {
       <div className={classes.root}>
         <TopBar />
 
-        <div className={classes.root}>
           <Switch>
             <Route exact path="/">
 
@@ -102,7 +105,7 @@ function MainPage(props) {
 
             <Route path="*" exact={true} component={NotFound} />
           </Switch>
-        </div>
+        <Footer />
       </div>
     </Router>
   );

@@ -118,11 +118,7 @@ function FoodList(props) {
         <Typography color="primary" variant="h3">
           There was an error completing this request
         </Typography>
-        <Typography color="primary">
-          Cross-Origin Request Blocked: The Same Origin Policy disallows reading
-          the remote resource at http://695135ee6c6f.ngrok.io/api/fooditems/.
-          (Reason: CORS header ‘Access-Control-Allow-Origin’ missing)
-        </Typography>
+    
       </div>
     );
   }

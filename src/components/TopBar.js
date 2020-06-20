@@ -9,8 +9,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Divider from '@material-ui/core/Divider';
 
 import Drawer from '@material-ui/core/Drawer';
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
+
 import Button from "@material-ui/core/Button";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -296,6 +295,11 @@ TopBar.propTypes = {
    * successful api request
    */
   logoutUser: PropTypes.func.isRequired,
+
+  /**
+   * This value shows whether the user is already logged in, 
+   */
+  isAuthorized: PropTypes.bool.isRequired,
 };
 
 const mapStatetoProps = (state) => {

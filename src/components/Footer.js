@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.light,
     padding: "20px",
     color: "white",
+    width: '100%',
+    position:'absolute',
+    bottom:'0',
+    left:'0'
   },
   large: {
     width: theme.spacing(7),

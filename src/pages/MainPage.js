@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 
 import { Link, BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 
 // import Footer from "../components/Footer";
-import script from "scriptjs"
 
 // import AccountCircle from "@material-ui/icons/AccountCircle";
 
@@ -53,16 +52,7 @@ function MainPage(props) {
   const classes = useStyles();
   // eslint-disable-next-line no-unused-vars
   const [loadedPaystack, setLoaded] =useState(false)
- useEffect(()=> {
 
-script('https://js.paystack.co/v2/inline.js', ()=> {
-setLoaded(true)
-console.log('loaded paystack')
-
-})
-
-
-})
 
 
   return (

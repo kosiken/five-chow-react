@@ -5,7 +5,7 @@ import { Link, BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Fab from "@material-ui/core/Fab";
-import ShoppingCart from "@material-ui/icons/ShoppingCart";
+
 
 // import AccountCircle from "@material-ui/icons/AccountCircle";
 
@@ -65,16 +65,6 @@ function MainPage(props) {
         <div className={classes.root}>
           <Switch>
             <Route exact path="/">
-              <Link to="/cart">
-                <Fab
-                  className={classes.fab}
-                  variant={state.variant}
-                  color="primary"
-                >
-                  <ShoppingCart />
-                  {state.variant === "extended" ? "Shopping Cart" : ""}
-                </Fab>
-              </Link>
 
               <div className={classes.linkdiv}>
                 <ComboBox />

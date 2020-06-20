@@ -63,7 +63,7 @@ export class Resturant {
   constructor(name, id, picture, location, index) {
     this.name = name;
     this.id = id;
-    this.picture = picture || pics.fitems[index % 3];
+    this.picture = picture || pics.resturants[index % pics.resturants.length];
     this.foods = [
       new Food(
         "Hamburger served with ketchup and fries",

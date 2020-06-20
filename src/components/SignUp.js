@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   root: {
-    width: window.innerWidth > 500 ? "80%" : "90%",
+    width: window.innerWidth > 500 ? "80%" : "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",

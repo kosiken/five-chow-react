@@ -45,9 +45,7 @@ export default (state = initialState, action) => {
     case SELECT_RESTURANT:
       returnValue = {
         ...state,
-        selectedResturant: state.resturants.find(
-          (resturant) => resturant.id === action.resturantId
-        ),
+        selectedResturant: action.resturantId,
       };
       break;
 

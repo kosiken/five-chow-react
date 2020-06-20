@@ -2,10 +2,10 @@ import { useEffect, useState, useCallback } from "react";
 
 const useWidth = (small, large) => {
   let [widthValue, setWidth] = useState(
-    window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? large : small
+    window.innerWidth > 600 ? large : window.innerWidth > 400 ? large : small
   );
   const resized = useCallback(() => {
-    let newWidthValue = window.innerWidth > 600 ? 4 : window.innerWidth > 400 ? large : small;
+    let newWidthValue = window.innerWidth > 600 ? large : window.innerWidth > 400 ? large : small;
     if (widthValue !== newWidthValue ) setWidth(newWidthValue );
   },[widthValue, large, small]);
  

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {  Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import { connect } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/styles";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Select from "@material-ui/core/Select"
+import Select from "@material-ui/core/Select";
 // import Avatar from "@material-ui/core/Avatar";
 import api from "../api";
 //  eslint-disable-next-line no-unused-vars
@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-   
-padding: '0 0 1.5em 0',
+
+      padding: "0 0 1.5em 0",
       width: "100vw",
       top: 0,
     },
@@ -32,16 +32,15 @@ padding: '0 0 1.5em 0',
       width: window.innerWidth > 500 ? "80%" : "90%",
       display: "block",
 
-      
       backgroundColor: "white",
     },
-containerDiv: {
-padding: '1em',
-border: '.5px solid currentColor',
-borderRadius: '5px',
-position: 'relative',
-marginTop: '1.5em',
-},
+    containerDiv: {
+      padding: "1em",
+      border: ".5px solid currentColor",
+      borderRadius: "5px",
+      position: "relative",
+      marginTop: "1.5em",
+    },
     small: {
       backgroundColor: "white",
       borderRaduis: "50%",
@@ -54,26 +53,29 @@ marginTop: '1.5em',
       backgroundColor: "rgb(11, 164, 219)",
       color: "white",
     },
-    btnSubmit: { margin: "1.5em auto 0", width:window.innerWidth > 500 ? "80%" :"100%"},
+    btnSubmit: {
+      margin: "1.5em auto 0",
+      width: window.innerWidth > 500 ? "80%" : "100%",
+    },
     link: {
       textDecoration: "none",
     },
     input: {
-    width: '100%',
-       marginBottom: window.innerWidth > 500 ?"0" : "1em",
+      width: "100%",
+      marginBottom: window.innerWidth > 500 ? "0" : "1em",
     },
     inputDiv: {
-      display: window.innerWidth > 500 ?"grid": "block",
+      display: window.innerWidth > 500 ? "grid" : "block",
       marginBottom: "1em",
-      
+
       gridTemplateColumns: "46% 46%",
-      gridColumnGap: '5%',
+      gridColumnGap: "5%",
     },
-    
+
     labeling: {
-    background: 'white',
-position: 'absolute',
-top: '-10px',
+      background: "white",
+      position: "absolute",
+      top: "-10px",
     },
   };
 });
@@ -89,8 +91,8 @@ function CheckOut(props) {
   // let [total] = React.useState(getTotal(props.shoppingCartItems));
 
   // function renderButton(tots) {
-    // we need to check if the user is signed in, if he is then he can make an order
-    // otherwise we need to redirect him to the login page to sign in
+  // we need to check if the user is signed in, if he is then he can make an order
+  // otherwise we need to redirect him to the login page to sign in
 
   //   return (
   //     <Button
@@ -123,11 +125,9 @@ function CheckOut(props) {
     let orderObject = {
       user: props.user.id,
       delivery_address: {
-      
         street: s.street,
         city: s.city,
         zip_code: s.zip_code,
-      
       },
       delivery_phone_number: s.delivery_phone_number,
       payment_method: s.payment_method,
@@ -138,17 +138,15 @@ function CheckOut(props) {
         };
       }),
     };
-    api.createOrder(props.token, orderObject).then(console.log).catch(console.log);
+    api
+      .createOrder(props.token, orderObject)
+      .then(console.log)
+      .catch(console.log);
   }
 
-if(!props.isAuthorized) {
-   return (
-      <Redirect
-        to={"/login?redirectTo=checkout"}
-        
-      />
-    );
-}
+  if (!props.isAuthorized) {
+    return <Redirect to={"/login?redirectTo=checkout"} />;
+  }
 
   return (
     <div className={classes.div}>
@@ -157,97 +155,88 @@ if(!props.isAuthorized) {
         noValidate
         onSubmit={handleSubmit(makeOrder)}
       >
-      <div className={classes.containerDiv}>
-        <label className={classes.labeling}>Location information</label>
-        <div className={classes.inputDiv}>
-          <TextField
-            color="secondary"
-            label="Street *"
-          
-            name={"street"}
-            variant="outlined"
-            multiline
-           className={classes.input}
-            inputProps={{
-              ref: register({
-                required: {
-                  value: true,
-                  message: "You have to enter a street for delivering",
-                },
-              }),
-            }}
-            error={!!errors.street}
-            helperText={errors.street?.message}
-          />
-          <TextField
-            color="secondary"
-            label="ZipCode*"
-     className={classes.input}
-            name={"zip_code"}
-            variant="outlined"
-            multiline
-           
-            inputProps={{
-          
-              ref: register({
-                required: {
-                  value: true,
-                  message: "You have to enter a zip code for delivering",
-                },
-              }),
-            }}
-            error={!!errors.zip_code}
-            helperText={errors.zip_code?.message}
-          />
-        </div>
-        <div className={classes.inputDiv}>
-          <TextField
-            color="secondary"
-            label="City"
-            className={classes.input}
-            name={"city"}
-            variant="outlined"
-           
-            inputProps={{
-          
-              ref: register({
-                required: {
-                  value: true,
-                  message: "You have to enter your city",
-                },
-              }),
-            }}
-            error={!!errors.city}
-            helperText={errors.city?.message}
-          />
+        <div className={classes.containerDiv}>
+          <label className={classes.labeling}>Location information</label>
+          <div className={classes.inputDiv}>
+            <TextField
+              color="secondary"
+              label="Street *"
+              name={"street"}
+              variant="outlined"
+              multiline
+              className={classes.input}
+              inputProps={{
+                ref: register({
+                  required: {
+                    value: true,
+                    message: "You have to enter a street for delivering",
+                  },
+                }),
+              }}
+              error={!!errors.street}
+              helperText={errors.street?.message}
+            />
+            <TextField
+              color="secondary"
+              label="ZipCode*"
+              className={classes.input}
+              name={"zip_code"}
+              variant="outlined"
+              multiline
+              inputProps={{
+                ref: register({
+                  required: {
+                    value: true,
+                    message: "You have to enter a zip code for delivering",
+                  },
+                }),
+              }}
+              error={!!errors.zip_code}
+              helperText={errors.zip_code?.message}
+            />
+          </div>
+          <div className={classes.inputDiv}>
+            <TextField
+              color="secondary"
+              label="City"
+              className={classes.input}
+              name={"city"}
+              variant="outlined"
+              inputProps={{
+                ref: register({
+                  required: {
+                    value: true,
+                    message: "You have to enter your city",
+                  },
+                }),
+              }}
+              error={!!errors.city}
+              helperText={errors.city?.message}
+            />
             <Select
-          native
-          defaultValue={0}
-        
-          inputProps={{
-            name: 'address_type',
-            id: 'address_type',
-            ref: register()
-          }}
-        >
-         
-          <option value={0}>Home Address</option>
-          <option value={1}>Office Address</option>
-         
-        </Select>
+              native
+              defaultValue={0}
+              inputProps={{
+                name: "address_type",
+                id: "address_type",
+                ref: register(),
+              }}
+            >
+              <option value={0}>Home Address</option>
+              <option value={1}>Office Address</option>
+            </Select>
+          </div>
         </div>
-        </div>
-        
-           <div className={classes.containerDiv}>
-        <label className={classes.labeling}>Payment Information</label>
-                <TextField
+
+        <div className={classes.containerDiv}>
+          <label className={classes.labeling}>Payment Information</label>
+          <TextField
             color="secondary"
             label="Delivery Phone number *"
-          
             name={"delivery_phone_number"}
             variant="outlined"
             multiline
-           className={classes.input}
+            className={classes.input}
             inputProps={{
               ref: register({
                 required: {
@@ -259,33 +248,29 @@ if(!props.isAuthorized) {
             error={!!errors.delivery_phone_number}
             helperText={errors.delivery_phone_number?.message}
           />
-               <Select
-          native
-          defaultValue={0}
-        
-          inputProps={{
-            name: 'payment_method',
-            id: 'payment_method',
-            ref: register()
-          }}
-        >
-         
-          <option value={0}>Debit Card</option>
-          <option value={1}>On Delivery</option>
-         
-        </Select>
+          <Select
+            native
+            defaultValue={0}
+            inputProps={{
+              name: "payment_method",
+              id: "payment_method",
+              ref: register(),
+            }}
+          >
+            <option value={0}>Debit Card</option>
+            <option value={1}>On Delivery</option>
+          </Select>
         </div>
         <div>
-            <Button
+          <Button
             variant="contained"
             className={classes.btnSubmit}
-            
             color="primary"
             type="submit"
           >
             Continue
           </Button>
-          </div>
+        </div>
       </form>
     </div>
   );

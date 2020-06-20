@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 .overlay-circle {
   background-color: transparent;
   border-radius: 50%;

@@ -40,7 +40,7 @@ function tempAsyncFunction(duration, shouldFail = false) {
  * @component
  */
 function FoodList(props) {
-  const { foods, debug, fetchFoods } = props;
+  const { foods, debug, fetchFoods, selectedResturant } = props;
   let [mfoods, setFoods] = useState(foods);
 
   let [isLoading, setLoading] = useState(!foods.length);
@@ -88,6 +88,29 @@ function FoodList(props) {
       setLoading(false);
     }
   }, [debug, fetchFoods, foods, mfoods.length]);
+  
+  const renderResturants = function(_width) {
+  
+  if(selectedResturant) {
+  
+  return mfoods.filter(food => food.resturant_id === selectedResturant).map((food) => (
+          <Grid item xs={_width} key={`food_${food.id}`}>
+            <Food food={food} />
+          </Grid>
+        ))
+   
+  }
+  
+    return mfoods.map((food) => (
+          <Grid item xs={_width} key={`food_${food.id}`}>
+            <Food food={food} />
+          </Grid>
+        ))
+    
+  
+  }
+  
+  
 
   if (error) {
     return (
@@ -107,11 +130,14 @@ function FoodList(props) {
   if (isLoading) {
     return <Loader />;
   }
+  
+  
+  
 
   return (
     <div
       style={{
-        width: window.innerWidth > 500 ? "85%" : "100%",
+        width: width === 4 ? "85%" : "100%",
         margin: "0 auto",
       }}
     >
@@ -126,14 +152,10 @@ function FoodList(props) {
         xs={12}
         spacing={3}
       >
-        {mfoods.map((food) => (
-          <Grid item xs={width} key={`food_${food.id}`}>
-            <Food food={food} />
-          </Grid>
-        ))}
-      </Grid>
+        {renderResturants(width)}
+           </Grid>
     </div>
-  );
+    )
 }
 
 FoodList.propTypes = {
@@ -157,6 +179,7 @@ const mapStatetoProps = (state) => {
   return {
     foods: state.food.foods,
     debug: state.auth.debug,
+    selectedResturant: state.food.selectedResturant
   };
 };
 

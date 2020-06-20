@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from 'prop-types'
 //import Button from "@material-ui/core/Button";
-import Button from "@material-ui/core/Button";
+
 import Divider from "@material-ui/core/Divider";
 import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
+import CardActions from "@material-ui/core/CardActions"
 import Typography from "@material-ui/core/Typography";
 import Backdrop from "@material-ui/core/Backdrop";
 import { makeStyles } from "@material-ui/core/styles";
@@ -34,10 +35,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
   },
-  button: {
-    width: "100%",
-    textAlign: "center",
-  },
+
 
   vendorTitle: {
     margin: "5px 0 2px 0",
@@ -47,6 +45,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "0.5em 0",
     fontWeight: "bold",
   },
+  cardActions: {
+  justifyContent: 'center'
+  
+  }
 }));
 /**
  * Used to display a food item
@@ -80,7 +82,7 @@ function Food({ food, shoppingCartItems }) {
 
   return (
     <div>
-      <Card className={classes.root} onClick={handleToggle} elevation={0}>
+      <Card className={classes.root} onClick={handleToggle} >
         <CardMedia className={classes.media} image={food.picture} />
 
         <CardContent className={classes.content}>
@@ -101,20 +103,12 @@ function Food({ food, shoppingCartItems }) {
             <small>{`N${food.price}`} </small>
           </div>
         </CardContent>
+        <CardActions className={classes.cardActions} >
+        <Item food={food} count={cf} />
+        </CardActions>
       </Card>
-
-      <Backdrop className={classes.backdrop} open={state.open}>
-        <Paper elevation={3}>
-          <Item food={food} count={cf} />
-          <Button
-            className={classes.button}
-            color="primary"
-            onClick={handleClose}
-          >
-            close
-          </Button>
-        </Paper>
-      </Backdrop>
+     
+   
     </div>
   );
 }

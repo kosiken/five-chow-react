@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import { connect } from "react-redux";
 import { v4 as uuid } from "uuid";
 import { Link } from "react-router-dom";
 
@@ -15,6 +15,8 @@ import RoomIcon from "@material-ui/icons/Room";
 import Divider from "@material-ui/core/Divider";
 
 import { makeStyles } from "@material-ui/core/styles";
+
+import { selectResturant } from "../store/actions";
 
 const useStyles = makeStyles((theme) => ({
   link: {
@@ -60,13 +62,15 @@ const useStyles = makeStyles((theme) => ({
  * @component
  */
 function Resturant(props) {
-  const { resturant } = props;
+  const { resturant, selectResturant } = props;
   const classes = useStyles();
 
   return (
     <div>
       <Link className={classes.link} to="/">
-        <Card>
+        <Card onClick={()=> {
+        selectResturant(resturant.id)
+        }}>
           <CardMedia className={classes.media} image={resturant.picture} />
 
           <CardContent className={classes.content}>
@@ -103,5 +107,5 @@ Resturant.propTypes = {
    */
   resturant: PropTypes.object.isRequired,
 };
-
-export default Resturant;
+const mapStateToProps = () => {}
+export default connect(mapStateToProps, { selectResturant })(Resturant);

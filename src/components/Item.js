@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
+import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
 import IconButton from "@material-ui/core/IconButton";
@@ -13,27 +13,15 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 
 const useStyles = makeStyles({
-  foodInfo: {
-    display: "flex",
-    padding: "8px",
-  },
 
-  sectionInfo: {
-    padding: "0px 5px",
-  },
-
-  foodTitle: {
-    fontWeight: "bold",
-  },
-  foodImg: {
-    width: "100px",
-    minWidth: "80px",
-  },
   cartActions: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
   },
+  btn: {
+  width: '100%'
+  }
 });
 
 /**
@@ -46,24 +34,24 @@ function Item(props) {
   const classes = useStyles();
   let [mcount, setCount] = useState(count(food.id));
 
-  return (
-    <div>
-      <div className={classes.foodInfo}>
-        <img src={food.picture} alt={food.name} className={classes.foodImg} />
-        <section className={classes.sectionInfo}>
-          <Typography className={classes.foodTitle}> {food.name} </Typography>
-          <small>{`N${food.price}`} </small>
-        </section>
-      </div>
+  function addToCart() {
+    addItemToCart(food);
+    setCount(count(food.id));
+  }
+function removeFromCart() {
+  removeItemfromCart(food);
+  setCount(count(food.id));
+}
+  if (mcount < 1) {
+    return (<Button className={classes.btn} color="secondary" variant="contained" onClick={addToCart}>Add To Cart</Button> );
+  }
 
-      {/* add to cart buttons */}
+  return (
+
       <div className={classes.cartActions}>
         <section>
           <IconButton
-            onClick={() => {
-              removeItemfromCart(food);
-              setCount(count(food.id));
-            }}
+            onClick={removeFromCart}
           >
             <RemoveCircleIcon />
           </IconButton>
@@ -71,18 +59,13 @@ function Item(props) {
           <Badge badgeContent={mcount.toString()} color="secondary" />
 
           <IconButton
-            onClick={() => {
-              addItemToCart(food);
-              setCount(count(food.id));
-            }}
+            onClick={addToCart}
           >
             <AddCircleIcon />
           </IconButton>
         </section>
       </div>
 
-      <Divider />
-    </div>
   );
 }
 

@@ -6,34 +6,37 @@ import { Link } from "react-router-dom";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Avatar from "@material-ui/core/Avatar";
+import Divider from '@material-ui/core/Divider';
 
+import Drawer from '@material-ui/core/Drawer';
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
-
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
 import IconButton from "@material-ui/core/IconButton";
-
-import { ExitToApp } from "@material-ui/icons";
+import HowToRegIcon from '@material-ui/icons/HowToReg';
+import ExitToApp  from "@material-ui/icons/ExitToApp";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { deepOrange } from "@material-ui/core/colors";
+import MenuIcon from '@material-ui/icons/Menu';
+import ShoppingCart from "@material-ui/icons/ShoppingCart";
 
+import useWidth from "../hooks/useWidth";
 import api from "../api";
 import logo from "../assets/logo-meduim.png";
 
 import { logoutUser } from "../store/actions";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    width: "85%",
-    margin: "0 auto",
-  },
+
   appbar: {
-    backGroundColor: "none !important",
+    backgroundColor: "white !important",
   },
   link: {
-    textDecoration: "none",
+    textDecoration: "none"
   },
 
   menuButton: {
@@ -47,12 +50,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   large: {
-    width: theme.spacing(7),
+    width: '50px',
     //  height: theme.spacing(4),
   },
   menuIcons: {
-    fontSize: "16px",
-    marginRight: "5px",
+    marginLeft: '28%'
   },
   loggedIn: {
     display: "flex",
@@ -62,6 +64,32 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepOrange[500]),
     backgroundColor: deepOrange[500],
   },
+  toolBar:{
+ 
+            display: 'flex',
+justifyContent: 'space-between',
+'*' : {
+flex: '1'
+},
+},
+desktopTitle: {
+
+position: 'absolute',
+width: '100%',
+
+textAlign: 'center',         
+  },
+  desktopNav: {
+  position: 'absolute',
+right: '10px',
+  },
+    drawer: {
+    width: 240,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: 240,
+  },
 }));
 
 /**
@@ -69,24 +97,31 @@ const useStyles = makeStyles((theme) => ({
  * @component
  */
 function TopBar(props) {
-  const { logoutUser, user } = props;
+  const { logoutUser, user, isAuthorized } = props;
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+ 
   const [muser, setUser] = React.useState(user);
   React.useEffect(() => {
     if (muser.email !== user.email) {
       setUser(user);
     }
   }, [muser.email, user]);
-  const handleClick = (event) => {
-    if (!anchorEl) setAnchorEl(event.currentTarget);
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
-  function logUserOut() {
-    setAnchorEl(null);
+
+
+  const classes = useStyles();
+ const isMobile = useWidth(true, false);
+ 
+   function logUserOut() {
+ 
     if (!props.debug) {
       api
         .logOut(props.token)
@@ -102,44 +137,116 @@ function TopBar(props) {
     }
     logoutUser();
   }
+ 
+ function renderDrawer (){
+ 
+ return (
+ 
+   <Drawer
+        className={classes.drawer}
+      onClose={handleDrawerClose}
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+     
+   
+        <List>
+     {isAuthorized ? (
+    
+        <ListItem button onClick={logUserOut} > 
+          
+          
+              <ListItemIcon> <ExitToApp/></ListItemIcon>   Sign out
+         
+           
+        </ListItem> 
+        ) :(
+         <>
+        <Link className={classes.link} to="/login">   
+        <ListItem button > 
+          
+          
+              <ListItemIcon> <ExitToApp/></ListItemIcon>   Sign In
+         
+           
+        </ListItem> 
+         </Link>
+        <Divider />
+        <Link className={classes.link} to="/signup">
+          <ListItem button > 
+             
+           
+            <ListItemIcon> <HowToRegIcon/></ListItemIcon>      Sign up
+            
+         
+         
+        </ListItem> 
+           </Link>
+           </>
+           )}
+        </List>
+        
+        </Drawer>);
+ 
+ }
+ if(isMobile){
+  return (
 
-  function renderTopIcon(handleClosen) {
-    if (muser.email) {
-      return (
-        <div>
-          <IconButton
-            edge="end"
-            aria-label="account of current user"
-            aria-haspopup="true"
-            color="inherit"
-            onClick={handleClick}
-          >
-            <Avatar className={classes.avatar}>
-              {" "}
-              {muser.email.slice(0, 2).toUpperCase()}{" "}
-            </Avatar>
-          </IconButton>
+    <AppBar position="sticky"  className={classes.appbar}>
+    {renderDrawer()}
+      
+        {" "}
+        <Toolbar
+         className={classes.toolBar}
+        >
+           <IconButton edge="start" color="secondary" aria-label="menu" onClick={handleDrawerOpen}>
+      <MenuIcon />
+    </IconButton>
 
-          <Menu
-            id="simple-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={logUserOut}>
-              <ExitToApp className={classes.menuIcons} /> LogOut
-            </MenuItem>
-          </Menu>
-        </div>
-      );
-    } else {
-      if (window.innerWidth > 500) {
-        return (
-          <div>
-            <Link className={classes.link} to="/login">
+            <Link to="/" className={classes.link}>
+              <img alt="logo" className={classes.large} src={logo} />
+            </Link>
+                   <Link className={classes.link} to="/cart">
+                <IconButton color="inherit" aria-label="Shopping Cart"
+                >
+                  <ShoppingCart />
+              
+                </IconButton>
+              </Link>
+
+        </Toolbar>
+     
+    </AppBar>
+       
+  );
+  }
+  
+  return (
+   <AppBar position="sticky" className={classes.appbar}>
+      <Toolbar
+        >
+        <div className={classes.desktopTitle} >
+          <Link to="/" className={classes.link}>
+              <img alt="logo" className={classes.large} src={logo} />
+            </Link>
+            </div>
+            
+            <div className={classes.desktopNav}>
+           {isAuthorized ? (
+            
+              <Button color="primary"  onClick={logoutUser}>
+             
+             LogOut
+              </Button>
+            
+           ) :(
+            <>
+           <Link className={classes.link} to="/login">
               {" "}
-              <Button color="primary" variant="outlined" onClick={handleClose}>
+              <Button color="primary" >
                 {" "}
                 Sign In
               </Button>
@@ -147,49 +254,25 @@ function TopBar(props) {
 
             <Link className={classes.link} to="/signup">
               {" "}
-              <Button color="primary" variant="contained" onClick={handleClose}>
+              <Button color="primary" variant="contained" elevation={0} >
                 {" "}
                 Sign up
               </Button>
-            </Link>
+            </Link></>
+            )}
+                     <Link className={classes.link} to="/cart">
+                <IconButton color="inherit" aria-label="Shopping Cart"
+                >
+                  <ShoppingCart />
+              
+                </IconButton>
+              </Link>
           </div>
-        );
-      }
-
-      return (
-        <Link className={classes.link} to="/signup">
-          {" "}
-          <Button color="primary" variant="contained" onClick={handleClose}>
-            {" "}
-            Sign up
-          </Button>
-        </Link>
-      );
-    }
-  }
-
-  const classes = useStyles();
-
-  return (
-    <AppBar position="static" color="transparent" elevation={0}>
-      <div className={classes.container}>
-        {" "}
-        <Toolbar
-          style={{
-            minHeight: "80px",
-          }}
-        >
-          <div className={classes.title}>
-            <Link to="/">
-              <img alt="logo" className={classes.large} src={logo} />
-            </Link>
-          </div>
-
-          {renderTopIcon(handleClose)}
-        </Toolbar>
-      </div>
+     
+  </Toolbar>
+     
     </AppBar>
-  );
+  )
 }
 
 TopBar.propTypes = {
@@ -220,6 +303,7 @@ const mapStatetoProps = (state) => {
     user: state.auth.user,
     token: state.auth.token,
     debug: state.auth.debug,
+    isAuthorized: state.auth.isAuthorized
   };
 };
 export default connect(mapStatetoProps, { logoutUser })(TopBar);

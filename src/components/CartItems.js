@@ -25,8 +25,8 @@ import { removeItemfromCart, clearCart } from "../store/actions";
 // utils
 import { getTotal, removeDuplicates } from "../constants";
 
-// eslint-disable-next-line no-unused-vars
-import { Food } from "../constants";
+// hooks
+import useWidth from "../hooks/useWidth";
 
 /**
  *
@@ -41,6 +41,7 @@ function CartItems(props) {
   let [_, setItems] = useState(props.shoppingCartItems.length);
   const [message, setMessage] = useState("Cart was cleared");
   const [open, setOpen] = useState(false);
+  const width = useWidth('100%', '85%');
 
   /**
    * Utitlity function that is used to count how many of an item there is
@@ -74,12 +75,34 @@ function CartItems(props) {
   const handleClose = (event, reason) => {
     setOpen(false);
   };
+  
+  if(!props.shoppingCartItems.length) {
+  
+  return (
+  <div style={{
+  
+  height: '100vh',
+position: 'fixed',
+top: 0,
+zIndex: '-9',
+display: 'flex',
+width: '100vw',
+alignContent: 'center',
+alignItems: 'center',
+textAlign: 'center',
+justifyContent: 'center',
+  }}>
+  <Typography> There is nothing here </Typography>
+  
+   </div>
+  )
+  }
 
   return (
     <div>
       <List
         style={{
-          width: window.innerWidth > 500 ? "85%" : "90%",
+          width,
           margin: "0 auto",
         }}
       >

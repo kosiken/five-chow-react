@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   root: {
-    width: window.innerWidth > 500 ? "80%" : "90%",
+    width: window.innerWidth > 500 ? "80%" : "100%",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
 
   actiondiv: {
     display: "flex",
-    width: "80%",
+    width: window.innerWidth > 500 ?"80%":"88%",
     justifyContent: "space-around",
     marginBottom: "2em",
   },
@@ -216,17 +216,14 @@ function Login(props) {
           />
         </div>
 
-        <div className={classes.actiondiv}>
+      {/*  <div className={classes.actiondiv}>
           <Link to="/forgotpassword">
             <Button color="primary">Forgot Password</Button>
           </Link>
-          <Link to={"/signup" + location}>
-            <Button c variant="contained" color="secondary">
-              Sign Up
-            </Button>
-          </Link>
-        </div>
+        
+        </div>*/}
         <div className={classes.inputDiv}>
+         
           <Button
             variant="contained"
             className={classes.btn}
@@ -236,6 +233,15 @@ function Login(props) {
           >
             Login
           </Button>
+          
+           <Link to={"/signup" + location}>
+            <Button className={classes.btn} style={{
+            
+            marginTop: "1em",
+            }} color="secondary">
+              Sign Up
+            </Button>
+          </Link>
         </div>
       </form>
 

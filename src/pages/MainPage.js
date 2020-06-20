@@ -21,6 +21,7 @@ import CartItems from "../components/CartItems";
 import CheckOut from "../components/CheckOut";
 import ComboBox from "../components/ComboBox";
 import NotFound from "../components/NotFound";
+import Order from "../components/Order";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,6 +94,9 @@ console.log('loaded paystack')
 
             <Route path="/resturants">
               <ResturantList />
+            </Route>
+            <Route exact path="/orders/:id`">
+              <Order />
             </Route>
             <Route path="/checkout">
               <CheckOut amount={1000} />

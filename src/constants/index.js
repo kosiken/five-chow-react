@@ -40,7 +40,7 @@ const resturants = [
 export class Food {
   constructor(name, price, picture, id, resturant_id, index, rname) {
     this.name = name;
-    this.price = price;
+    this.price = Math.round(parseInt(price));
     this.picture = picture || pics.fitems[index % 3];
     this.id = id;
     this.resturant_id = resturant_id;

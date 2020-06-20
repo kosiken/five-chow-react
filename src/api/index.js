@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosInstance} from "axios";
 
 import {Food, Resturant} from '../constants'
 
@@ -146,7 +146,19 @@ class FiveWebApi {
       }
   }
   
+async getOrder(token, id) {
+  let resp =await this.api.get("/orders/"+id, {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  });
 
+  if (goodResponse(resp)) {
+    return resp.data;
+  } else {
+    throw new FiveChowError(resp);
+  }
+}
 }
 
 export default new FiveWebApi(Axios);

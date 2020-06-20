@@ -153,7 +153,7 @@ function paystackPay(total) {
     let cartMap = Object.create(null);
     let total = 0
     for (let item of props.shoppingCartItems) {
-      total += parseInt(item.price);
+      total += Math.round(parseInt(item.price));
       if (!cartMap[item.id]) {
         cartMap[item.id] = item;
         cartMap[item.id].count = 1;
@@ -180,8 +180,8 @@ function paystackPay(total) {
     };
    let paystackResponsse = await paystackPay(total)
      let apiResponse = await api.createOrder(props.token, orderObject)
-     console.log(apiResponse)
-     setRedirectTo(`/order?orderId=${apiResponse.id}`);
+     console.log(apiResponse, paystackResponsse)
+     setRedirectTo(`/orders/${apiResponse.id}`);
      
   }
 

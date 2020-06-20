@@ -141,7 +141,7 @@ function paystackPay(total) {
       }
   
     };
-   const paystackPopup = window.PaystackPop.setup(config);
+   const paystackPopup =  window.PaystackPop.setup(config);
    paystackPopup.openIframe();
   })
 }

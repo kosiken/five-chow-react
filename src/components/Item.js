@@ -14,6 +14,18 @@ import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 
 const useStyles = makeStyles({
 
+  sectionInfo: {
+    padding: "0px 5px",
+  },
+
+  foodTitle: {
+    fontWeight: "bold",
+  },
+  foodImg: {
+    width: "100px",
+    minWidth: "80px",
+    maxHeight: "80px",
+  },
   cartActions: {
     display: "flex",
     justifyContent: "center",

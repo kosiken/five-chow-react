@@ -99,7 +99,16 @@ function CartItems(props) {
   }
 
   return (
-    <div>
+    <div  style={{
+
+        minHeight: '100vh',
+        
+        
+        
+        display: 'flex',
+        width: '100vw',
+        position:'relative',
+      }}>
       <List
         style={{
           width,
@@ -138,7 +147,7 @@ function CartItems(props) {
       </List>
       <div
         style={{
-          position: "fixed",
+          position: "absolute",
           width: "100vw",
           bottom: "0",
           left: "0",

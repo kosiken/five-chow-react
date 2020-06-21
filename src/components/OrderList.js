@@ -156,6 +156,7 @@ width,
 display: 'flex',
 'flex-direction': 'column',
 'align-items': 'center',
+margin:'0 auto',
 }}>
    {orders.map(order => (<Order static order={order}/>))}
 </div>

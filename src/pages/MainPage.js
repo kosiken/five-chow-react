@@ -21,6 +21,7 @@ import CheckOut from "../components/CheckOut";
 import ComboBox from "../components/ComboBox";
 import NotFound from "../components/NotFound";
 import Order from "../components/Order";
+import OrderList from "../components/OrderList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +88,11 @@ function MainPage(props) {
             <Route exact path="/orders/:id">
               <Order />
             </Route>
+
+            <Route exact path="/orderlist">
+              <OrderList />
+            </Route>
+            
             <Route path="/checkout">
               <CheckOut amount={1000} />
             </Route>

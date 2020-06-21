@@ -159,6 +159,20 @@ async getOrder(token, id) {
     throw new FiveChowError(resp);
   }
 }
+
+async getOrders(token) {
+  let resp =await this.api.get("/orderslist", {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  });
+
+  if (goodResponse(resp)) {
+    return resp.data;
+  } else {
+    throw new FiveChowError(resp);
+  }
+}
 }
 
 export default new FiveWebApi(Axios);

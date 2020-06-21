@@ -99,7 +99,7 @@ function Order(props) {
   }
   // eslint-disable-next-line 
   useEffect(() => {
-    getOrder();
+   if(!props.static) getOrder();
     // eslint-disable-next-line 
   }, [])
   const handleErrorClose = () => {
@@ -125,6 +125,7 @@ function Order(props) {
             <List>
 
               {morder.order_items.map(ord => {
+                if(!ord) return false;
                 return (
                   <ListItem key={ord.id}>
                     <ListItemText><span style={{ fontWeight: 'bold' }}>{ord.quantity + "x "}</span>{ord.food_item.name}</ListItemText>
@@ -177,7 +178,9 @@ function Order(props) {
 
 
   }
-
+if(props.static) {
+  return renderOrders(props.order)
+}
 
 
   return (

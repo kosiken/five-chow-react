@@ -155,11 +155,19 @@ function TopBar(props) {
 
         <List>
           {isAuthorized ? (
-
+          <>
+            <Link className={classes.link} to="/orderlist">
+                  <ListItem button onClick={handleDrawerClose}>
+                    <ListItemIcon> <ShoppingCart /></ListItemIcon>
+                   Orders
+        </ListItem>
+                </Link>
             <ListItem button onClick={logUserOut} >
               <ListItemIcon> <ExitToApp /></ListItemIcon>
               Sign out
+            
             </ListItem>
+            </>
           ) : (
               <>
                 <Link className={classes.link} to="/login">
@@ -185,7 +193,7 @@ function TopBar(props) {
   if (isMobile) {
     return (
 
-      <AppBar position="sticky" className={classes.appbar}>
+      <AppBar position="static" className={classes.appbar}>
         {renderDrawer()}
 
         {" "}
@@ -215,7 +223,7 @@ function TopBar(props) {
   }
 
   return (
-    <AppBar position="sticky" className={classes.appbar}>
+    <AppBar position="static" className={classes.appbar}>
       <Toolbar
       >
         <div className={classes.desktopTitle} >
@@ -226,12 +234,17 @@ function TopBar(props) {
 
         <div className={classes.desktopNav}>
           {isAuthorized ? (
-
+<>
+ <Link className={classes.link} to="/orderlist">
+                  {" "}
+                  <Button color="primary" elevation={0} >                   
+                Orders
+              </Button>
+              </Link>
             <Button color="primary" onClick={logoutUser}>
-
-              LogOut
-            </Button>
-
+             LogOut
+           </Button>
+</>
           ) : (
               <>
                 <Link className={classes.link} to="/login">

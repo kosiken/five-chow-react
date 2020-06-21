@@ -108,6 +108,7 @@ function CheckOut(props) {
     setOpen(false);
   };
   const handleOpen = (m) => {
+    setLoading(false);
     setMessage(m);
     setOpen(true);
   };
@@ -183,12 +184,16 @@ function CheckOut(props) {
         };
       }),
     };
+    try {
     let paystackResponsse = await paystackPay(total)
     let apiResponse = await api.createOrder(props.token, orderObject)
     console.log(apiResponse, paystackResponsse)
     props.clearCart();
     setRedirectTo(`/orders/${apiResponse.id}`);
-
+    }
+    catch(err) {
+      handleOpen('There was an error. You may have some script blocking browser extensions or it may be from us');
+    }
   }
 
   if (!props.isAuthorized) {

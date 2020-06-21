@@ -11,6 +11,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { addItemToCart, removeItemfromCart } from "../store/actions";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
 
@@ -19,9 +20,15 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    position:'relative'
   },
   btn: {
   width: '100%'
+  },
+  toCart: {
+    position: 'absolute',
+    right: '0',
+    
   }
 });
 
@@ -65,6 +72,9 @@ function removeFromCart() {
             <AddCircleIcon />
           </IconButton>
         </section>
+        <Link to="/cart" className={classes.toCart}>
+          <Button>Continue </Button>
+        </Link>
       </div>
 
   );

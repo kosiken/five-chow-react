@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: "none",
-    color:'inherit'
+    color: 'inherit'
   },
 
   menuButton: {
@@ -98,7 +98,8 @@ const useStyles = makeStyles((theme) => ({
  */
 function TopBar(props) {
   const { logoutUser, user, isAuthorized } = props;
-
+  const classes = useStyles();
+  const isMobile = useWidth(true, false);
 
   const [muser, setUser] = React.useState(user);
   React.useEffect(() => {
@@ -117,9 +118,10 @@ function TopBar(props) {
   };
 
 
-  const classes = useStyles();
-  const isMobile = useWidth(true, false);
 
+/**
+ * This function is used to logout a user
+ */
   function logUserOut() {
     handleDrawerClose();
 
@@ -156,17 +158,17 @@ function TopBar(props) {
 
         <List>
           {isAuthorized ? (
-          <>
-            <Link className={classes.link} to="/orderlist">
-                  <ListItem button onClick={handleDrawerClose}>
-                    <ListItemIcon> <ShoppingCart /></ListItemIcon>
+            <>
+              <Link className={classes.link} to="/orderlist">
+                <ListItem button onClick={handleDrawerClose}>
+                  <ListItemIcon> <ShoppingCart /></ListItemIcon>
                    Orders
         </ListItem>
-                </Link>
-            <ListItem button onClick={logUserOut} >
-              <ListItemIcon> <ExitToApp /></ListItemIcon>
+              </Link>
+              <ListItem button onClick={logUserOut} >
+                <ListItemIcon> <ExitToApp /></ListItemIcon>
               Sign out
-            
+
             </ListItem>
             </>
           ) : (
@@ -222,61 +224,62 @@ function TopBar(props) {
 
     );
   }
+  else {
+    return (
+      <AppBar position="static" className={classes.appbar}>
+        <Toolbar
+        >
+          <div className={classes.desktopTitle} >
+            <Link to="/" className={classes.link}>
+              <img alt="logo" className={classes.large} src={logo} />
+            </Link>
+          </div>
 
-  return (
-    <AppBar position="static" className={classes.appbar}>
-      <Toolbar
-      >
-        <div className={classes.desktopTitle} >
-          <Link to="/" className={classes.link}>
-            <img alt="logo" className={classes.large} src={logo} />
-          </Link>
-        </div>
-
-        <div className={classes.desktopNav}>
-          {isAuthorized ? (
-<>
- <Link className={classes.link} to="/orderlist">
-                  {" "}
-                  <Button color="primary" elevation={0} >                   
-                Orders
-              </Button>
-              </Link>
-            <Button color="primary" onClick={logoutUser}>
-             LogOut
-           </Button>
-</>
-          ) : (
+          <div className={classes.desktopNav}>
+            {isAuthorized ? (
               <>
-                <Link className={classes.link} to="/login">
+                <Link className={classes.link} to="/orderlist">
                   {" "}
-                  <Button color="primary" >
-                    {" "}
-                Sign In
+                  <Button color="primary" elevation={0} >
+                    Orders
               </Button>
                 </Link>
-
-                <Link className={classes.link} to="/signup">
-                  {" "}
-                  <Button color="primary" variant="contained" elevation={0} >
+                <Button color="primary" onClick={logoutUser}>
+                  LogOut
+           </Button>
+              </>
+            ) : (
+                <>
+                  <Link className={classes.link} to="/login">
                     {" "}
+                    <Button color="primary" >
+                      {" "}
+                Sign In
+              </Button>
+                  </Link>
+
+                  <Link className={classes.link} to="/signup">
+                    {" "}
+                    <Button color="primary" variant="contained" elevation={0} >
+                      {" "}
                 Sign up
               </Button>
-                </Link></>
-            )}
-          <Link className={classes.link} to="/cart">
-            <IconButton color="inherit" aria-label="Shopping Cart"
-            >
-              <ShoppingCart />
+                  </Link></>
+              )}
+            <Link className={classes.link} to="/cart">
+              <IconButton color="inherit" aria-label="Shopping Cart"
+              >
+                <ShoppingCart />
 
-            </IconButton>
-          </Link>
-        </div>
+              </IconButton>
+            </Link>
+          </div>
 
-      </Toolbar>
+        </Toolbar>
 
-    </AppBar>
-  )
+      </AppBar>
+    );
+  }
 }
 
 TopBar.propTypes = {

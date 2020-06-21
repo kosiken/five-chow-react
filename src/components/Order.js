@@ -2,19 +2,26 @@ import React, {
   useState, useEffect
 } from 'react';
 import { connect } from "react-redux";
-import moment from 'moment'
+import moment from 'moment';
+import PropTypes from "prop-types";
+
 import { makeStyles } from "@material-ui/styles";
 import { useParams } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
+
 import CircularProgress from '@material-ui/core/CircularProgress';
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
+
 import Chip from '@material-ui/core/Chip';
 import ListItem from "@material-ui/core/ListItem";
 import Button from "@material-ui/core/Button";
+
 import Divider from "@material-ui/core/Divider";
 import { red, green, deepPurple, blue } from "@material-ui/core/colors";
 import Typography from "@material-ui/core/Typography";
+
+
 import api from "../api";
 
 const useStyles = makeStyles((theme) => {
@@ -86,18 +93,29 @@ const statuses = [
   "Delivered",
   "Cancelled"];
 
+/**
+ * Renders an order item 
+ * @component
+ *  
+ */
 function Order(props) {
+
   const classes = useStyles();
   const [error, setError] = useState(false);
   const [order, setOrder] = useState(null)
+
   const { id } = useParams();
+
   function getOrder() {
+
     if (error) handleErrorClose();
+
     api.getOrder(props.token, id).then(setOrder)
       .catch(handleErrorOpen)
 
   }
-  // eslint-disable-next-line 
+
+
   useEffect(() => {
    if(!props.static) getOrder();
     // eslint-disable-next-line 
@@ -190,6 +208,24 @@ if(props.static) {
 
     </div>
   )
+}
+
+Order.propTypes = {
+    /**
+   * The api auth token
+   */
+  token: PropTypes.string.isRequired,
+  /**
+   * Tells if the component is standalone or is rendered in another
+   * fivechow component
+   */
+  static: PropTypes.bool,
+
+  /**
+   * An order object passed on by a parent component
+   */
+  order: PropTypes.object
+
 }
 const mapStatetoProps = (state) => {
   return {

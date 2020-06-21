@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React from "react";
 
 import { Link, BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -50,8 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 function MainPage(props) {
   const classes = useStyles();
-  // eslint-disable-next-line no-unused-vars
-  const [loadedPaystack, setLoaded] =useState(false)
+
 
 
 

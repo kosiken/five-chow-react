@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Snackbar from "@material-ui/core/Snackbar";
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     backgroundColor: "white",
     maxWidth: "500px",
-
+ position: 'relative',
     padding: "2em 0",
     boxShadow:
       "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
@@ -164,6 +165,12 @@ function SignUp(props) {
             padding: "1em",
           }}
         >
+                 {isLoading && (<LinearProgress color="secondary" style={{
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          width: '100%'
+        }} />)};
           <Link to="/">
             <img
               alt="logo"

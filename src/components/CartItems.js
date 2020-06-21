@@ -14,11 +14,13 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Snackbar from "@material-ui/core/Snackbar";
-import Fab from '@material-ui/core/Fab';
+
+
 // icons
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import DeleteIcon from '@material-ui/icons/Delete';
+import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 //actions
 import { removeItemfromCart, clearCart } from "../store/actions";
 
@@ -86,13 +88,15 @@ function CartItems(props) {
         top: 0,
         
         display: 'flex',
+        flexDirection:'column',
         width: '100vw',
         alignContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
         justifyContent: 'center',
       }}>
-        <Typography> There is nothing here </Typography>
+      <ViewAgendaIcon style={{ fontSize: 40 }}  />
+        <Typography> There is nothing here, <Link to="/"> Go Home </Link> </Typography>
 
       </div>
     )
@@ -101,15 +105,15 @@ function CartItems(props) {
   return (
     <div  style={{
 
-        minHeight: '100vh',
+     
+          minHeight: '100vh',
         
         
-        
-        display: 'flex',
+      
         width: '100vw',
         position:'relative',
       }}>
-      <List
+<List
         style={{
           width,
           margin: "0 auto",
@@ -145,20 +149,33 @@ function CartItems(props) {
           );
         })}
       </List>
+            <div style={{textAlign:'center'}} >
+        <IconButton color="primary" onClick={clear} aria-label="clear cart" >
+          <DeleteIcon />
+        </IconButton>
+        </div>
+      
       <div
         style={{
           position: "absolute",
           width: "100vw",
           bottom: "0",
           left: "0",
-          padding: "15px",
-          display: "flex",
+          padding: "10px 5px",
+        backgroundColor:'#ffdc4a',
           borderTop: ".5px solid black",
-          alignItems: "center",
-          justifyContent: "space-around",
+         
         }}
       >
+        <div style={{
+            padding: "5px",   display: "flex",
+ alignItems: "center",
+ justifyContent: "space-around",
+ 
+
+        }}>
         <Typography>Total N{getTotal(shoppingCartItems)}</Typography>
+      
 
         <Link to="/checkout">
           {" "}
@@ -168,18 +185,11 @@ function CartItems(props) {
           </Button>
 
         </Link>
+        </div>
       </div>
-      <div style={{
-        position: 'fixed',
-        bottom: '50px',
-
-        width: "100vw",
-        textAlign: 'center'
-      }}>
-        <Fab color="primary" onClick={clear} aria-label="clear cart">
-          <DeleteIcon />
-        </Fab>
-      </div>
+  
+       
+    
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",

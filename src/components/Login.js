@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     maxWidth: "500px",
     backgroundColor: "white",
+         position: 'relative',
 
     padding: "2em 0",
     boxShadow:
@@ -151,6 +153,12 @@ function Login(props) {
 
         onSubmit={handleSubmit(handleSubmitCallback)}
       >
+          {isLoading && (<LinearProgress color="secondary" style={{
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          width: '100%'
+        }} />)};
         <div
           style={{
             padding: "1em",

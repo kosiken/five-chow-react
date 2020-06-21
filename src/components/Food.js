@@ -46,7 +46,8 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
   },
   cardActions: {
-  justifyContent: 'center'
+
+  display: 'block'
   
   }
 }));

@@ -16,6 +16,7 @@ import Avatar from "@material-ui/core/Avatar";
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from "@material-ui/core/Paper";
 import api from "../api";
+import { clearCart } from "../store/actions";
 //  eslint-disable-next-line no-unused-vars
 // import { getTotal, Food, User } from "../constants";
 
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
- background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
+      background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
       padding: "0 0 1.5em 0",
       width: "100vw",
       top: 0,
@@ -38,12 +39,12 @@ const useStyles = makeStyles((theme) => {
       width: window.innerWidth > 500 ? "85%" : "90%",
       display: "block",
       padding: '1em',
-      position:'relative'
+      position: 'relative'
 
-     
+
     },
-    form: { width:'100%'},
-      containerDiv: {
+    form: { width: '100%' },
+    containerDiv: {
       padding: "1em",
       border: ".5px solid currentColor",
       borderRadius: "5px",
@@ -60,8 +61,8 @@ const useStyles = makeStyles((theme) => {
     },
     btn: {
       backgroundColor: "rgb(11, 164, 219)",
-      color: "white",margin:'1em auto',
-      
+      color: "white", margin: '1em auto',
+
     },
     btnSubmit: {
       margin: "1.5em auto 0",
@@ -98,62 +99,62 @@ const useStyles = makeStyles((theme) => {
 function CheckOut(props) {
   const classes = useStyles();
   const { register, handleSubmit, errors } = useForm();
-   const [message, setMessage] = React.useState("Processing Payment");
-    const [open, setOpen] = React.useState(false);
-    const [redirectTo, setRedirectTo] = React.useState('');
-   const  [isLoading, setLoading]=React.useState(false);
+  const [message, setMessage] = React.useState("Processing Payment");
+  const [open, setOpen] = React.useState(false);
+  const [redirectTo, setRedirectTo] = React.useState('');
+  const [isLoading, setLoading] = React.useState(false);
   // let [total] = React.useState(getTotal(props.shoppingCartItems));
- const handleClose = () => {
+  const handleClose = () => {
     setOpen(false);
   };
-   const handleOpen = (m) => {
-      setMessage(m);
+  const handleOpen = (m) => {
+    setMessage(m);
     setOpen(true);
   };
 
-function paystackPay(total) {
-  return new Promise((res) => {
-  console.log(total)
-    const config = {
+  function paystackPay(total) {
+    return new Promise((res) => {
+      console.log(total)
+      const config = {
 
-      key: 'pk_test_8375cb0559631010056db94e05b725e445435002', // Replace with your public key
-  
-      email: props.user.email,
-  
-      amount: total* 100,
- 
-  
-      currency: "NGN", //GHS for Ghana Cedis
-  
-    //use your reference or leave empty to have a reference generated for you
-  
-      // label: "Optional string that replaces customer email"
-  
-      onClose: function(){
-  
-        console.log('Window closed.');
-  
-      },
-  
-      callback: function(response){
-  
-       handleOpen('Payment complete! Thanks for your patronage');
-        res(response.reference)
-        
-  
-      }
-  
-    };
-   const paystackPopup =  window.PaystackPop.setup(config);
-   paystackPopup.openIframe();
-  })
-}
+        key: 'pk_test_8375cb0559631010056db94e05b725e445435002', // Replace with your public key
+
+        email: props.user.email,
+
+        amount: total * 100,
+
+
+        currency: "NGN", //GHS for Ghana Cedis
+
+        //use your reference or leave empty to have a reference generated for you
+
+        // label: "Optional string that replaces customer email"
+
+        onClose: function () {
+
+          console.log('Window closed.');
+
+        },
+
+        callback: function (response) {
+
+          handleOpen('Payment complete! Thanks for your patronage');
+          res(response.reference)
+
+
+        }
+
+      };
+      const paystackPopup = window.PaystackPop.setup(config);
+      paystackPopup.openIframe();
+    })
+  }
 
   /**
    * Temporary function to create an order object
    */
-   async function makeOrder(s) {
-   setLoading(true);
+  async function makeOrder(s) {
+    setLoading(true);
     let cartMap = Object.create(null);
     let total = 0
     for (let item of props.shoppingCartItems) {
@@ -182,160 +183,161 @@ function paystackPay(total) {
         };
       }),
     };
-   let paystackResponsse = await paystackPay(total)
-     let apiResponse = await api.createOrder(props.token, orderObject)
-     console.log(apiResponse, paystackResponsse)
-     setRedirectTo(`/orders/${apiResponse.id}`);
-     
+    let paystackResponsse = await paystackPay(total)
+    let apiResponse = await api.createOrder(props.token, orderObject)
+    console.log(apiResponse, paystackResponsse)
+    props.clearCart();
+    setRedirectTo(`/orders/${apiResponse.id}`);
+
   }
 
   if (!props.isAuthorized) {
     return <Redirect to={"/login?redirectTo=checkout"} />;
   }
-  
-  if(redirectTo.length) {
-return  <Redirect to={redirectTo} />
-  
+
+  if (redirectTo.length) {
+    return <Redirect to={redirectTo} />
+
   }
 
   return (
     <div className={classes.div}>
-    <Paper className={classes.root}>
-   {isLoading&& (<LinearProgress style={{
-     position:'absolute',
-     top:'0',
-     left:'0',
-     width:'100%'
-   }} />)};
+      <Paper className={classes.root}>
+        {isLoading && (<LinearProgress color="secondary" style={{
+          position: 'absolute',
+          top: '0',
+          left: '0',
+          width: '100%'
+        }} />)};
       <form
-        className={classes.form}
-        noValidate
-        onSubmit={handleSubmit(makeOrder)}
-      >
-        <div className={classes.containerDiv}>
-          <label className={classes.labeling}>Location information</label>
-          <div className={classes.inputDiv}>
-            <TextField
-              color="secondary"
-              label="Street *"
-              name={"street"}
-              variant="outlined"
-              multiline
-              className={classes.input}
-              inputProps={{
-                ref: register({
-                  required: {
-                    value: true,
-                    message: "You have to enter a street for delivering",
-                  },
-                }),
-              }}
-              error={!!errors.street}
-              helperText={errors.street?.message}
-            />
-            <TextField
-              color="secondary"
-              label="ZipCode*"
-              className={classes.input}
-              name={"zip_code"}
-              variant="outlined"
-              multiline
-              inputProps={{
-                ref: register({
-                  required: {
-                    value: true,
-                    message: "You have to enter a zip code for delivering",
-                  },
-                }),
-              }}
-              error={!!errors.zip_code}
-              helperText={errors.zip_code?.message}
-            />
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmit(makeOrder)}
+        >
+          <div className={classes.containerDiv}>
+            <label className={classes.labeling}>Location information</label>
+            <div className={classes.inputDiv}>
+              <TextField
+                color="secondary"
+                label="Street *"
+                name={"street"}
+                variant="outlined"
+                multiline
+                className={classes.input}
+                inputProps={{
+                  ref: register({
+                    required: {
+                      value: true,
+                      message: "You have to enter a street for delivering",
+                    },
+                  }),
+                }}
+                error={!!errors.street}
+                helperText={errors.street?.message}
+              />
+              <TextField
+                color="secondary"
+                label="ZipCode*"
+                className={classes.input}
+                name={"zip_code"}
+                variant="outlined"
+                multiline
+                inputProps={{
+                  ref: register({
+                    required: {
+                      value: true,
+                      message: "You have to enter a zip code for delivering",
+                    },
+                  }),
+                }}
+                error={!!errors.zip_code}
+                helperText={errors.zip_code?.message}
+              />
+            </div>
+            <div className={classes.inputDiv}>
+              <TextField
+                color="secondary"
+                label="City"
+                className={classes.input}
+                name={"city"}
+                variant="outlined"
+                inputProps={{
+                  ref: register({
+                    required: {
+                      value: true,
+                      message: "You have to enter your city",
+                    },
+                  }),
+                }}
+                error={!!errors.city}
+                helperText={errors.city?.message}
+              />
+              <Select
+                native
+                defaultValue={0}
+                inputProps={{
+                  name: "address_type",
+                  id: "address_type",
+                  ref: register(),
+                }}
+              >
+                <option value={0}>Home Address</option>
+                <option value={1}>Office Address</option>
+              </Select>
+            </div>
           </div>
-          <div className={classes.inputDiv}>
+
+          <div className={classes.containerDiv}> <div className={classes.inputDiv}>
+            <label className={classes.labeling}>Payment Information</label>
             <TextField
               color="secondary"
-              label="City"
-              className={classes.input}
-              name={"city"}
+              label="Delivery Phone number *"
+              name={"delivery_phone_number"}
               variant="outlined"
+              multiline
+              className={classes.input}
               inputProps={{
                 ref: register({
                   required: {
                     value: true,
-                    message: "You have to enter your city",
+                    message: "You have to enter a delivery phone number",
                   },
                 }),
               }}
-              error={!!errors.city}
-              helperText={errors.city?.message}
+              error={!!errors.delivery_phone_number}
+              helperText={errors.delivery_phone_number?.message}
             />
             <Select
               native
               defaultValue={0}
               inputProps={{
-                name: "address_type",
-                id: "address_type",
+                name: "payment_method",
+                id: "payment_method",
                 ref: register(),
               }}
             >
-              <option value={0}>Home Address</option>
-              <option value={1}>Office Address</option>
+              <option value={0}>Debit Card</option>
+              <option value={1}>On Delivery</option>
             </Select>
           </div>
-        </div>
-
-        <div className={classes.containerDiv}> <div className={classes.inputDiv}>
-          <label className={classes.labeling}>Payment Information</label>
-          <TextField
-            color="secondary"
-            label="Delivery Phone number *"
-            name={"delivery_phone_number"}
-            variant="outlined"
-            multiline
-            className={classes.input}
-            inputProps={{
-              ref: register({
-                required: {
-                  value: true,
-                  message: "You have to enter a delivery phone number",
-                },
-              }),
-            }}
-            error={!!errors.delivery_phone_number}
-            helperText={errors.delivery_phone_number?.message}
-          />
-          <Select
-            native
-            defaultValue={0}
-            inputProps={{
-              name: "payment_method",
-              id: "payment_method",
-              ref: register(),
-            }}
-          >
-            <option value={0}>Debit Card</option>
-            <option value={1}>On Delivery</option>
-          </Select>
           </div>
-        </div>
-        <div>
-        <Button
-        type="submit"
-        className={classes.btn}
-        variant="contained"
-        color="info"
-        disabled={isLoading}
-      
-      >
-        <Avatar src={paystack_logo} className={classes.small} />
+          <div>
+            <Button
+              type="submit"
+              className={classes.btn}
+              variant="contained"
+              color="info"
+              disabled={isLoading}
+
+            >
+              <Avatar src={paystack_logo} className={classes.small} />
         Pay with Paystack
       </Button>
-        </div>
-      </form>
+          </div>
+        </form>
       </Paper>
-      
-            <Snackbar
+
+      <Snackbar
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "left",
@@ -401,4 +403,4 @@ const mapStatetoProps = (state) => {
     isAuthorized: state.auth.isAuthorized,
   };
 };
-export default connect(mapStatetoProps, null)(CheckOut);
+export default connect(mapStatetoProps, { clearCart })(CheckOut);

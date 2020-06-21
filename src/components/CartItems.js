@@ -14,11 +14,11 @@ import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Snackbar from "@material-ui/core/Snackbar";
-
+import Fab from '@material-ui/core/Fab';
 // icons
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
 import CloseIcon from "@material-ui/icons/Close";
-
+import DeleteIcon from '@material-ui/icons/Delete';
 //actions
 import { removeItemfromCart, clearCart } from "../store/actions";
 
@@ -75,27 +75,27 @@ function CartItems(props) {
   const handleClose = (event, reason) => {
     setOpen(false);
   };
-  
-  if(!props.shoppingCartItems.length) {
-  
-  return (
-  <div style={{
-  
-  height: '100vh',
-position: 'fixed',
-top: 0,
-zIndex: '-9',
-display: 'flex',
-width: '100vw',
-alignContent: 'center',
-alignItems: 'center',
-textAlign: 'center',
-justifyContent: 'center',
-  }}>
-  <Typography> There is nothing here </Typography>
-  
-   </div>
-  )
+
+  if (!props.shoppingCartItems.length) {
+
+    return (
+      <div style={{
+
+        height: '100vh',
+        position: 'fixed',
+        top: 0,
+        zIndex: '-9',
+        display: 'flex',
+        width: '100vw',
+        alignContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        justifyContent: 'center',
+      }}>
+        <Typography> There is nothing here </Typography>
+
+      </div>
+    )
   }
 
   return (
@@ -150,17 +150,26 @@ justifyContent: 'center',
         }}
       >
         <Typography>Total N{getTotal(shoppingCartItems)}</Typography>
-        <Button color="primary" onClick={clear}>
-          {" "}
-          Clear Cart
-        </Button>
+
         <Link to="/checkout">
           {" "}
           <Button variant="contained" color="primary">
             {" "}
             Continue
-          </Button>{" "}
+          </Button>
+
         </Link>
+      </div>
+      <div style={{
+        position: 'fixed',
+        bottom: '50px',
+
+        width: "100vw",
+        textAlign: 'center'
+      }}>
+        <Fab color="primary" onClick={clear} aria-label="clear cart">
+          <DeleteIcon />
+        </Fab>
       </div>
       <Snackbar
         anchorOrigin={{

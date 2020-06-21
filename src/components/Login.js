@@ -63,13 +63,13 @@ const useStyles = makeStyles((theme) => ({
   inputDiv: {
     dusplay: "block",
     marginBottom: "2em",
-    width: "80%",
+    width: window.innerWidth > 500 ? "80%" : "88%",
   },
   btn: { margin: "0 auto", width: "100%" },
 
   actiondiv: {
     display: "flex",
-    width: window.innerWidth > 500 ?"80%":"88%",
+    width: window.innerWidth > 500 ? "80%" : "88%",
     justifyContent: "space-around",
     marginBottom: "2em",
   },
@@ -148,7 +148,7 @@ function Login(props) {
     <div className={classes.div}>
       <form
         className={classes.root}
-   
+
         onSubmit={handleSubmit(handleSubmitCallback)}
       >
         <div
@@ -216,14 +216,14 @@ function Login(props) {
           />
         </div>
 
-      {/*  <div className={classes.actiondiv}>
+        {/*  <div className={classes.actiondiv}>
           <Link to="/forgotpassword">
             <Button color="primary">Forgot Password</Button>
           </Link>
         
         </div>*/}
         <div className={classes.inputDiv}>
-         
+
           <Button
             variant="contained"
             className={classes.btn}
@@ -233,11 +233,11 @@ function Login(props) {
           >
             Login
           </Button>
-          
-           <Link to={"/signup" + location}>
+
+          <Link to={"/signup" + location}>
             <Button className={classes.btn} style={{
-            
-            marginTop: "1em",
+
+              marginTop: "1em",
             }} color="secondary">
               Sign Up
             </Button>

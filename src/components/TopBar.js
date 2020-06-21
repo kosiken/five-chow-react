@@ -16,7 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import IconButton from "@material-ui/core/IconButton";
 import HowToRegIcon from '@material-ui/icons/HowToReg';
-import ExitToApp  from "@material-ui/icons/ExitToApp";
+import ExitToApp from "@material-ui/icons/ExitToApp";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { deepOrange } from "@material-ui/core/colors";
@@ -63,26 +63,26 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepOrange[500]),
     backgroundColor: deepOrange[500],
   },
-  toolBar:{
- 
-            display: 'flex',
-justifyContent: 'space-between',
-'*' : {
-flex: '1'
-},
-},
-desktopTitle: {
+  toolBar: {
 
-position: 'absolute',
-width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
+    '*': {
+      flex: '1'
+    },
+  },
+  desktopTitle: {
 
-textAlign: 'center',         
+    position: 'absolute',
+    width: '100%',
+
+    textAlign: 'center',
   },
   desktopNav: {
-  position: 'absolute',
-right: '10px',
+    position: 'absolute',
+    right: '10px',
   },
-    drawer: {
+  drawer: {
     width: 240,
     flexShrink: 0,
   },
@@ -98,7 +98,7 @@ right: '10px',
 function TopBar(props) {
   const { logoutUser, user, isAuthorized } = props;
 
- 
+
   const [muser, setUser] = React.useState(user);
   React.useEffect(() => {
     if (muser.email !== user.email) {
@@ -117,10 +117,11 @@ function TopBar(props) {
 
 
   const classes = useStyles();
- const isMobile = useWidth(true, false);
- 
-   function logUserOut() {
- 
+  const isMobile = useWidth(true, false);
+
+  function logUserOut() {
+    handleDrawerClose();
+
     if (!props.debug) {
       api
         .logOut(props.token)
@@ -132,144 +133,134 @@ function TopBar(props) {
           console.log(e);
         });
       return;
-     
+
     }
     logoutUser();
   }
- 
- function renderDrawer (){
- 
- return (
- 
-   <Drawer
+
+  function renderDrawer() {
+
+    return (
+
+      <Drawer
         className={classes.drawer}
-      onClose={handleDrawerClose}
+        onClose={handleDrawerClose}
         anchor="left"
         open={open}
         classes={{
           paper: classes.drawerPaper,
         }}
       >
-     
-   
-        <List>
-     {isAuthorized ? (
-    
-        <ListItem button onClick={logUserOut} > 
-          
-          
-              <ListItemIcon> <ExitToApp/></ListItemIcon>   Sign out
-         
-           
-        </ListItem> 
-        ) :(
-         <>
-        <Link className={classes.link} to="/login">   
-        <ListItem button > 
-          
-          
-              <ListItemIcon> <ExitToApp/></ListItemIcon>   Sign In
-         
-           
-        </ListItem> 
-         </Link>
-        <Divider />
-        <Link className={classes.link} to="/signup">
-          <ListItem button > 
-             
-           
-            <ListItemIcon> <HowToRegIcon/></ListItemIcon>      Sign up
-            
-         
-         
-        </ListItem> 
-           </Link>
-           </>
-           )}
-        </List>
-        
-        </Drawer>);
- 
- }
- if(isMobile){
-  return (
 
-    <AppBar position="sticky"  className={classes.appbar}>
-    {renderDrawer()}
-      
+
+        <List>
+          {isAuthorized ? (
+
+            <ListItem button onClick={logUserOut} >
+              <ListItemIcon> <ExitToApp /></ListItemIcon>
+              Sign out
+            </ListItem>
+          ) : (
+              <>
+                <Link className={classes.link} to="/login">
+                  <ListItem button onClick={handleDrawerClose}>
+                    <ListItemIcon> <ExitToApp /></ListItemIcon>
+                    Sign In
+        </ListItem>
+                </Link>
+                <Divider />
+                <Link className={classes.link} to="/signup">
+                  <ListItem button onClick={handleDrawerClose}>
+                    <ListItemIcon> <HowToRegIcon /></ListItemIcon>
+                    Sign up
+        </ListItem>
+                </Link>
+              </>
+            )}
+        </List>
+
+      </Drawer>);
+
+  }
+  if (isMobile) {
+    return (
+
+      <AppBar position="sticky" className={classes.appbar}>
+        {renderDrawer()}
+
         {" "}
         <Toolbar
-         className={classes.toolBar}
+          className={classes.toolBar}
         >
-           <IconButton edge="start" color="secondary" aria-label="menu" onClick={handleDrawerOpen}>
-      <MenuIcon />
-    </IconButton>
+          <IconButton edge="start" color="secondary" aria-label="menu" onClick={handleDrawerOpen}>
+            <MenuIcon />
+          </IconButton>
 
-            <Link to="/" className={classes.link}>
-              <img alt="logo" className={classes.large} src={logo} />
-            </Link>
-                   <Link className={classes.link} to="/cart">
-                <IconButton color="inherit" aria-label="Shopping Cart"
-                >
-                  <ShoppingCart />
-              
-                </IconButton>
-              </Link>
+          <Link to="/" className={classes.link}>
+            <img alt="logo" className={classes.large} src={logo} />
+          </Link>
+          <Link className={classes.link} to="/cart">
+            <IconButton color="inherit" aria-label="Shopping Cart"
+            >
+              <ShoppingCart />
+
+            </IconButton>
+          </Link>
 
         </Toolbar>
-     
-    </AppBar>
-       
-  );
+
+      </AppBar>
+
+    );
   }
-  
+
   return (
-   <AppBar position="sticky" className={classes.appbar}>
+    <AppBar position="sticky" className={classes.appbar}>
       <Toolbar
-        >
+      >
         <div className={classes.desktopTitle} >
           <Link to="/" className={classes.link}>
-              <img alt="logo" className={classes.large} src={logo} />
-            </Link>
-            </div>
-            
-            <div className={classes.desktopNav}>
-           {isAuthorized ? (
-            
-              <Button color="primary"  onClick={logoutUser}>
-             
-             LogOut
-              </Button>
-            
-           ) :(
-            <>
-           <Link className={classes.link} to="/login">
-              {" "}
-              <Button color="primary" >
-                {" "}
+            <img alt="logo" className={classes.large} src={logo} />
+          </Link>
+        </div>
+
+        <div className={classes.desktopNav}>
+          {isAuthorized ? (
+
+            <Button color="primary" onClick={logoutUser}>
+
+              LogOut
+            </Button>
+
+          ) : (
+              <>
+                <Link className={classes.link} to="/login">
+                  {" "}
+                  <Button color="primary" >
+                    {" "}
                 Sign In
               </Button>
-            </Link>
+                </Link>
 
-            <Link className={classes.link} to="/signup">
-              {" "}
-              <Button color="primary" variant="contained" elevation={0} >
-                {" "}
+                <Link className={classes.link} to="/signup">
+                  {" "}
+                  <Button color="primary" variant="contained" elevation={0} >
+                    {" "}
                 Sign up
               </Button>
-            </Link></>
+                </Link></>
             )}
-                     <Link className={classes.link} to="/cart">
-                <IconButton color="inherit" aria-label="Shopping Cart"
-                >
-                  <ShoppingCart />
-              
-                </IconButton>
-              </Link>
-          </div>
-     
-  </Toolbar>
-     
+          <Link className={classes.link} to="/cart">
+            <IconButton color="inherit" aria-label="Shopping Cart"
+            >
+              <ShoppingCart />
+
+            </IconButton>
+          </Link>
+        </div>
+
+      </Toolbar>
+
     </AppBar>
   )
 }

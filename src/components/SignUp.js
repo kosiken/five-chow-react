@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
     position: "fixed",
-  
+
     width: "100vw",
     top: 0,
   },
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   inputDiv: {
     dusplay: "block",
     marginBottom: "2em",
-    width: "80%",
+    width: window.innerWidth > 500 ? "80%" : "88%",
   },
   btn: { margin: "0 auto", width: "100%" },
 
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "2em",
   },
   numspan: {
-    marginRight: theme.spacing(2),
+    marginRight: '10px',
   },
 }));
 
@@ -94,11 +94,11 @@ function SignUp(props) {
 
   const [open, setOpen] = useState(false);
 
- /**
-   * This is the callback called when the form is submitted by the
-   * useForm hook https://react-hook-form.com
-   * @param {FormData} s
-   */
+  /**
+    * This is the callback called when the form is submitted by the
+    * useForm hook https://react-hook-form.com
+    * @param {FormData} s
+    */
   const handleSubmitCallback = (s) => {
     setLoading(true);
     if (!props.debug) {
@@ -165,7 +165,7 @@ function SignUp(props) {
         >
           <Link to="/">
             <img
-            alt="logo"
+              alt="logo"
               src={logo}
               style={{
                 width: "60px",

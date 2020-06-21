@@ -6,7 +6,7 @@ import Typography from "@material-ui/core/Typography";
 
 import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
-import msvg from "../assets/undraw_walk_in_the_city_1ma6.svg";
+
 import logo from "../assets/logo-meduim.png";
 
 const useStyles = makeStyles((theme) => ({
@@ -64,14 +64,6 @@ function NotFound() {
         </Typography>
       </Paper>
 
-      <img
-        alt="bgImage"
-        src={msvg}
-        style={{
-          position: "absolute",
-          zIndex: "-1",
-        }}
-      />
     </div>
   );
 }

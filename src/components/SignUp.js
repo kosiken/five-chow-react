@@ -17,8 +17,8 @@ import CloseIcon from "@material-ui/icons/Close";
 import api from "../api";
 import { loginUser } from "../store/actions";
 
-import logo from "../assets/logo-meduim.png";
-import msvg from "../assets/undraw_walk_in_the_city_1ma6.svg";
+import logo from "../assets/logo-variant.png";
+
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
     maxWidth: "500px",
  position: 'relative',
+ borderRadius: '0.5em',
     padding: "2em 0",
     boxShadow:
       "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
@@ -105,7 +106,7 @@ function SignUp(props) {
     setLoading(true);
     if (!props.debug) {
       api
-        .signUp(s)
+        .signUp({...s, email: s.email.toLowerCase()})
         .then((d) => {
           //setLoading(false)
 
@@ -170,7 +171,7 @@ function SignUp(props) {
           top: '0',
           left: '0',
           width: '100%'
-        }} />)};
+        }} />)}
           <Link to="/">
             <img
               alt="logo"
@@ -311,14 +312,7 @@ function SignUp(props) {
           <Button className={classes.btn}> Already signed up? </Button>{" "}
         </Link>
       </form>
-      <img
-        src={msvg}
-        alt="bgImg"
-        style={{
-          position: "absolute",
-          zIndex: "-1",
-        }}
-      />
+ 
 
       <Snackbar
         anchorOrigin={{

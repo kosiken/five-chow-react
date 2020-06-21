@@ -24,12 +24,12 @@ const useStyles = makeStyles((theme) => {
       padding: "0 0 1.5em 0",
       width: "100vw",
       top: 0,
-      height: '100vh',
+      minHeight: '100vh',
       overflowY: 'scroll',
 
     },
     root: {
-      width: window.innerWidth > 500 ? "85%" : "90%",
+      width: window.innerWidth > 500 ? "85%" : "100%",
       display: "block",
       padding: '1em',
 

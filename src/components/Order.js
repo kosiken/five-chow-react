@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => {
    minHeight: "100vh",
     },
     root: {
-      width: window.innerWidth > 500 ? "85%" : "90%",
+      width: window.innerWidth > 500 ? "85%" : "100%",
       display: "block",
       padding: '1em',
 
@@ -139,7 +139,7 @@ function Order(props) {
             <Typography>{morder.order_items[0].food_item.vendor.name}</Typography>
            
           </div>
-          <Paper style={{ padding: '1em', }}>
+          <Paper >
             <List>
 
               {morder.order_items.map(ord => {
@@ -154,11 +154,11 @@ function Order(props) {
               })}
             </List>
             <Divider />
-            <div className={classes.infoDiv} >
+            <div className={classes.infoDiv} style={{ padding: '1em', }}>
               <span>Total</span> <Typography style={{ fontWeight: 'bold' }}>{morder.total_order_price}</Typography>
             </div>
             <Divider />
-            <div className={classes.infoDiv} >
+            <div className={classes.infoDiv} style={{ padding: '1em', }}>
             <Typography>{moment(morder.created_at).format('MMMM Do YYYY, hh:mm ')}</Typography>
               </div>
           </Paper>

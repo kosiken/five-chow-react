@@ -25,7 +25,7 @@ import ShoppingCart from "@material-ui/icons/ShoppingCart";
 
 import useWidth from "../hooks/useWidth";
 import api from "../api";
-import logo from "../assets/logo-meduim.png";
+import logo from "../assets/logo-variant.png";
 
 import { logoutUser } from "../store/actions";
 
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
   },
   desktopNav: {
     position: 'absolute',
-    right: '10px',
+    right: '16px',
   },
   drawer: {
     width: 240,
@@ -240,11 +240,17 @@ function TopBar(props) {
               <>
                 <Link className={classes.link} to="/orderlist">
                   {" "}
-                  <Button color="primary" elevation={0} >
+                  <Button color="primary" style={{
+                   
+                    textTransform:'none'
+                    }} >
                     Orders
               </Button>
                 </Link>
-                <Button color="primary" onClick={logoutUser}>
+                <Button color="primary" style={{
+                   
+                    textTransform:'none'
+                    }} onClick={logoutUser}>
                   LogOut
            </Button>
               </>
@@ -252,7 +258,10 @@ function TopBar(props) {
                 <>
                   <Link className={classes.link} to="/login">
                     {" "}
-                    <Button color="primary" >
+                    <Button color="primary" style={{
+                   
+                    textTransform:'none'
+                    }} >
                       {" "}
                 Sign In
               </Button>
@@ -260,14 +269,17 @@ function TopBar(props) {
 
                   <Link className={classes.link} to="/signup">
                     {" "}
-                    <Button color="primary" variant="contained" elevation={0} >
+                    <Button color="primary" variant="contained" style={{
+                    boxShadow: 'none',
+                    textTransform:'none'
+                    }} >
                       {" "}
                 Sign up
               </Button>
                   </Link></>
               )}
             <Link className={classes.link} to="/cart">
-              <IconButton color="inherit" aria-label="Shopping Cart"
+              <IconButton color="secondary"aria-label="Shopping Cart"
               >
                 <ShoppingCart />
 

@@ -81,10 +81,10 @@ function CartItems(props) {
     return (
       <div style={{
 
-        height: '100vh',
-        position: 'fixed',
+        minHeight: '100vh',
+        
         top: 0,
-        zIndex: '-9',
+        
         display: 'flex',
         width: '100vw',
         alignContent: 'center',

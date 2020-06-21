@@ -47,7 +47,8 @@ const useStyles = makeStyles((theme) => {
     infoDiv: {
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      marginTop: '10px'
     },
 
     Cancelled: {

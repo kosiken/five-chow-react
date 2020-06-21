@@ -119,7 +119,7 @@ function Order(props) {
           <div className={classes.greyDiv}>
             <Chip className={classes[status]} label={status} />
             <Typography>{morder.order_items[0].food_item.vendor.name}</Typography>
-            <Typography>{moment(morder.created_at).format('MMMM Do YYYY, h:mm a')}</Typography>
+           
           </div>
           <Paper style={{ padding: '1em', }}>
             <List>
@@ -138,6 +138,10 @@ function Order(props) {
             <div className={classes.infoDiv} >
               <span>Total</span> <Typography style={{ fontWeight: 'bold' }}>{morder.total_order_price}</Typography>
             </div>
+            <Divider />
+            <div className={classes.infoDiv} >
+            <Typography>{moment(morder.created_at).format('MMMM Do YYYY, hh:mm ')}</Typography>
+              </div>
           </Paper>
 
         </div>

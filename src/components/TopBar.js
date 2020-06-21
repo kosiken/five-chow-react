@@ -209,7 +209,7 @@ function TopBar(props) {
             <img alt="logo" className={classes.large} src={logo} />
           </Link>
           <Link className={classes.link} to="/cart">
-            <IconButton color="inherit" aria-label="Shopping Cart"
+            <IconButton color="secondary" aria-label="Shopping Cart"
             >
               <ShoppingCart />
 

@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => {
       padding: "0 0 1.5em 0",
       width: "100vw",
       top: 0,
-      height: '100vh',
-      overflowY: 'scroll',
+      minHeight: '100vh',
+      
     },
 
     root: {

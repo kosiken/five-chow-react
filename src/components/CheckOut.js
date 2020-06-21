@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Select from "@material-ui/core/Select";
 import Avatar from "@material-ui/core/Avatar";
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Paper from "@material-ui/core/Paper";
 import api from "../api";
 //  eslint-disable-next-line no-unused-vars
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => {
       width: window.innerWidth > 500 ? "85%" : "90%",
       display: "block",
       padding: '1em',
+      position:'relative'
 
      
     },
@@ -99,6 +101,7 @@ function CheckOut(props) {
    const [message, setMessage] = React.useState("Processing Payment");
     const [open, setOpen] = React.useState(false);
     const [redirectTo, setRedirectTo] = React.useState('');
+   const  [isLoading, setLoading]=React.useState(false);
   // let [total] = React.useState(getTotal(props.shoppingCartItems));
  const handleClose = () => {
     setOpen(false);
@@ -150,6 +153,7 @@ function paystackPay(total) {
    * Temporary function to create an order object
    */
    async function makeOrder(s) {
+   setLoading(true);
     let cartMap = Object.create(null);
     let total = 0
     for (let item of props.shoppingCartItems) {
@@ -197,6 +201,12 @@ return  <Redirect to={redirectTo} />
   return (
     <div className={classes.div}>
     <Paper className={classes.root}>
+   {isLoading&& (<LinearProgress style={{
+     position:'absolute',
+     top:'0',
+     left:'0',
+     width:'100%'
+   }} />)};
       <form
         className={classes.form}
         noValidate
@@ -315,6 +325,7 @@ return  <Redirect to={redirectTo} />
         className={classes.btn}
         variant="contained"
         color="info"
+        disabled={isLoading}
       
       >
         <Avatar src={paystack_logo} className={classes.small} />
@@ -323,6 +334,7 @@ return  <Redirect to={redirectTo} />
         </div>
       </form>
       </Paper>
+      
             <Snackbar
         anchorOrigin={{
           vertical: "bottom",

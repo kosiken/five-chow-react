@@ -25,7 +25,6 @@ import Order from "../components/Order";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor:'#f0fbff',
     height:'100vh',
     width:'100vw',
     position:'relative'

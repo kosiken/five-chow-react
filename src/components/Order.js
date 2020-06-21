@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => {
       padding: "0 0 1.5em 0",
       width: "100vw",
       top: 0,
-      height: '100%'
+   minHeight: "100vh",
     },
     root: {
       width: window.innerWidth > 500 ? "85%" : "90%",

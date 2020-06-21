@@ -13,13 +13,13 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: 'white',
-    padding: "20px 0 0",
+  
 
     width: '100%',
   
     bottom:'0',
     left:'0',
-    marginTop: theme.spacing(2),
+   
   },
   
   list: {

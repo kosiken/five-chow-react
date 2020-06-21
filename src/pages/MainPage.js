@@ -77,7 +77,6 @@ function MainPage(props) {
               </div>
 
               <FoodList />
-                <Footer/>
             </Route>
             <Route path="/cart">
               <CartItems />
@@ -85,7 +84,6 @@ function MainPage(props) {
 
             <Route path="/resturants">
               <ResturantList />
-                <Footer/>
             </Route>
             <Route exact path="/orders/:id">
               <Order />
@@ -93,7 +91,6 @@ function MainPage(props) {
 
             <Route exact path="/orderlist">
               <OrderList />
-                <Footer/>.
             </Route>
             
             <Route path="/checkout">
@@ -110,7 +107,7 @@ function MainPage(props) {
 
             <Route path="*" exact={true} component={NotFound} />
           </Switch>
-     
+       <Footer/>
       </div>
     </Router>
   );

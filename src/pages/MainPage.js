@@ -4,7 +4,7 @@ import { Link, BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 
-// import Footer from "../components/Footer";
+ import Footer from "../components/Footer";
 
 // import AccountCircle from "@material-ui/icons/AccountCircle";
 
@@ -107,7 +107,7 @@ function MainPage(props) {
 
             <Route path="*" exact={true} component={NotFound} />
           </Switch>
-       
+       <Footer/>
       </div>
     </Router>
   );

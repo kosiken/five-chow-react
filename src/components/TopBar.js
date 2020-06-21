@@ -35,7 +35,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white !important",
   },
   link: {
-    textDecoration: "none"
+    textDecoration: "none",
+    color:'inherit'
   },
 
   menuButton: {

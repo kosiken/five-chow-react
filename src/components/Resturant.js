@@ -67,9 +67,9 @@ function Resturant(props) {
 
   return (
     <div>
-      <Link className={classes.link} to="/">
+      <Link className={classes.link} to={"/resturant-view/"+resturant.id }>
         <Card onClick={()=> {
-        selectResturant(resturant.id)
+        selectResturant(resturant)
         }}>
           <CardMedia className={classes.media} image={resturant.picture} />
 

@@ -43,9 +43,9 @@ export const fetchFoods = (debug, payload) => (dispatch) => {
   }
 };
 
-export const selectResturant = (id) => (dispatch) => {
+export const selectResturant = (resturant) => (dispatch) => {
   dispatch({
     type: SELECT_RESTURANT,
-    resturantId: id,
+    resturant
   });
 };

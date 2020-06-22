@@ -167,11 +167,11 @@ async getOrders(token) {
     },
   });
 
- // if (goodResponse(resp)) {
+  if (goodResponse(resp)) {
     return resp.data;
-  
-   // throw new FiveChowError(resp);
-  
+  } else {
+    throw new FiveChowError(resp);
+  }
 }
 }
 

@@ -45,7 +45,7 @@ export default (state = initialState, action) => {
     case SELECT_RESTURANT:
       returnValue = {
         ...state,
-        selectedResturant: action.resturantId,
+        selectedResturant: action.resturant,
       };
       break;
 

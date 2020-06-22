@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 345,
     cursor: "pointer",
     paddingTop: '10px',
-    
+    minWidth: 150,
   },
   media: {
     height: 0,

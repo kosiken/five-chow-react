@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // import AccountCircle from "@material-ui/icons/AccountCircle";
 
 import ResturantList from "../components/ResturantList";
-
+import RestaurantPage from "../components/RestaurantPage";
 import TopBar from "../components/TopBar.js";
 import FoodList from "../components/FoodList";
 import Button from "@material-ui/core/Button";
@@ -84,6 +84,9 @@ function MainPage(props) {
 
             <Route path="/resturants">
               <ResturantList />
+            </Route>
+            <Route exact path="/resturant-view/:id">
+              <RestaurantPage />
             </Route>
             <Route exact path="/orders/:id">
               <Order />

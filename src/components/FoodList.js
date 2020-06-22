@@ -176,7 +176,7 @@ const mapStatetoProps = (state) => {
   return {
     foods: state.food.foods,
     debug: state.auth.debug,
-    selectedResturant: state.food.selectedResturant
+   
   };
 };
 

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
+     
       padding: "0 0 1.5em 0",
       width: "100vw",
       top: 0,
@@ -112,7 +112,7 @@ function CheckOut(props) {
     setOpen(false);
   };
   const handleOpen = (m) => {
-    setLoading(false);
+   
     setMessage(m);
     setOpen(true);
   };

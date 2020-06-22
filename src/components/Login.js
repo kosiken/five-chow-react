@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     minHeight: "100vh",
 
-   
+
 
     width: "100vw",
     top: 0,
@@ -40,10 +40,10 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     maxWidth: "500px",
     backgroundColor: "white",
-         position: 'relative',
- 	borderRadius: '0.5em',
+    position: 'relative',
+    borderRadius: '0.5em',
     padding: "5em 0 2em",
-
+    boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',
     "&:focus": {
       opacity: "1",
     },
@@ -101,7 +101,7 @@ function Login(props) {
     if (!props.debug) {
       setLoading(true);
       api
-        .logIn({...s, email: s.username.toLowerCase(), username: s.username.toLowerCase()})
+        .logIn({ ...s, email: s.username.toLowerCase(), username: s.username.toLowerCase() })
         .then((d) => {
           props.loginUser(d);
           setAuth(true);
@@ -151,13 +151,13 @@ function Login(props) {
 
         onSubmit={handleSubmit(handleSubmitCallback)}
       >
-          {isLoading && (<LinearProgress color="secondary" style={{
+        {isLoading && (<LinearProgress color="secondary" style={{
           position: 'absolute',
           top: '0',
           left: '0',
           width: '100%'
         }} />)}
-      
+
         <div className={classes.inputDiv}>
           <TextField
             color="secondary"

@@ -27,11 +27,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     minHeight: "100vh",
 
-   
+
 
     width: "100vw",
     top: 0,
-  
+
   },
 
   root: {
@@ -42,11 +42,11 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     backgroundColor: "white",
     maxWidth: "500px",
- position: 'relative',
- borderRadius: '0.5em',
+    position: 'relative',
+    borderRadius: '0.5em',
     padding: "5em 0 2em",
- 
- 
+
+    boxShadow: '0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)',
     opacity: "0.9",
     "&:focus": {
       opacity: "1",
@@ -106,7 +106,7 @@ function SignUp(props) {
     setLoading(true);
     if (!props.debug) {
       api
-        .signUp({...s, email: s.email.toLowerCase()})
+        .signUp({ ...s, email: s.email.toLowerCase() })
         .then((d) => {
           //setLoading(false)
 
@@ -162,13 +162,13 @@ function SignUp(props) {
     <div className={classes.div}>
       <form className={classes.root} onSubmit={handleSubmit(handleSubmitCallback)}>
 
-                 {isLoading && (<LinearProgress color="secondary" style={{
+        {isLoading && (<LinearProgress color="secondary" style={{
           position: 'absolute',
           top: '0',
           left: '0',
           width: '100%'
         }} />)}
-  
+
         <div className={classes.inputDiv}>
           <TextField
             label="Email"
@@ -299,7 +299,7 @@ function SignUp(props) {
           <Button className={classes.btn}> Already signed up? </Button>{" "}
         </Link>
       </form>
- 
+
 
       <Snackbar
         anchorOrigin={{

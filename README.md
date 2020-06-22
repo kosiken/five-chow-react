@@ -2,7 +2,7 @@
 
 ## Todo
 
-- Integrate with api
+
 - Documentation
 
 

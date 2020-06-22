@@ -61,13 +61,17 @@ function Footer() {
     
     <Divider style={{margin: '0 0 10px' }} />
     	
-			 <Typography className={classes.list}>&copy; Five Hundred Chow, 2020</Typography>
+			 <Typography className={classes.list}>
+			 Made with <span role="img" aria-label="love" >❤️ </span><span style={{
+			 color:'#f0324b'
+			 }}>500Chow</span>
+			 </Typography>
 			<div className={classes.list}>
 			<List >
 			
 				<ListItemIcon>
 					<Link className={classes.link} href="https://facebook.com/500chow">
-						  <IconButton color="secondary" aria-label="facebook">
+						  <IconButton color="primary" aria-label="facebook">
 						  <FacebookIcon />
 						  </IconButton>
 					</Link>
@@ -75,14 +79,14 @@ function Footer() {
 				
 					<ListItemIcon>
 					<Link className={classes.link} href="https://instagram.com/500chow">
-						<IconButton color="secondary" aria-label="instagram">
+						<IconButton color="primary" aria-label="instagram">
 						<InstagramIcon />
 						</IconButton>
 					</Link>
 					</ListItemIcon>
 					<ListItemIcon>
 						<Link className={classes.link} href="https://twitter.com/500chow">
-						<IconButton color="secondary" aria-label="instagram">
+						<IconButton color="primary" aria-label="instagram">
 						<TwitterIcon />
 							</IconButton>
 					</Link>

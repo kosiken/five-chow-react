@@ -106,12 +106,17 @@ function CartItems(props) {
     <div  style={{
 
      
-          minHeight: '100vh',
+        
         
         
       
         width: '100vw',
         position:'relative',
+      }}>
+      <div style={{
+      height: '100%',
+        minHeight: '80vh',
+      
       }}>
 <List
         style={{
@@ -148,16 +153,20 @@ function CartItems(props) {
             </div>
           );
         })}
+        
+    
       </List>
-            <div style={{textAlign:'center'}} >
+                    <div style={{textAlign:'center'}} >
         <IconButton color="primary" onClick={clear} aria-label="clear cart" >
           <DeleteIcon />
         </IconButton>
-        </div>
       
+  
+        </div>
+        </div>
       <div
         style={{
-          position: "absolute",
+        
           width: "100vw",
           bottom: "0",
           left: "0",

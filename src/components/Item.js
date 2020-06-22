@@ -26,9 +26,8 @@ const useStyles = makeStyles({
   width: '100%'
   },
   toCart: {
-    position: 'absolute',
-    right: '0',
-    
+   color:'inherit',
+   
   }
 });
 
@@ -55,7 +54,10 @@ function removeFromCart() {
   }
 
   return (
-
+<div style={{
+paddingBottom:'5px',
+textAlign:'right'
+}}>
       <div className={classes.cartActions}>
         <section>
           <IconButton
@@ -72,7 +74,9 @@ function removeFromCart() {
             <AddCircleIcon />
           </IconButton>
         </section>
-        <Link to="/cart" className={classes.toCart}>
+     
+      </div>
+         <Link to="/cart" className={classes.toCart}>
           <Button>Continue </Button>
         </Link>
       </div>

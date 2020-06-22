@@ -17,7 +17,7 @@ import api from "../api";
 
 import { loginUser } from "../store/actions";
 
-import logo from "../assets/logo-variant.png";
+
 
 const useStyles = makeStyles((theme) => ({
   div: {
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     minHeight: "100vh",
-    background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
+
    
 
     width: "100vw",
@@ -42,10 +42,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
          position: 'relative',
  	borderRadius: '0.5em',
-    padding: "2em 0",
-    boxShadow:
-      "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
-    opacity: "0.9",
+    padding: "5em 0 2em",
+
     "&:focus": {
       opacity: "1",
     },
@@ -159,21 +157,7 @@ function Login(props) {
           left: '0',
           width: '100%'
         }} />)}
-        <div
-          style={{
-            padding: "1em",
-          }}
-        >
-          <Link to="/">
-            <img
-              alt="logo"
-              src={logo}
-              style={{
-                width: "60px",
-              }}
-            />
-          </Link>
-        </div>
+      
         <div className={classes.inputDiv}>
           <TextField
             color="secondary"

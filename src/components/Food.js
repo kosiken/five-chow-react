@@ -18,10 +18,14 @@ import Item from "./Item";
 const useStyles = makeStyles((theme) => ({
   link: {
     textDecoration: "none",
+    
+  
   },
   root: {
     maxWidth: 345,
     cursor: "pointer",
+    paddingTop: '10px',
+    
   },
   media: {
     height: 0,
@@ -57,14 +61,8 @@ const useStyles = makeStyles((theme) => ({
  */
 function Food({ food, shoppingCartItems }) {
   const classes = useStyles();
-  const [state, setState] = React.useState({
-    open: false,
-  });
 
-  const handleToggle = () => {
-    setState({ open: !state.open });
-  };
-  
+
   /**
    * Utitlity function that is used to count how many of an item there is
    * in the shopping cart
@@ -80,15 +78,15 @@ function Food({ food, shoppingCartItems }) {
 
   return (
     <div>
-      <Card className={classes.root} onClick={handleToggle} >
+      <Card className={classes.root} elevation={0}>
         <CardMedia className={classes.media} image={food.picture} />
 
         <CardContent className={classes.content}>
           <Typography
             gutterBottom
-            variant="h6"
-            className={classes.foodTitle}
-            component="h6"
+       
+          
+          
           >
             {food.name}
           </Typography>

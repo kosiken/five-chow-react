@@ -45,7 +45,7 @@ function FoodList(props) {
 
   let [isLoading, setLoading] = useState(!foods.length);
   const [error, setError] = useState(false);
-  const width = useWidth(12, 4);
+  const width = useWidth(12, 3);
 
   const classes = useStyles();
 
@@ -133,13 +133,14 @@ function FoodList(props) {
   return (
     <div
       style={{
-        width: width === 4 ? "85%" : "100%",
+        width: width === 3 ? "85%" : "100%",
         margin: "0 auto",
       }}
     >
       <Grid
         style={{
           margin: "0 auto",
+          
         }}
         container
         item

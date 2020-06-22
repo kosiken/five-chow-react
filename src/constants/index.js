@@ -13,9 +13,9 @@ import res5 from "../assets/res5.jpg";
 import res6 from "../assets/res6.jpg";
 import res7 from "../assets/res7.jpg";
 import res8 from "../assets/res8.jpg";
-import hamburger from "../assets/hamburger.jpg";
-import bread from "../assets/bread.jpg";
-import meat from "../assets/meat.jpg";
+import hamburger from "../assets/hamburger.png";
+import bread from "../assets/bread.png";
+import meat from "../assets/meat.png";
 const pics = {
   foods: { hamburger, bread, meat },
   fitems: [hamburger, bread, meat],

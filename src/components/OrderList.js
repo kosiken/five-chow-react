@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => {
   return {
     div: {
     
-      background: "linear-gradient(45deg,#f0324b, #e5298b, #b44dc3)",
+      background: "transparent",
       padding: "0 0 1.5em 0",
       width: "100vw",
       top: 0,

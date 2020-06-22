@@ -26,9 +26,10 @@ import OrderList from "../components/OrderList";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    height:'100vh',
+    backgroundColor:'#f5f5f5',
     width:'100vw',
-    position:'relative'
+    position:'relative',
+    
    
   },
   fab: {

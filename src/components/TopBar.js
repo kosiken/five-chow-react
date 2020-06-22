@@ -6,20 +6,19 @@ import { Link } from "react-router-dom";
 
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
-import Divider from '@material-ui/core/Divider';
-
 import Drawer from '@material-ui/core/Drawer';
 
 import Button from "@material-ui/core/Button";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+
 import IconButton from "@material-ui/core/IconButton";
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import ExitToApp from "@material-ui/icons/ExitToApp";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { deepOrange } from "@material-ui/core/colors";
+
 import MenuIcon from '@material-ui/icons/Menu';
 import ShoppingCart from "@material-ui/icons/ShoppingCart";
 
@@ -33,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
 
   appbar: {
     backgroundColor: "white !important",
+    top:'0',
+    boxShadow: 'none',
   },
   link: {
     textDecoration: "none",
@@ -60,10 +61,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
-  avatar: {
-    color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: deepOrange[500],
-  },
+ 
   toolBar: {
 
     display: 'flex',
@@ -179,7 +177,7 @@ function TopBar(props) {
                     Sign In
         </ListItem>
                 </Link>
-                <Divider />
+             
                 <Link className={classes.link} to="/signup">
                   <ListItem button onClick={handleDrawerClose}>
                     <ListItemIcon> <HowToRegIcon /></ListItemIcon>

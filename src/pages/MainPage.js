@@ -71,7 +71,7 @@ function MainPage(props) {
                       color: "#011627",
                     }}
                   >
-                    Resturants
+                    Restaurants
                   </Button>
                 </Link>
               </div>

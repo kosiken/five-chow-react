@@ -118,7 +118,7 @@ function CheckOut(props) {
   };
 
   function paystackPay(total) {
-    return new Promise((res) => {
+    return new Promise((res, rej) => {
       console.log(total)
       const config = {
 
@@ -135,16 +135,19 @@ function CheckOut(props) {
 
         // label: "Optional string that replaces customer email"
 
-        onClose: function () {
 
-          console.log('Window closed.');
+        
+        onClose: function() {
 
-        },
+    //   handleOpen('Transaction was not completed, please try again');
+       res(['Transaction was not completed, please try again', false])
+
+    },
 
         callback: function (response) {
 
           handleOpen('Payment complete! Thanks for your patronage');
-          res(response.reference)
+          res([response.reference, true])
 
 
         }
@@ -189,9 +192,17 @@ function CheckOut(props) {
       }),
     };
     try {
-    let paystackResponsse = await paystackPay(total)
+    let [paystackResponse, complete] = await paystackPay(total)
+    
+    if(!complete) {
+     setLoading(false)
+     handleOpen(paystackResponse)
+     return
+    
+    
+    }
     let apiResponse = await api.createOrder(props.token, orderObject)
-    console.log(apiResponse, paystackResponsse)
+    console.log(apiResponse, paystackResponse)
     props.clearCart();
     setRedirectTo(`/orders/${apiResponse.id}`);
     }
@@ -217,7 +228,7 @@ function CheckOut(props) {
           top: '0',
           left: '0',
           width: '100%'
-        }} />)};
+        }} />)}
       <form
           className={classes.form}
           noValidate

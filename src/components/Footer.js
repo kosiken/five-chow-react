@@ -34,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
   list: {
 
       textAlign: 'center',
+          fontSize: '14px',
+
   },
   
   appStoresDiv: {
@@ -72,7 +74,7 @@ function Footer() {
 				<ListItemIcon>
 					<Link className={classes.link} href="https://facebook.com/500chow">
 						  <IconButton color="primary" aria-label="facebook">
-						  <FacebookIcon />
+						  <FacebookIcon fontSize="small" />
 						  </IconButton>
 					</Link>
 				</ListItemIcon>
@@ -80,14 +82,14 @@ function Footer() {
 					<ListItemIcon>
 					<Link className={classes.link} href="https://instagram.com/500chow">
 						<IconButton color="primary" aria-label="instagram">
-						<InstagramIcon />
+						<InstagramIcon fontSize="small" />
 						</IconButton>
 					</Link>
 					</ListItemIcon>
 					<ListItemIcon>
 						<Link className={classes.link} href="https://twitter.com/500chow">
 						<IconButton color="primary" aria-label="instagram">
-						<TwitterIcon />
+						<TwitterIcon fontSize="small" />
 							</IconButton>
 					</Link>
 				</ListItemIcon>

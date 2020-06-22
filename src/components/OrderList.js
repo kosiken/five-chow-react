@@ -63,7 +63,7 @@ function OrderList(props) {
     api.getOrders(props.token).then(orders => {
       
       setLoading(false);
-      setOrders(orders.filter(order=> order.order_items.length));
+      setOrders(orders.filter(order=> order.order_items.length).reverse());
   }
   )
       .catch(handleErrorOpen)

@@ -129,7 +129,7 @@ function CartItems(props) {
         backgroundColor:'#ffdc4a',
           borderTop: ".5px solid black",
     position: 'sticky',
-         
+      'z-index': 999   
         }}
       >
         <div style={{

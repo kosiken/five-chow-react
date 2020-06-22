@@ -115,7 +115,7 @@ function CartItems(props) {
       }}>
       <div style={{
       height: '100%',
-        minHeight: '70vh',
+        minHeight: '60vh',
       
       }}>
 <List

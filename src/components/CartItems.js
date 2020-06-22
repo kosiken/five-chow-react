@@ -115,7 +115,7 @@ function CartItems(props) {
       }}>
       <div style={{
       height: '100%',
-        minHeight: '60vh',
+        minHeight: '100vh',
       
       }}>
     
@@ -128,7 +128,7 @@ function CartItems(props) {
           padding: "10px 5px",
         backgroundColor:'#ffdc4a',
           borderTop: ".5px solid black",
-    position: 'absolute',
+    position: 'sticky',
          
         }}
       >

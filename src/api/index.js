@@ -161,7 +161,7 @@ async getOrder(token, id) {
 }
 
 async getOrders(token) {
-  let resp =await this.api.get("/orderslist", {
+  let resp =await this.api.get("/orderslist/", {
     headers: {
       Authorization: `Token ${token}`,
     },

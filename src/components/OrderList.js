@@ -78,8 +78,8 @@ function OrderList(props) {
     setError(false);
   };
   const handleErrorOpen = (err) => {
-console.log(err, err.response)	
-if(err.response.status === 401) setErrorMessage("You need to login to view orders");
+//console.log(err, err.response)	
+setErrorMessage(err.toString());
 	    setError(true);
   };
 

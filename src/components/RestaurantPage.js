@@ -12,18 +12,18 @@ const useStyles = makeStyles((theme) => ({
         display: 'block',
         minHeight: '90vh',
     },
-    vendorPaper:{
-    padding: '1em',
-    backgroundColor:'#f0324b',
-    color: 'white',
-    
+    vendorPaper: {
+        padding: '1em',
+        backgroundColor: '#f0324b',
+        color: 'white',
+
     },
 }));
 
 
 
 export const RestaurantPage = (props) => {
- const classes = useStyles();
+    const classes = useStyles();
     if (!props.selectedResturant) {
         return <Redirect to={"/"} />;
     }
@@ -40,12 +40,12 @@ export const RestaurantPage = (props) => {
     )
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => {
 
-
-    selectedResturant: state.food.selectedResturant,
-
-})
+    return {
+        selectedResturant: state.food.selectedResturant,
+    }
+}
 
 const mapDispatchToProps = {
 

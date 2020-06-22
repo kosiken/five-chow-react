@@ -118,6 +118,40 @@ function CartItems(props) {
         minHeight: '60vh',
       
       }}>
+    
+         <div
+        style={{
+        
+          width: "100vw",
+          top: "0",
+          left: "0",
+          padding: "10px 5px",
+        backgroundColor:'#ffdc4a',
+          borderTop: ".5px solid black",
+    position: 'absolute',
+         
+        }}
+      >
+        <div style={{
+            padding: "5px",   display: "flex",
+ alignItems: "center",
+ justifyContent: "space-around",
+ 
+
+        }}>
+        <Typography>Total N{getTotal(shoppingCartItems)}</Typography>
+      
+
+        <Link to="/checkout">
+          {" "}
+          <Button variant="contained" color="primary">
+            {" "}
+            Continue
+          </Button>
+
+        </Link>
+        </div>
+      </div>
 <List
         style={{
           width,
@@ -164,38 +198,7 @@ function CartItems(props) {
   
         </div>
         </div>
-      <div
-        style={{
-        
-          width: "100vw",
-          bottom: "0",
-          left: "0",
-          padding: "10px 5px",
-        backgroundColor:'#ffdc4a',
-          borderTop: ".5px solid black",
-         
-        }}
-      >
-        <div style={{
-            padding: "5px",   display: "flex",
- alignItems: "center",
- justifyContent: "space-around",
  
-
-        }}>
-        <Typography>Total N{getTotal(shoppingCartItems)}</Typography>
-      
-
-        <Link to="/checkout">
-          {" "}
-          <Button variant="contained" color="primary">
-            {" "}
-            Continue
-          </Button>
-
-        </Link>
-        </div>
-      </div>
   
        
     

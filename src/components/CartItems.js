@@ -111,6 +111,7 @@ function CartItems(props) {
         
       
         width: '100vw',
+        overflowX: 'hidden',
         position:'relative',
       }}>
       <div style={{
@@ -121,7 +122,7 @@ function CartItems(props) {
     
          <div
         style={{
-        
+          overflowX:'hidden',
           width: "100vw",
           top: "0",
           left: "0",
